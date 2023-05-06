@@ -105,7 +105,7 @@ exports.getUser = function (req, res, next) { return __awaiter(void 0, void 0, v
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                userId = req.body;
+                userId = req.body.userId;
                 return [4 /*yield*/, userModel_1["default"].findById(userId)];
             case 1:
                 user = _a.sent();
@@ -179,19 +179,21 @@ exports.passwordRecovery = function (req, res, next) { return __awaiter(void 0, 
     });
 }); };
 exports.deleteUser = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var userId, user, users, error_6;
+    var userId, findUser, users, error_6;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 3, , 4]);
-                userId = req.params.userId;
-                return [4 /*yield*/, userModel_1["default"].deleteOne({ _id: userId })];
+                userId = req.body.userId;
+                return [4 /*yield*/, userModel_1["default"].findByIdAndDelete(userId)];
             case 1:
-                user = _a.sent();
+                findUser = _a.sent();
+                if (!findUser)
+                    throw new Error("User not found in delete user route.");
                 return [4 /*yield*/, userModel_1["default"].find({})];
             case 2:
                 users = _a.sent();
-                res.status(200).send({ users: users });
+                res.status(200).send({ findUser: findUser, users: users });
                 return [3 /*break*/, 4];
             case 3:
                 error_6 = _a.sent();
@@ -203,23 +205,29 @@ exports.deleteUser = function (req, res, next) { return __awaiter(void 0, void 0
     });
 }); };
 exports.updateUser = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var userId, data, users, user, error_7;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var _a, userId, firstName, lastName, gender, userName, password, email, updateUser_1, user, error_7;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                _a.trys.push([0, 3, , 4]);
-                userId = req.params.userId;
-                data = req.body;
-                return [4 /*yield*/, userModel_1["default"].find({})];
+                _b.trys.push([0, 3, , 4]);
+                _a = req.body, userId = _a.userId, firstName = _a.firstName, lastName = _a.lastName, gender = _a.gender, userName = _a.userName, password = _a.password, email = _a.email;
+                return [4 /*yield*/, userModel_1["default"].findByIdAndUpdate({ _id: userId }, {
+                        firstName: firstName,
+                        lastName: lastName,
+                        gender: gender,
+                        userName: userName,
+                        password: password,
+                        email: email
+                    })];
             case 1:
-                users = _a.sent();
-                return [4 /*yield*/, userModel_1["default"].findById({ _id: userId })];
+                updateUser_1 = _b.sent();
+                return [4 /*yield*/, userModel_1["default"].findById(userId)];
             case 2:
-                user = _a.sent();
-                res.status(201).json({ users: users });
+                user = _b.sent();
+                res.status(201).json({ user: user });
                 return [3 /*break*/, 4];
             case 3:
-                error_7 = _a.sent();
+                error_7 = _b.sent();
                 console.error(error_7);
                 res.status(500).send({ error: error_7.message });
                 return [3 /*break*/, 4];

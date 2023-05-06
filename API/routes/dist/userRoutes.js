@@ -6,3 +6,7 @@ var userRouter = express_1["default"].Router();
 exports.userRouter = userRouter;
 var userController_1 = require("../controller/userController");
 userRouter.route("/").get(userController_1.getAllUsers).post(userController_1.createUser);
+userRouter.route("/getUser").get(userController_1.getUser);
+userRouter.route("/deleteUser")["delete"](userController_1.deleteUser);
+userRouter.route("/updateUser").patch(userController_1.updateUser);
+userRouter.route("/login").post(userController_1.login);

@@ -60,7 +60,7 @@ export const getUser = async (
   next: NextFunction
 ) => {
   try {
-    const userId = req.body;
+    const { userId } = req.body;
     const user = await User.findById(userId);
     res.json({ user });
   } catch (error: any) {
@@ -127,11 +127,15 @@ export const deleteUser = async (
   next: NextFunction
 ) => {
   try {
-    const { userId } = req.params;
-    const user = await User.deleteOne({ _id: userId });
+    const { userId } = req.body;
+
+    const findUser = await User.findByIdAndDelete(userId);
+
+    if (!findUser) throw new Error("User not found in delete user route.");
+
     const users = await User.find({});
 
-    res.status(200).send({ users });
+    res.status(200).send({ findUser, users });
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: error.message });
@@ -144,12 +148,24 @@ export const updateUser = async (
   next: NextFunction
 ) => {
   try {
-    const { userId } = req.params;
-    const data = req.body;
-    const users = await User.find({});
-    const user = await User.findById({ _id: userId });
+    const { userId, firstName, lastName, gender, userName, password, email } =
+      req.body;
 
-    res.status(201).json({ users });
+    const updateUser = await User.findByIdAndUpdate(
+      { _id: userId },
+      {
+        firstName,
+        lastName,
+        gender,
+        userName,
+        password,
+        email,
+      }
+    );
+
+    const user = await User.findById(userId);
+
+    res.status(201).json({ user });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });
