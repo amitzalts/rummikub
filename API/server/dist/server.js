@@ -39,6 +39,7 @@ exports.__esModule = true;
 var express_1 = require("express");
 var app = express_1["default"]();
 var mongoose_1 = require("mongoose");
+var path_1 = require("path");
 var cookie_parser_1 = require("cookie-parser");
 var config_1 = require("../config/config");
 var userRoutes_1 = require("../routes/userRoutes");
@@ -62,6 +63,9 @@ function StartServer() {
                     app.use(cookie_parser_1["default"]());
                     //routes
                     app.use("/api/v1/users", userRoutes_1.userRouter);
+                    app.get("/login", function (req, res, next) {
+                        res.sendFile(path_1["default"].join(__dirname, "../../public", "login.html"));
+                    });
                     app.listen(config_1.config.server.port, function () {
                         console.log("Server is listening on port " + config_1.config.server.port + "...");
                     });

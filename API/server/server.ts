@@ -25,6 +25,10 @@ async function StartServer() {
   //routes
   app.use("/api/v1/users", userRouter);
 
+  app.get("/login", (req: Request, res: Response, next: NextFunction) => {
+    res.sendFile(path.join(__dirname, "../../public", "login.html"));
+  });
+
   app.listen(config.server.port, () => {
     console.log(`Server is listening on port ${config.server.port}...`);
   });
