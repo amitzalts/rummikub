@@ -16,7 +16,7 @@ body {
   width: 100vw;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .square {
@@ -30,7 +30,7 @@ body {
   cursor: pointer;
 }
 
-.square.active {
+.active {
   box-shadow: 0 0 5px black;
 }
 
@@ -51,16 +51,37 @@ body {
 }
 
 .gold {
-  background-color: gold;
+  background-color: darkgoldenrod;
   font-weight: bold;
 }
 
-.black {
-  background-color: black;
+.green {
+  background-color: green;
   font-weight: bold;
 }
 
 .blue {
   background-color: blue;
   font-weight: bold;
+}
+
+
+.player{
+  border: 1px solid black;
+  height: 70%;
+  width: 15%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+  .tile{
+    width: 30%;
+    height: 10%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
 }
