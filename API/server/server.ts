@@ -29,6 +29,14 @@ async function StartServer() {
     res.sendFile(path.join(__dirname, "../../public", "login.html"));
   });
 
+  app.get("/signUp", (req: Request, res: Response, next: NextFunction) => {
+    res.sendFile(path.join(__dirname, "../../public", "register.html"));
+  });
+
+  app.get("/profile", (req: Request, res: Response, next: NextFunction) => {
+    res.sendFile(path.join(__dirname, "../../public", "profile.html"));
+  });
+
   app.get("/game", (req: Request, res: Response, next: NextFunction) => {
     res.sendFile(path.join(__dirname, "../../public", "game.html"));
   });

@@ -46,8 +46,8 @@ export const createUser = async (
     //   httpOnly: true,
     // });
 
-    // res.redirect("/main");
-    res.json({ user });
+    res.redirect("/profile");
+    // res.json({ user });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

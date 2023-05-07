@@ -46,8 +46,8 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         //   maxAge: 24 * 60 * 60 * 1000, //24 hours
         //   httpOnly: true,
         // });
-        // res.redirect("/main");
-        res.json({ user });
+        res.redirect("/profile");
+        // res.json({ user });
     }
     catch (error) {
         console.error(error);

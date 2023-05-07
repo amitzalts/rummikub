@@ -39,6 +39,12 @@ function StartServer() {
         app.get("/signIn", (req, res, next) => {
             res.sendFile(path_1.default.join(__dirname, "../../public", "login.html"));
         });
+        app.get("/signUp", (req, res, next) => {
+            res.sendFile(path_1.default.join(__dirname, "../../public", "register.html"));
+        });
+        app.get("/profile", (req, res, next) => {
+            res.sendFile(path_1.default.join(__dirname, "../../public", "profile.html"));
+        });
         app.get("/game", (req, res, next) => {
             res.sendFile(path_1.default.join(__dirname, "../../public", "game.html"));
         });
