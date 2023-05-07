@@ -25,7 +25,7 @@ async function StartServer() {
   //routes
   app.use("/api/v1/users", userRouter);
 
-  app.get("/login", (req: Request, res: Response, next: NextFunction) => {
+  app.get("/signIn", (req: Request, res: Response, next: NextFunction) => {
     res.sendFile(path.join(__dirname, "../../public", "login.html"));
   });
 

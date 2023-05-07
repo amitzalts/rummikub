@@ -56,7 +56,8 @@ button {
   padding: 14px 22px;
   text-decoration: none;
   transition: all 0.2s;
-  user-select: none;
+  -moz-user-select: none;
+       user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
 }
@@ -77,4 +78,4 @@ button:hover {
     min-width: 200px;
     padding: 14px 16px;
   }
-}
+}/*# sourceMappingURL=welcomePage.css.map */

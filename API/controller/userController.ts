@@ -69,7 +69,7 @@ export const getUser = async (
   }
 };
 
-export const login = async (
+export const userLogin = async (
   req: Request,
   res: Response,
   next: NextFunction
