@@ -29,6 +29,10 @@ async function StartServer() {
     res.sendFile(path.join(__dirname, "../../public", "login.html"));
   });
 
+  app.get("/game", (req: Request, res: Response, next: NextFunction) => {
+    res.sendFile(path.join(__dirname, "../../public", "game.html"));
+  });
+
   app.listen(config.server.port, () => {
     console.log(`Server is listening on port ${config.server.port}...`);
   });

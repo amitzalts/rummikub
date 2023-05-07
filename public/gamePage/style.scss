@@ -27,6 +27,11 @@ body {
   justify-content: center;
   align-items: center;
   color: #f3f3f3;
+  cursor: pointer;
+}
+
+.square.active {
+  box-shadow: 0 0 5px black;
 }
 
 .board {

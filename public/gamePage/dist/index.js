@@ -1,12 +1,29 @@
 var board = document.querySelector(".board");
 var gridArray = [];
-if (!board)
-    throw new Error("ERROR");
-for (var i = 1; i <= 160; i++) {
-    var div = document.createElement("div");
-    div.classList.add("square");
-    board.append(div);
-    gridArray.push(div);
+createBoard();
+function createBoard() {
+    if (!board)
+        throw new Error("Board div not found.");
+    var _loop_1 = function (i) {
+        var div = document.createElement("div");
+        div.classList.add("square");
+        board.append(div);
+        gridArray.push(div);
+        div.addEventListener("click", function () {
+            var _a;
+            if (div.classList.contains("active")) {
+                div.classList.remove("active");
+            }
+            else {
+                (_a = gridArray
+                    .find(function (ele) { return ele.classList.contains("active"); })) === null || _a === void 0 ? void 0 : _a.classList.remove("active");
+                div.classList.add("active");
+            }
+        });
+    };
+    for (var i = 1; i <= 160; i++) {
+        _loop_1(i);
+    }
 }
 gridArray[67].classList.add("red");
 gridArray[67].textContent = "7";

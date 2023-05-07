@@ -66,6 +66,9 @@ function StartServer() {
                     app.get("/login", function (req, res, next) {
                         res.sendFile(path_1["default"].join(__dirname, "../../public", "login.html"));
                     });
+                    app.get("/game", function (req, res, next) {
+                        res.sendFile(path_1["default"].join(__dirname, "../../public", "game.html"));
+                    });
                     app.listen(config_1.config.server.port, function () {
                         console.log("Server is listening on port " + config_1.config.server.port + "...");
                     });
