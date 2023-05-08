@@ -7,3 +7,4 @@ const playerTiles = document.querySelectorAll(
 
 const activePlayer = document.querySelector(".activePlayer") as HTMLDivElement;
 
+let currentTile: HTMLDivElement | undefined;

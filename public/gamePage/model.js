@@ -1,63 +1,64 @@
 "use strict";
 const allTiles = [
-    "1b",
-    "1g",
-    "1y",
-    "1r",
-    "2b",
-    "2g",
-    "2y",
-    "2r",
-    "3b",
-    "3g",
-    "3y",
-    "3r",
-    "4b",
-    "4g",
-    "4y",
-    "4r",
-    "5b",
-    "5g",
-    "5y",
-    "5r",
-    "6b",
-    "6g",
-    "6y",
-    "6r",
-    "7b",
-    "7g",
-    "7y",
-    "7r",
-    "8b",
-    "8g",
-    "8y",
-    "8r",
-    "9b",
-    "9g",
-    "9y",
-    "9r",
-    "10b",
-    "10g",
-    "10y",
-    "10r",
-    "11b",
-    "11g",
-    "11y",
-    "11r",
-    "12b",
-    "12g",
-    "12y",
-    "12r",
-    "13b",
-    "13g",
-    "13y",
-    "13r",
+    "b1",
+    "g1",
+    "y1",
+    "r1",
+    "b2",
+    "g2",
+    "y2",
+    "r2",
+    "b3",
+    "g3",
+    "y3",
+    "r3",
+    "b4",
+    "g4",
+    "y4",
+    "r4",
+    "b5",
+    "g5",
+    "y5",
+    "r5",
+    "b6",
+    "g6",
+    "y6",
+    "r6",
+    "b7",
+    "g7",
+    "y7",
+    "r7",
+    "b8",
+    "g8",
+    "y8",
+    "r8",
+    "b9",
+    "g9",
+    "y9",
+    "r9",
+    "b10",
+    "g10",
+    "y10",
+    "r10",
+    "b11",
+    "g11",
+    "y11",
+    "r11",
+    "b12",
+    "g12",
+    "y12",
+    "r12",
+    "b13",
+    "g13",
+    "y13",
+    "r13",
     "jocker",
 ];
 class Player {
     constructor(name, hand = []) {
         this.name = name;
         this.hand = hand;
+        this.divsArray = [];
     }
     getNewHand(deck) {
         for (let i = 1; i < 15; i++) {
@@ -67,35 +68,35 @@ class Player {
     getRandomTile(deck) {
         const getTile = deck.deal();
         this.hand.push(getTile);
-        const tilediv = document.createElement("div");
-        tilediv.classList.add("tile");
-        // tilediv.addEventListener("click", () => {
-        //   tilediv.classList.add("active");
-        // });
-        switch (getTile[1]) {
+        const tileDiv = document.createElement("div");
+        tileDiv.classList.add("square");
+        toggleActive(tileDiv, this.divsArray);
+        switch (getTile[0]) {
             case "r":
-                tilediv.classList.add("red");
-                tilediv.innerHTML = getTile[0];
+                tileDiv.classList.add("red");
+                tileDiv.innerHTML = getTile.slice(1);
                 break;
             case "b":
-                tilediv.classList.add("blue");
-                tilediv.innerHTML = getTile[0];
+                tileDiv.classList.add("blue");
+                tileDiv.innerHTML = getTile.slice(1);
                 break;
             case "y":
-                tilediv.classList.add("yellow");
-                tilediv.innerHTML = getTile[0];
+                tileDiv.classList.add("gold");
+                tileDiv.innerHTML = getTile.slice(1);
                 break;
             case "g":
-                tilediv.classList.add("green");
-                tilediv.innerHTML = getTile[0];
+                tileDiv.classList.add("green");
+                tileDiv.innerHTML = getTile.slice(1);
                 break;
-            case "o":
-                tilediv.classList.add("jocker");
-                tilediv.innerHTML = '<i class="fa-regular fa-face-smile"></i>';
+            case "j":
+                tileDiv.classList.add("jocker");
+                tileDiv.innerHTML = '<i class="fa-regular fa-face-smile"></i>';
+                break;
             default:
                 console.error("Switch statement didn't work well.");
         }
-        activePlayer.append(tilediv);
+        this.divsArray.push(tileDiv);
+        activePlayer.append(tileDiv);
     }
 }
 class Deck {
