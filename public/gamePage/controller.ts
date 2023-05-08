@@ -25,7 +25,7 @@ function toggleActive(
   elementArray: Array<HTMLElement>
 ) {
   element.addEventListener("click", () => {
-    if (moveTile(element)) return;
+    if (moveTileToBoard(element)) return;
 
     if (element.classList.contains("active")) {
       element.classList.remove("active");
@@ -44,7 +44,7 @@ function toggleActive(
   });
 }
 
-function moveTile(divElement: HTMLDivElement) {
+function moveTileToBoard(divElement: HTMLDivElement) {
   if (!currentTile) return;
 
   if (!board) throw new Error("Can't find board div.");
@@ -52,7 +52,6 @@ function moveTile(divElement: HTMLDivElement) {
   if (newPlayer.divsArray.find((ele) => ele === currentTile)) {
     currentTile.classList.remove("active");
 
-    console.log("3");
     const indexOfNewLocation = gridArray.indexOf(divElement);
     gridArray[indexOfNewLocation] = currentTile;
 
@@ -74,7 +73,6 @@ function moveTile(divElement: HTMLDivElement) {
 
     renderBoard(gridArray);
     currentTile = undefined;
-    console.log("4");
   }
 
   return true;

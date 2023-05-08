@@ -18,7 +18,7 @@ function renderBoard(divsArray) {
 }
 function toggleActive(element, elementArray) {
     element.addEventListener("click", () => {
-        if (moveTile(element))
+        if (moveTileToBoard(element))
             return;
         if (element.classList.contains("active")) {
             element.classList.remove("active");
@@ -33,14 +33,13 @@ function toggleActive(element, elementArray) {
         }
     });
 }
-function moveTile(divElement) {
+function moveTileToBoard(divElement) {
     if (!currentTile)
         return;
     if (!board)
         throw new Error("Can't find board div.");
     if (newPlayer.divsArray.find((ele) => ele === currentTile)) {
         currentTile.classList.remove("active");
-        console.log("3");
         const indexOfNewLocation = gridArray.indexOf(divElement);
         gridArray[indexOfNewLocation] = currentTile;
         const index = newPlayer.divsArray.indexOf(currentTile);
@@ -56,7 +55,6 @@ function moveTile(divElement) {
         gridArray[indexOfNewLocation] = currentTile;
         renderBoard(gridArray);
         currentTile = undefined;
-        console.log("4");
     }
     return true;
 }

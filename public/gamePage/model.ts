@@ -99,9 +99,15 @@ class Player {
       default:
         console.error("Switch statement didn't work well.");
     }
+    this.addTileToHande(tileDiv);
+  }
 
-    this.divsArray.push(tileDiv);
-    activePlayer.append(tileDiv);
+  addTileToHande(div: HTMLDivElement) {
+    if (this.divsArray.length === 40) {
+      activePlayer.style.gridTemplateColumns = "repeat(25, 1fr)";
+    }
+    this.divsArray.push(div);
+    activePlayer.append(div);
   }
 }
 
@@ -117,5 +123,17 @@ class Deck {
   }
   resetDeck() {
     this.deck = [...allTiles, ...allTiles];
+  }
+}
+
+class Game {
+  public board: Array<HTMLElement> = [];
+
+  constructor(public players: Player[]) {
+    // this.board = this.getBoardFromUser()
+  }
+
+  getBoardFromUser() {
+    //or Game route???
   }
 }

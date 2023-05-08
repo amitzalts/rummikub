@@ -95,8 +95,14 @@ class Player {
             default:
                 console.error("Switch statement didn't work well.");
         }
-        this.divsArray.push(tileDiv);
-        activePlayer.append(tileDiv);
+        this.addTileToHande(tileDiv);
+    }
+    addTileToHande(div) {
+        if (this.divsArray.length === 40) {
+            activePlayer.style.gridTemplateColumns = "repeat(25, 1fr)";
+        }
+        this.divsArray.push(div);
+        activePlayer.append(div);
     }
 }
 class Deck {
@@ -110,5 +116,15 @@ class Deck {
     }
     resetDeck() {
         this.deck = [...allTiles, ...allTiles];
+    }
+}
+class Game {
+    constructor(players) {
+        this.players = players;
+        this.board = [];
+        // this.board = this.getBoardFromUser()
+    }
+    getBoardFromUser() {
+        //or Game route???
     }
 }

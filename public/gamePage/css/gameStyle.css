@@ -23,8 +23,6 @@ body {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
 }
 
 .waitingPlayers {
@@ -76,17 +74,6 @@ body {
   background-color: #f3f3f3;
   border: 1px solid black;
   border-radius: 2px;
-  cursor: pointer;
-}
-
-.tile {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2px;
-  color: #f3f3f3;
   cursor: pointer;
 }
 

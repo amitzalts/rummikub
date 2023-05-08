@@ -24,8 +24,6 @@ body {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
 }
 
 .waitingPlayers {
@@ -57,14 +55,6 @@ body {
   grid-column-gap: 5px;
   grid-row-gap: 5px;
   padding: 5px;
-  // .tile {
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
-  //   border-radius: 2px;
-  //   color: #f3f3f3;
-  //   cursor: pointer;
-  // }
 }
 
 .board {
@@ -88,16 +78,16 @@ body {
   cursor: pointer;
 }
 
-.tile {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2px;
-  color: #f3f3f3;
-  cursor: pointer;
-}
+// .tile {
+//   width: 100%;
+//   height: 100%;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   border-radius: 2px;
+//   color: #f3f3f3;
+//   cursor: pointer;
+// }
 
 .active {
   box-shadow: 0 0 5px black;
