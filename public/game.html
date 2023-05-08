@@ -4,31 +4,51 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/0d9e773bea.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="./gamePage/css/gameStyle.css" />
+    <script src="./gamePage/view.js" defer></script>
+    <script src="./gamePage/model.js" defer></script>
+    <script src="./gamePage/controller.js" defer></script>
     <script src="./gamePage/index.js" defer></script>
     <title>Game Page</title>
   </head>
   <body>
-    <div class="player one">
-      <div class="tile blue">4</div>
-      <div class="tile blue">6</div>
-      <div class="tile gold">10</div>
-      <div class="tile gold">9</div>
-      <div class="tile red">1</div>
-      <div class="tile blue">4</div>
-      <div class="tile gold">2</div>
-      <div class="tile red">3</div>
-      <div class="tile green">7</div>
-      <div class="tile gold">13</div>
-      <div class="tile blue">12</div>
-      <div class="tile red">5</div>
-      <div class="tile red">11</div>
-      <div class="tile green">8</div>
-      <div class="tile blue">9</div>
-      <div class="tile gold">10</div>
-      <div class="tile green">3</div>
+    <div class="wrapper">
+      <div class="waitingPlayers">
+        <div class="player">Amit</div>
+        <div class="player">Shlomi</div>
+        <div class="player active">Vladi</div>
+        <div class="player">Bob</div>
+      </div>
+      <div class="activePlayer">
+        <!-- <div class="tile blue">4</div>
+        <div class="tile blue">6</div>
+        <div class="tile gold">10</div>
+        <div class="tile jocker"><i class="fa-regular fa-face-smile"></i></div>
+        <div class="tile red">1</div>
+        <div class="tile blue">4</div>
+        <div class="tile gold">2</div>
+        <div class="tile red">3</div>
+        <div class="tile green">7</div>
+        <div class="tile gold">13</div>
+        <div class="tile blue">12</div>
+        <div class="tile red">5</div>
+        <div class="tile red">11</div>
+        <div class="tile green">8</div>
+        <div class="tile blue">9</div>
+        <div class="tile gold">10</div>
+        <div class="tile green">3</div>
+        <div class="tile gold">2</div>
+        <div class="tile red">3</div>
+        <div class="tile green">7</div>
+        <div class="tile gold">13</div>
+        <div class="tile blue">12</div>
+        <div class="tile red">5</div> -->
+      </div>
+      <div class="board"></div>
     </div>
-    <div class="board"></div>
-    <div class="player two"></div>
   </body>
 </html>
