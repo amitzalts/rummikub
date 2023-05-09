@@ -4,9 +4,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- link to style -->
+    <link rel="stylesheet" href="./style/profileStyle.css" />
+
+    <!-- link to fontawesome -->
+    <script
+      src="https://kit.fontawesome.com/0d9e773bea.js"
+      crossorigin="anonymous"
+    ></script>
+  
+    <!-- links to js -->
+    <script src="./src/profile/view.js" defer></script>
+    <script src="./src/profile/controller.js" defer></script>
     <title>User's page</title>
   </head>
-  <body>
-    <h1>Welcome to user profile page</h1>
+  <body onload="getUserDetails()">
+    <h1 id="headerRoot">Welcome to user profile page</h1>
+
+    <div class="profileLogo"
+      ><i class="fa-regular fa-circle-user"></i
+    ></div>
+
+
   </body>
 </html>

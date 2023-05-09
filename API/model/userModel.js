@@ -23,13 +23,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserSchema = exports.UserRoleEnum = void 0;
+exports.UserSchema = exports.UserUserRoleEnum = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-var UserRoleEnum;
-(function (UserRoleEnum) {
-    UserRoleEnum["ADMIN"] = "admin";
-    UserRoleEnum["SIMPLE"] = "simple";
-})(UserRoleEnum = exports.UserRoleEnum || (exports.UserRoleEnum = {}));
+var UserUserRoleEnum;
+(function (UserUserRoleEnum) {
+    UserUserRoleEnum["ADMIN"] = "admin";
+    UserUserRoleEnum["SIMPLE"] = "simple";
+})(UserUserRoleEnum = exports.UserUserRoleEnum || (exports.UserUserRoleEnum = {}));
 exports.UserSchema = new mongoose_1.Schema({
     firstName: {
         type: String,
@@ -55,11 +55,11 @@ exports.UserSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-    role: {
+    userRole: {
         type: String,
         required: true,
-        enum: UserRoleEnum,
-        default: UserRoleEnum.SIMPLE,
+        enum: UserUserRoleEnum,
+        default: UserUserRoleEnum.SIMPLE,
     },
     // notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
 }, {

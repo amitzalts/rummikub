@@ -39,14 +39,14 @@ export const createUser = async (
         email: email.toLowerCase(),
       });
 
-      if (adminToken === "amit" && user.role === "simple") {
-        user.role = "admin"
+      if (adminToken === "amit" && user.userRole === "simple") {
+        user.userRole = "admin"
         user.save()
     }
 
       if (!secret) throw new Error("Missing jwt secret");
 
-      const token = jwt.encode({ userId: user._id, firstName:user.firstName, lastName:user.lastName, gender:user.gender, userName:user.userName,  role: "public" }, secret);
+      const token = jwt.encode({ userId: user._id, firstName:user.firstName, lastName:user.lastName, gender:user.gender, userName:user.userName, userRole: user.userRole,   role: "public" }, secret);
 
       res.cookie("user", token, {
         maxAge: 24 * 60 * 60 * 1000, //24 hours
@@ -68,12 +68,21 @@ export const createUser = async (
     next: NextFunction
   ) => {
     try {
-      const { userId } = req.body;
-      const user = await User.findById(userId);
-      res.json({ user });
+      
+      const { user } = req.cookies;
+      
+      if (!secret) throw new Error("No secret")
+      if (!user) throw new Error("No user found")
+
+      const decoded = jwt.decode(user, secret)
+
+      const cookieUser = decoded
+
+      res.send({ ok: true, cookieUser })
+
     } catch (error: any) {
       console.error(error);
-      res.status(500).send({ error: error.message });
+      res.status(500).send({ error: "error.message" });
     }
   };
 
@@ -86,7 +95,7 @@ export const createUser = async (
   ) => {
     try {
       const { userName, password } = req.body;
-
+      console.log("entered userlogin")
       //User Authentication....
 
       const user = await User.findOne({ userName, password });
@@ -94,7 +103,7 @@ export const createUser = async (
 
       if (!secret) throw new Error("Missing jwt secret");
 
-      const token = jwt.encode({ userId: user._id, firstName:user.firstName, lastName:user.lastName, gender:user.gender, userName:user.userName, role: "public" }, secret);
+      const token = jwt.encode({ userId: user._id, firstName:user.firstName, lastName:user.lastName, gender:user.gender, userName:user.userName, userRole: user.userRole, role: "public" }, secret);
 
       res.cookie("user", token, {
         maxAge: 60 * 60 * 1000, //1 hours

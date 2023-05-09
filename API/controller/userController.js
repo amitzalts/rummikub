@@ -40,13 +40,13 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             password,
             email: email.toLowerCase(),
         });
-        if (adminToken === "amit" && user.role === "simple") {
-            user.role = "admin";
+        if (adminToken === "amit" && user.userRole === "simple") {
+            user.userRole = "admin";
             user.save();
         }
         if (!secret)
             throw new Error("Missing jwt secret");
-        const token = jwt_simple_1.default.encode({ userId: user._id, firstName: user.firstName, lastName: user.lastName, gender: user.gender, userName: user.userName, role: "public" }, secret);
+        const token = jwt_simple_1.default.encode({ userId: user._id, firstName: user.firstName, lastName: user.lastName, gender: user.gender, userName: user.userName, userRole: user.userRole, role: "public" }, secret);
         res.cookie("user", token, {
             maxAge: 24 * 60 * 60 * 1000,
             httpOnly: true,
@@ -61,26 +61,32 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 exports.createUser = createUser;
 const getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { userId } = req.body;
-        const user = yield userModel_1.default.findById(userId);
-        res.json({ user });
+        const { user } = req.cookies;
+        if (!secret)
+            throw new Error("No secret");
+        if (!user)
+            throw new Error("No user found");
+        const decoded = jwt_simple_1.default.decode(user, secret);
+        const cookieUser = decoded;
+        res.send({ ok: true, cookieUser });
     }
     catch (error) {
         console.error(error);
-        res.status(500).send({ error: error.message });
+        res.status(500).send({ error: "error.message" });
     }
 });
 exports.getUser = getUser;
 const userLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userName, password } = req.body;
+        console.log("entered userlogin");
         //User Authentication....
         const user = yield userModel_1.default.findOne({ userName, password });
         if (!user)
             throw new Error("User not found on get user function");
         if (!secret)
             throw new Error("Missing jwt secret");
-        const token = jwt_simple_1.default.encode({ userId: user._id, firstName: user.firstName, lastName: user.lastName, gender: user.gender, userName: user.userName, role: "public" }, secret);
+        const token = jwt_simple_1.default.encode({ userId: user._id, firstName: user.firstName, lastName: user.lastName, gender: user.gender, userName: user.userName, userRole: user.userRole, role: "public" }, secret);
         res.cookie("user", token, {
             maxAge: 60 * 60 * 1000,
             httpOnly: true,
