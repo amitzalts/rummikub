@@ -26,7 +26,7 @@ body {
   grid-template-rows: repeat(5, 1fr);
 }
 
-.waitingPlayers {
+.playersInGame {
   grid-area: 1 / 1 / 6 / 2;
   border-right: 5px solid black;
   display: flex;

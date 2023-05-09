@@ -1,61 +1,8 @@
-const allTiles = [
-  "b1",
-  "g1",
-  "y1",
-  "r1",
-  "b2",
-  "g2",
-  "y2",
-  "r2",
-  "b3",
-  "g3",
-  "y3",
-  "r3",
-  "b4",
-  "g4",
-  "y4",
-  "r4",
-  "b5",
-  "g5",
-  "y5",
-  "r5",
-  "b6",
-  "g6",
-  "y6",
-  "r6",
-  "b7",
-  "g7",
-  "y7",
-  "r7",
-  "b8",
-  "g8",
-  "y8",
-  "r8",
-  "b9",
-  "g9",
-  "y9",
-  "r9",
-  "b10",
-  "g10",
-  "y10",
-  "r10",
-  "b11",
-  "g11",
-  "y11",
-  "r11",
-  "b12",
-  "g12",
-  "y12",
-  "r12",
-  "b13",
-  "g13",
-  "y13",
-  "r13",
-  "jocker",
-];
-
 class Player {
-  public divsArray: Array<HTMLElement> = [];
+  public divsArray: Array<HTMLDivElement> = [];
+
+  public isActive: boolean = false;
+
   constructor(public name: string, public hand: string[] = []) {}
 
   getNewHand(deck: Deck) {
@@ -99,15 +46,17 @@ class Player {
       default:
         console.error("Switch statement didn't work well.");
     }
-    this.addTileToHande(tileDiv);
+    this.divsArray.push(tileDiv);
   }
 
-  addTileToHande(div: HTMLDivElement) {
-    if (this.divsArray.length === 40) {
-      activePlayer.style.gridTemplateColumns = "repeat(25, 1fr)";
+  renderHandToScreen() {
+    activePlayerArea.innerHTML = "";
+
+    if (this.divsArray.length > 40) {
+      activePlayerArea.style.gridTemplateColumns = "repeat(25, 1fr)";
     }
-    this.divsArray.push(div);
-    activePlayer.append(div);
+
+    this.divsArray.forEach((div) => activePlayerArea.append(div));
   }
 }
 
@@ -127,9 +76,9 @@ class Deck {
 }
 
 class Game {
-  public board: Array<HTMLElement> = [];
+  public board: Array<HTMLDivElement> = [];
 
-  constructor(public players: Player[]) {
+  constructor(public players: Player[], public deck: Deck) {
     // this.board = this.getBoardFromUser()
   }
 
@@ -137,3 +86,5 @@ class Game {
     //or Game route???
   }
 }
+
+// const newGame = new Game()

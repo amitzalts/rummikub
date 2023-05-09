@@ -1,18 +1,18 @@
-function createEmptyBoard() {
+function createEmptyBoard(array: Array<HTMLDivElement>) {
   if (!board) throw new Error("Board div not found.");
 
   for (let i = 1; i <= 160; i++) {
-    const div: HTMLDivElement = document.createElement("div");
-    div.classList.add("square");
+    const squareDiv: HTMLDivElement = document.createElement("div");
+    squareDiv.classList.add("square");
 
-    gridArray.push(div);
+    array.push(squareDiv);
 
-    toggleActive(div, gridArray);
+    toggleActive(squareDiv, array);
   }
-  renderBoard(gridArray);
+  renderBoard(array);
 }
 
-function renderBoard(divsArray: Array<HTMLElement>) {
+function renderBoard(divsArray: Array<HTMLDivElement>) {
   if (!board) throw new Error("Can't find board div.");
 
   board.innerHTML = "";
@@ -21,59 +21,73 @@ function renderBoard(divsArray: Array<HTMLElement>) {
 }
 
 function toggleActive(
-  element: HTMLDivElement,
-  elementArray: Array<HTMLElement>
+  squareDiv: HTMLDivElement,
+  squareDivArray: Array<HTMLDivElement>
 ) {
-  element.addEventListener("click", () => {
-    if (moveTileToBoard(element)) return;
+  squareDiv.addEventListener("click", () => {
+    if (moveTileToBoard(squareDiv)) return;
 
-    if (element.classList.contains("active")) {
-      element.classList.remove("active");
+    if (squareDiv.classList.contains("active")) {
+      squareDiv.classList.remove("active");
       currentTile = undefined;
     } else {
-      const findEle = elementArray.find((ele) =>
+      const findEle = squareDivArray.find((ele) =>
         ele.classList.contains("active")
       );
 
       if (findEle) findEle.classList.remove("active");
 
-      element.classList.add("active");
+      squareDiv.classList.add("active");
 
-      currentTile = element;
+      currentTile = squareDiv;
     }
   });
 }
 
-function moveTileToBoard(divElement: HTMLDivElement) {
+function moveTileToBoard(squareDiv: HTMLDivElement) {
   if (!currentTile) return;
 
   if (!board) throw new Error("Can't find board div.");
 
-  if (newPlayer.divsArray.find((ele) => ele === currentTile)) {
+  if (currentPlayer.divsArray.find((ele) => ele === currentTile)) {
     currentTile.classList.remove("active");
 
-    const indexOfNewLocation = gridArray.indexOf(divElement);
-    gridArray[indexOfNewLocation] = currentTile;
+    const indexOfNewLocation = newGame.board.indexOf(squareDiv);
 
-    const index = newPlayer.divsArray.indexOf(currentTile);
+    newGame.board[indexOfNewLocation] = currentTile;
 
-    newPlayer.divsArray.splice(index, 1);
+    const index = currentPlayer.divsArray.indexOf(currentTile);
 
-    renderBoard(gridArray);
+    currentPlayer.divsArray.splice(index, 1);
+
+    renderBoard(newGame.board);
 
     currentTile = undefined;
   } else {
     currentTile.classList.remove("active");
 
-    const indexOfcurrentTile = gridArray.indexOf(currentTile);
-    const indexOfNewLocation = gridArray.indexOf(divElement);
+    const indexOfcurrentTile = newGame.board.indexOf(currentTile);
+    const indexOfNewLocation = newGame.board.indexOf(squareDiv);
 
-    gridArray[indexOfcurrentTile] = divElement;
-    gridArray[indexOfNewLocation] = currentTile;
+    newGame.board[indexOfcurrentTile] = squareDiv;
+    newGame.board[indexOfNewLocation] = currentTile;
 
-    renderBoard(gridArray);
+    renderBoard(newGame.board);
     currentTile = undefined;
   }
 
   return true;
+}
+
+function activatePlayers() {
+  players.forEach((player) =>
+    player.addEventListener("click", (e: MouseEvent) => {
+      players.forEach((player) => player.classList.remove("active"));
+      const target = e.target as HTMLElement;
+      if (target.classList.contains("player")) {
+        target.classList.add("active");
+        
+      }
+    })
+  );
 }
