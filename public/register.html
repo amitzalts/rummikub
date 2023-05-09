@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register</title>
-    <link rel="stylesheet" href="./register/css/registerStyle.css" />
+    <link rel="stylesheet" href="./style/dist/registerStyle.css" />
   </head>
   <body>
     <form id="registerForm" action="/api/v1/users" method="post">
@@ -64,11 +64,7 @@
 
       <input type="email" name="email" placeholder="Email" required />
 
-      <input
-      type="text"
-      name="role"
-      placeholder="admin token"
-    />
+      <input type="text" name="role" placeholder="admin token" />
 
       <button type="submit">Register</button>
     </form>
