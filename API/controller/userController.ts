@@ -22,168 +22,162 @@ export const createUser = async (
   next: NextFunction
 ) => {
   try {
-    const { firstName, lastName, gender, userName, password, email, role } =
-      req.body;
+    const { firstName, lastName, gender, userName, password, email, adminToken } = req.body;
 
     const findUser = await User.findOne({ email });
 
     if (findUser) return res.send(`Email exists in the system`);
 
-    if (role === "admin") {
-      const admin = "ADMIN";
+      const user = await User.create({
+        firstName: firstName.toLowerCase(),
+        lastName: lastName.toLowerCase(),
+        gender: gender.toLowerCase(),
+        userName,
+        password,
+        email: email.toLowerCase(),
+      });
 
-      const user = await User.create({
-        firstName: firstName.toLowerCase(),
-        lastName: lastName.toLowerCase(),
-        gender: gender.toLowerCase(),
-        userName,
-        password,
-        email: email.toLowerCase(),
-        role: admin,
-      });
-    } else {
-      const user = await User.create({
-        firstName: firstName.toLowerCase(),
-        lastName: lastName.toLowerCase(),
-        gender: gender.toLowerCase(),
-        userName,
-        password,
-        email: email.toLowerCase(),
-        role,
-      });
+      if (adminToken === "arad" && user.role === "simple") {
+        user.role = "admin"
+        console.log("adminToken", adminToken)
+        // console.log("user role", user.role)
+        user.save()
     }
 
-    // if (!secret) throw new Error("Missing jwt secret");
+      // if (!secret) throw new Error("Missing jwt secret");
 
-    // const token = jwt.encode({ userId: user._id, role: "public" }, secret);
+      // const token = jwt.encode({ userId: user._id, role: "public" }, secret);
 
-    // res.cookie("user", token, {
-    //   maxAge: 24 * 60 * 60 * 1000, //24 hours
-    //   httpOnly: true,
-    // });
+      // res.cookie("user", token, {
+      //   maxAge: 24 * 60 * 60 * 1000, //24 hours
+      //   httpOnly: true,
+      // });
 
-    res.redirect("/profile");
-    // res.json({ user });
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-};
+      res.redirect("/profile");
+      // res.json({ user });
+    } catch (error: any) {
+      console.error(error);
+      res.status(500).send({ error: error.message });
+    }
+  
+  };
 
-export const getUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { userId } = req.body;
-    const user = await User.findById(userId);
-    res.json({ user });
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-};
 
-export const userLogin = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { userName, password } = req.body;
 
-    //User Authentication....
+  export const getUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { userId } = req.body;
+      const user = await User.findById(userId);
+      res.json({ user });
+    } catch (error: any) {
+      console.error(error);
+      res.status(500).send({ error: error.message });
+    }
+  };
 
-    const findUser = await User.findOne({ userName, password });
+  export const userLogin = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { userName, password } = req.body;
 
-    if (!findUser) throw new Error("User not found on get user function");
+      //User Authentication....
 
-    if (!secret) throw new Error("Missing jwt secret");
+      const findUser = await User.findOne({ userName, password });
 
-    const token = jwt.encode({ userId: findUser._id, role: "public" }, secret);
+      if (!findUser) throw new Error("User not found on get user function");
 
-    res.cookie("user", token, {
-      maxAge: 60 * 60 * 1000, //1 hours
-      httpOnly: true,
-    });
-    res.redirect("/main");
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-};
+      if (!secret) throw new Error("Missing jwt secret");
 
-export const passwordRecovery = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { firstName, lastName, userName, email } = req.body;
-    const user = await User.findOne({
-      firstName,
-      lastName,
-      userName,
-      email,
-    });
+      const token = jwt.encode({ userId: findUser._id, role: "public" }, secret);
 
-    if (!user) throw new Error("User not found, check entered data");
+      res.cookie("user", token, {
+        maxAge: 60 * 60 * 1000, //1 hours
+        httpOnly: true,
+      });
+      res.redirect("/main");
+    } catch (error: any) {
+      console.error(error);
+      res.status(500).send({ error: error.message });
+    }
+  };
 
-    res.status(200).send({ user });
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-};
-
-export const deleteUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { userId } = req.body;
-
-    const findUser = await User.findByIdAndDelete(userId);
-
-    if (!findUser) throw new Error("User not found in delete user route.");
-
-    const users = await User.find({});
-
-    res.status(200).send({ findUser, users });
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).json({ error: error.message });
-  }
-};
-
-export const updateUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { userId, firstName, lastName, gender, userName, password, email } =
-      req.body;
-
-    const updateUser = await User.findByIdAndUpdate(
-      { _id: userId },
-      {
+  export const passwordRecovery = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { firstName, lastName, userName, email } = req.body;
+      const user = await User.findOne({
         firstName,
         lastName,
-        gender,
         userName,
-        password,
         email,
-      }
-    );
+      });
 
-    const user = await User.findById(userId);
+      if (!user) throw new Error("User not found, check entered data");
 
-    res.status(201).json({ user });
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
-};
+      res.status(200).send({ user });
+    } catch (error: any) {
+      console.error(error);
+      res.status(500).send({ error: error.message });
+    }
+  };
+
+  export const deleteUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { userId } = req.body;
+
+      const findUser = await User.findByIdAndDelete(userId);
+
+      if (!findUser) throw new Error("User not found in delete user route.");
+
+      const users = await User.find({});
+
+      res.status(200).send({ findUser, users });
+    } catch (error: any) {
+      console.error(error);
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+  export const updateUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const { userId, firstName, lastName, gender, userName, password, email } =
+        req.body;
+
+      const updateUser = await User.findByIdAndUpdate(
+        { _id: userId },
+        {
+          firstName,
+          lastName,
+          gender,
+          userName,
+          password,
+          email,
+        }
+      );
+
+      const user = await User.findById(userId);
+
+      res.status(201).json({ user });
+    } catch (error: any) {
+      console.error(error);
+      res.status(500).send({ error: error.message });
+    }
+  };

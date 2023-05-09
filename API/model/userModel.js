@@ -57,10 +57,10 @@ exports.UserSchema = new mongoose_1.Schema({
     },
     role: {
         type: String,
+        required: true,
         enum: UserRoleEnum,
         default: UserRoleEnum.SIMPLE,
-        required: true,
-    }
+    },
     // notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
 }, {
     versionKey: false,
