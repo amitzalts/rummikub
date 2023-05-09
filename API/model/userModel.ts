@@ -1,5 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 
+export enum UserRoleEnum {
+  ADMIN = "admin",
+  SIMPLE = "simple",
+}
+
 export interface UserInterface {
   firstName: string;
   lastName: string;
@@ -8,7 +13,10 @@ export interface UserInterface {
   password: string;
   email: string;
   _id: string;
+  role: UserRoleEnum;
 }
+
+
 
 export const UserSchema: Schema = new Schema(
   {
@@ -36,6 +44,12 @@ export const UserSchema: Schema = new Schema(
       type: String,
       required: true,
     },
+    role:{
+      type: String,
+      enum: UserRoleEnum,
+      default: UserRoleEnum.SIMPLE,
+      required: true,
+    }
     // notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
   },
   {
@@ -44,3 +58,9 @@ export const UserSchema: Schema = new Schema(
 );
 
 export default mongoose.model<UserInterface>("User", UserSchema);
+
+
+
+
+
+
