@@ -52,7 +52,7 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
                 userName,
                 password,
                 email: email.toLowerCase(),
-                role: 
+                role,
             });
         }
         // if (!secret) throw new Error("Missing jwt secret");

@@ -22,27 +22,15 @@ export const createUser = async (
   next: NextFunction
 ) => {
   try {
-    const { firstName, lastName, gender, userName, password, email, role } = req.body;
-
-    
+    const { firstName, lastName, gender, userName, password, email, role } =
+      req.body;
 
     const findUser = await User.findOne({ email });
 
     if (findUser) return res.send(`Email exists in the system`);
 
-    if (role === "admin"){
-      const admin = "ADMIN"
-      
-      const user = await User.create({
-      firstName: firstName.toLowerCase(),
-      lastName: lastName.toLowerCase(),
-      gender: gender.toLowerCase(),
-      userName,
-      password,
-      email: email.toLowerCase(),
-      role: admin,
-    });
-    } else{
+    if (role === "admin") {
+      const admin = "ADMIN";
 
       const user = await User.create({
         firstName: firstName.toLowerCase(),
@@ -51,11 +39,19 @@ export const createUser = async (
         userName,
         password,
         email: email.toLowerCase(),
-        role: 
-    })
-  }
-
-    
+        role: admin,
+      });
+    } else {
+      const user = await User.create({
+        firstName: firstName.toLowerCase(),
+        lastName: lastName.toLowerCase(),
+        gender: gender.toLowerCase(),
+        userName,
+        password,
+        email: email.toLowerCase(),
+        role,
+      });
+    }
 
     // if (!secret) throw new Error("Missing jwt secret");
 
