@@ -12,8 +12,8 @@ export interface UserInterface {
   userName: string;
   password: string;
   email: string;
+  role: string;
   _id: string;
-  role: UserRoleEnum;
 }
 
 
@@ -44,12 +44,12 @@ export const UserSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    role:{
+    role: {
       type: String,
+      required: true,
       enum: UserRoleEnum,
       default: UserRoleEnum.SIMPLE,
-      required: true,
-    }
+    },
     // notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
   },
   {

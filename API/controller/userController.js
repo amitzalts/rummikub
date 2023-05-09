@@ -28,32 +28,23 @@ const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 exports.getAllUsers = getAllUsers;
 const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { firstName, lastName, gender, userName, password, email, role } = req.body;
+        const { firstName, lastName, gender, userName, password, email, adminToken } = req.body;
         const findUser = yield userModel_1.default.findOne({ email });
         if (findUser)
             return res.send(`Email exists in the system`);
-        if (role === "admin") {
-            const admin = "ADMIN";
-            const user = yield userModel_1.default.create({
-                firstName: firstName.toLowerCase(),
-                lastName: lastName.toLowerCase(),
-                gender: gender.toLowerCase(),
-                userName,
-                password,
-                email: email.toLowerCase(),
-                role: admin,
-            });
-        }
-        else {
-            const user = yield userModel_1.default.create({
-                firstName: firstName.toLowerCase(),
-                lastName: lastName.toLowerCase(),
-                gender: gender.toLowerCase(),
-                userName,
-                password,
-                email: email.toLowerCase(),
-                role: 
-            });
+        const user = yield userModel_1.default.create({
+            firstName: firstName.toLowerCase(),
+            lastName: lastName.toLowerCase(),
+            gender: gender.toLowerCase(),
+            userName,
+            password,
+            email: email.toLowerCase(),
+        });
+        if (adminToken === "arad" && user.role === "simple") {
+            user.role = "admin";
+            console.log("adminToken", adminToken);
+            // console.log("user role", user.role)
+            user.save();
         }
         // if (!secret) throw new Error("Missing jwt secret");
         // const token = jwt.encode({ userId: user._id, role: "public" }, secret);
