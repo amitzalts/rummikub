@@ -31,7 +31,7 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         const { firstName, lastName, gender, userName, password, email, adminToken } = req.body;
         const findUser = yield userModel_1.default.findOne({ email });
         if (findUser)
-            return res.send(`Email exists in the system`);
+            return res.send(`Email already exists in the system`);
         const user = yield userModel_1.default.create({
             firstName: firstName.toLowerCase(),
             lastName: lastName.toLowerCase(),
@@ -40,20 +40,18 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             password,
             email: email.toLowerCase(),
         });
-        if (adminToken === "arad" && user.role === "simple") {
+        if (adminToken === "amit" && user.role === "simple") {
             user.role = "admin";
-            console.log("adminToken", adminToken);
-            // console.log("user role", user.role)
             user.save();
         }
-        // if (!secret) throw new Error("Missing jwt secret");
-        // const token = jwt.encode({ userId: user._id, role: "public" }, secret);
-        // res.cookie("user", token, {
-        //   maxAge: 24 * 60 * 60 * 1000, //24 hours
-        //   httpOnly: true,
-        // });
-        res.redirect("/profile");
-        // res.json({ user });
+        if (!secret)
+            throw new Error("Missing jwt secret");
+        const token = jwt_simple_1.default.encode({ userId: user._id, firstName: user.firstName, lastName: user.lastName, gender: user.gender, userName: user.userName, role: "public" }, secret);
+        res.cookie("user", token, {
+            maxAge: 24 * 60 * 60 * 1000,
+            httpOnly: true,
+        });
+        res.redirect("/signIn");
     }
     catch (error) {
         console.error(error);
@@ -77,17 +75,17 @@ const userLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     try {
         const { userName, password } = req.body;
         //User Authentication....
-        const findUser = yield userModel_1.default.findOne({ userName, password });
-        if (!findUser)
+        const user = yield userModel_1.default.findOne({ userName, password });
+        if (!user)
             throw new Error("User not found on get user function");
         if (!secret)
             throw new Error("Missing jwt secret");
-        const token = jwt_simple_1.default.encode({ userId: findUser._id, role: "public" }, secret);
+        const token = jwt_simple_1.default.encode({ userId: user._id, firstName: user.firstName, lastName: user.lastName, gender: user.gender, userName: user.userName, role: "public" }, secret);
         res.cookie("user", token, {
             maxAge: 60 * 60 * 1000,
             httpOnly: true,
         });
-        res.redirect("/main");
+        res.redirect("/profile");
     }
     catch (error) {
         console.error(error);

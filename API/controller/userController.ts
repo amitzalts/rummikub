@@ -16,6 +16,8 @@ export const getAllUsers = async (
   }
 };
 
+
+
 export const createUser = async (
   req: Request,
   res: Response,
@@ -26,7 +28,7 @@ export const createUser = async (
 
     const findUser = await User.findOne({ email });
 
-    if (findUser) return res.send(`Email exists in the system`);
+    if (findUser) return res.send(`Email already exists in the system`);
 
       const user = await User.create({
         firstName: firstName.toLowerCase(),
@@ -37,29 +39,25 @@ export const createUser = async (
         email: email.toLowerCase(),
       });
 
-      if (adminToken === "arad" && user.role === "simple") {
+      if (adminToken === "amit" && user.role === "simple") {
         user.role = "admin"
-        console.log("adminToken", adminToken)
-        // console.log("user role", user.role)
         user.save()
     }
 
-      // if (!secret) throw new Error("Missing jwt secret");
+      if (!secret) throw new Error("Missing jwt secret");
 
-      // const token = jwt.encode({ userId: user._id, role: "public" }, secret);
+      const token = jwt.encode({ userId: user._id, firstName:user.firstName, lastName:user.lastName, gender:user.gender, userName:user.userName,  role: "public" }, secret);
 
-      // res.cookie("user", token, {
-      //   maxAge: 24 * 60 * 60 * 1000, //24 hours
-      //   httpOnly: true,
-      // });
+      res.cookie("user", token, {
+        maxAge: 24 * 60 * 60 * 1000, //24 hours
+        httpOnly: true,
+      });
 
-      res.redirect("/profile");
-      // res.json({ user });
+      res.redirect("/signIn");
     } catch (error: any) {
       console.error(error);
       res.status(500).send({ error: error.message });
     }
-  
   };
 
 
@@ -79,6 +77,8 @@ export const createUser = async (
     }
   };
 
+
+
   export const userLogin = async (
     req: Request,
     res: Response,
@@ -89,19 +89,18 @@ export const createUser = async (
 
       //User Authentication....
 
-      const findUser = await User.findOne({ userName, password });
-
-      if (!findUser) throw new Error("User not found on get user function");
+      const user = await User.findOne({ userName, password });
+      if (!user) throw new Error("User not found on get user function");
 
       if (!secret) throw new Error("Missing jwt secret");
 
-      const token = jwt.encode({ userId: findUser._id, role: "public" }, secret);
+      const token = jwt.encode({ userId: user._id, firstName:user.firstName, lastName:user.lastName, gender:user.gender, userName:user.userName, role: "public" }, secret);
 
       res.cookie("user", token, {
         maxAge: 60 * 60 * 1000, //1 hours
         httpOnly: true,
       });
-      res.redirect("/main");
+      res.redirect("/profile");
     } catch (error: any) {
       console.error(error);
       res.status(500).send({ error: error.message });
