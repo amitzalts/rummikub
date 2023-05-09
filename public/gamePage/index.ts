@@ -1,37 +1,23 @@
-const board: HTMLDivElement | null = document.querySelector(".board");
-const gridArray: Array<HTMLElement> = [];
+createEmptyBoard();
 
-createBoard();
+const newPlayer = new Player("vladb89");
 
-function createBoard() {
-  if (!board) throw new Error("Board div not found.");
+const newDeck = new Deck();
 
-  for (let i = 1; i <= 160; i++) {
-    const div: HTMLDivElement = document.createElement("div");
-    div.classList.add("square");
+newPlayer.getNewHand(newDeck);
 
-    board.append(div);
+activePlayer.addEventListener("click", (e: MouseEvent) => {
+  if (!currentTile || !board) return;
 
-    gridArray.push(div);
-
-    div.addEventListener("click", () => {
-      if (div.classList.contains("active")) {
-        div.classList.remove("active");
-      } else {
-        gridArray
-          .find((ele) => ele.classList.contains("active"))
-          ?.classList.remove("active");
-        div.classList.add("active");
-      }
-    });
+  const target = e.target as HTMLElement;
+  if (target.classList.contains("activePlayer")) {
+    if (gridArray.find((x) => x === currentTile)) {
+      const emptySquare = document.createElement("div");
+      emptySquare.classList.add("square");
+      board.replaceChild(emptySquare, currentTile);
+      newPlayer.addTileToHande(currentTile);
+      currentTile.classList.remove("active");
+      currentTile = undefined;
+    }
   }
-}
-
-gridArray[67].classList.add("red");
-gridArray[67].textContent = "7";
-gridArray[68].classList.add("black");
-gridArray[68].textContent = "7";
-gridArray[69].classList.add("gold");
-gridArray[69].textContent = "7";
-gridArray[70].classList.add("blue");
-gridArray[70].textContent = "7";
+});

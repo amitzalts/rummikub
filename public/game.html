@@ -4,12 +4,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/0d9e773bea.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="./gamePage/css/gameStyle.css" />
-    <script src="./gamePage/dist/index.js" defer></script>
+    <script src="./gamePage/view.js" defer></script>
+    <script src="./gamePage/model.js" defer></script>
+    <script src="./gamePage/controller.js" defer></script>
+    <script src="./gamePage/index.js" defer></script>
     <title>Game Page</title>
   </head>
   <body>
-    <h1>rummikub</h1>
-    <div class="board"></div>
+    <div class="wrapper">
+      <div class="waitingPlayers">
+        <div class="player">Amit</div>
+        <div class="player">Shlomi</div>
+        <div class="player active">Vladi</div>
+        <div class="player">Bob</div>
+      </div>
+      <div class="activePlayer">
+      </div>
+      <div class="board"></div>
+    </div>
   </body>
 </html>
