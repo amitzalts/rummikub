@@ -42,11 +42,12 @@ class Player {
                 console.error("Switch statement didn't work well.");
         }
         this.divsArray.push(tileDiv);
+        this.renderHandToScreen();
     }
     renderHandToScreen() {
         activePlayerArea.innerHTML = "";
-        if (this.divsArray.length > 40) {
-            activePlayerArea.style.gridTemplateColumns = "repeat(25, 1fr)";
+        if (this.divsArray.length > 30) {
+            activePlayerArea.style.gridTemplateColumns = "repeat(20, 1fr)";
         }
         this.divsArray.forEach((div) => activePlayerArea.append(div));
     }

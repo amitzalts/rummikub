@@ -17,6 +17,11 @@ const players = document.querySelectorAll(
 let currentPlayer: Player;
 let currentTile: HTMLDivElement | undefined;
 
+//
+//
+//
+//
+// deck
 const allTiles = [
   "b1",
   "g1",

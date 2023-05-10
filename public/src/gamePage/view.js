@@ -6,6 +6,11 @@ const activePlayerArea = document.querySelector(".activePlayer");
 const players = document.querySelectorAll(".player");
 let currentPlayer;
 let currentTile;
+//
+//
+//
+//
+// deck
 const allTiles = [
     "b1",
     "g1",
