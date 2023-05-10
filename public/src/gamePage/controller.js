@@ -20,6 +20,9 @@ function toggleActive(squareDiv, squareDivArray) {
     squareDiv.addEventListener("click", () => {
         if (moveTileToBoard(squareDiv))
             return;
+        if (squareDiv.className === "square") {
+            return console.log("Not activating empty square");
+        }
         if (squareDiv.classList.contains("active")) {
             squareDiv.classList.remove("active");
             currentTile = undefined;

@@ -27,6 +27,10 @@ function toggleActive(
   squareDiv.addEventListener("click", () => {
     if (moveTileToBoard(squareDiv)) return;
 
+    if (squareDiv.className === "square") {
+      return console.log("Not activating empty square");
+    }
+    
     if (squareDiv.classList.contains("active")) {
       squareDiv.classList.remove("active");
       currentTile = undefined;
@@ -86,7 +90,6 @@ function activatePlayers() {
       const target = e.target as HTMLElement;
       if (target.classList.contains("player")) {
         target.classList.add("active");
-        
       }
     })
   );

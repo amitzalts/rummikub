@@ -40,7 +40,7 @@ activePlayerArea.addEventListener("click", (e: MouseEvent) => {
       // replace empty div with current tile at board and board array
       board.replaceChild(emptySquare, currentTile);
       newGame.board[index] = emptySquare;
-
+      toggleActive(emptySquare, newGame.board);
       // add tile back to player's hand
       currentPlayer.divsArray.push(currentTile);
       currentPlayer.renderHandToScreen();
