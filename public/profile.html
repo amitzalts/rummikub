@@ -20,12 +20,28 @@
     <title>User's page</title>
   </head>
   <body onload="getUserDetails()">
+  <div class="container">
     <h1 id="headerRoot">Welcome to user profile page</h1>
+    <div class="profileLogo" onclick="renderpersonalDetailsBar()">
+      <i class="fa-regular fa-circle-user"></i>
+    </div>
+    <div id="personalDetailsRoot">
+      <div class="personalDetailsWrapper">
+        <div class="personalDetailsWrapper__buttons">
+          <button>edit</button>
+          <button>save</button>
+        </div>
+        <div contenteditable="false" class="personalDetailsWrapper__detail">first name:</div>
+        <div contenteditable="false" class="personalDetailsWrapper__detail">last name:</div>
+        <div contenteditable="false" class="personalDetailsWrapper__detail">gender:</div>
+        <div contenteditable="false" class="personalDetailsWrapper__detail">user name:</div>
+        <div contenteditable="false" class="personalDetailsWrapper__detail">e-mail:</div>
+      </div>
+    </div>
 
-    <div class="profileLogo"
-      ><i class="fa-regular fa-circle-user"></i
-    ></div>
-
+    <div class="middleImage"></div>
+  </div>
+   
 
   </body>
 </html>
