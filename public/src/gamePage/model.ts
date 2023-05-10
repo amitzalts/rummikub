@@ -24,23 +24,23 @@ class Player {
 
     switch (getTile[0]) {
       case "r":
-        tileDiv.classList.add("red");
+        tileDiv.classList.add("red", "tile");
         tileDiv.innerHTML = getTile.slice(1);
         break;
       case "b":
-        tileDiv.classList.add("blue");
+        tileDiv.classList.add("blue", "tile");
         tileDiv.innerHTML = getTile.slice(1);
         break;
       case "y":
-        tileDiv.classList.add("gold");
+        tileDiv.classList.add("gold", "tile");
         tileDiv.innerHTML = getTile.slice(1);
         break;
       case "g":
-        tileDiv.classList.add("green");
+        tileDiv.classList.add("green", "tile");
         tileDiv.innerHTML = getTile.slice(1);
         break;
       case "j":
-        tileDiv.classList.add("jocker");
+        tileDiv.classList.add("jocker", "tile");
         tileDiv.innerHTML = '<i class="fa-regular fa-face-smile"></i>';
         break;
       default:

@@ -18,7 +18,7 @@ function renderBoard(divsArray) {
 }
 function toggleActive(squareDiv, squareDivArray) {
     squareDiv.addEventListener("click", () => {
-        if (moveTileToBoard(squareDiv))
+        if (moveTile(squareDiv))
             return;
         if (squareDiv.className === "square") {
             return console.log("Not activating empty square");
@@ -36,20 +36,16 @@ function toggleActive(squareDiv, squareDivArray) {
         }
     });
 }
-function moveTileToBoard(squareDiv) {
+function moveTile(squareDiv) {
     if (!currentTile)
         return;
     if (!board)
         throw new Error("Can't find board div.");
+    // if currentTile in player's hand
     if (currentPlayer.divsArray.find((ele) => ele === currentTile)) {
-        currentTile.classList.remove("active");
-        const indexOfNewLocation = newGame.board.indexOf(squareDiv);
-        newGame.board[indexOfNewLocation] = currentTile;
-        const index = currentPlayer.divsArray.indexOf(currentTile);
-        currentPlayer.divsArray.splice(index, 1);
-        renderBoard(newGame.board);
-        currentTile = undefined;
+        moveFromPlayerHand(squareDiv);
     }
+    // moving tile on board from one square to another
     else {
         currentTile.classList.remove("active");
         const indexOfcurrentTile = newGame.board.indexOf(currentTile);
@@ -69,4 +65,33 @@ function activatePlayers() {
             target.classList.add("active");
         }
     }));
+}
+function moveFromPlayerHand(squareDiv) {
+    if (!currentTile)
+        return;
+    if (!board)
+        throw new Error("Can't find board div.");
+    if (currentPlayer.divsArray.find((ele) => ele === squareDiv)) {
+        return;
+    }
+    if (squareDiv.classList.contains("tile")) {
+        currentTile.classList.remove("active");
+        const indexOfNewLocation = newGame.board.indexOf(squareDiv);
+        const indexOfcurrentTile = currentPlayer.divsArray.indexOf(currentTile);
+        newGame.board[indexOfNewLocation] = currentTile;
+        currentPlayer.divsArray[indexOfcurrentTile] = squareDiv;
+        renderBoard(newGame.board);
+        currentPlayer.renderHandToScreen();
+        currentTile = undefined;
+        console.log("object");
+    }
+    else {
+        currentTile.classList.remove("active");
+        const indexOfNewLocation = newGame.board.indexOf(squareDiv);
+        newGame.board[indexOfNewLocation] = currentTile;
+        const index = currentPlayer.divsArray.indexOf(currentTile);
+        currentPlayer.divsArray.splice(index, 1);
+        renderBoard(newGame.board);
+        currentTile = undefined;
+    }
 }
