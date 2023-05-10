@@ -4,11 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "npx tsc && node-sass public/style -o public/style/dist",
+    "build": "npx tsc && node-sass public/style/scss -o public/style/css",
     "prestart": "npm run build",
     "start": "node ./API/server/server.js",
     "predev": "npm run build",
-    "dev": "concurrently \"npx tsc -w\" \"node-sass --watch public/style -o public/style/dist\"  \"nodemon ./API/server/server.ts\""
+    "dev": "concurrently \"npx tsc -w\" \"node-sass -w public/style/scss -o public/style/css\"  \"nodemon ./API/server/server.ts\""
   },
   "keywords": [],
   "author": "",
