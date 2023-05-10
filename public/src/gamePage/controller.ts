@@ -138,21 +138,33 @@ function activatePlayers() {
     }
   });
 
-  playersArray.forEach((player) =>
-    player.addEventListener("click", (e: MouseEvent) => {
-      playersArray.forEach((player) => player.classList.remove("active"));
+  endTurnBtn.addEventListener("click", moveToNextPlayer);
+}
 
-      const target = e.target as HTMLElement;
+function moveToNextPlayer() {
+  const playersArray = playersInGameArea.querySelectorAll(
+    ".player"
+  ) as NodeListOf<HTMLDivElement>;
 
-      if (target.classList.contains("player")) {
-        target.classList.add("active");
-        const findPlayer = newGame.players.find(
-          (player) => player.id === target.id
-        );
-        if (findPlayer) currentPlayer = findPlayer;
+  const numOfPlayers = newGame.players.length;
 
-        currentPlayer.renderHandToScreen();
+  const indexCurrentPlayer = newGame.players.indexOf(currentPlayer);
+
+  // if current player is last player on array of players
+  if (indexCurrentPlayer === numOfPlayers - 1) activateNextPlayer(0);
+  else activateNextPlayer(indexCurrentPlayer + 1);
+
+  function activateNextPlayer(index: number) {
+    currentPlayer.isActive = false;
+    currentPlayer = newGame.players[index];
+    currentPlayer.isActive = true;
+    currentPlayer.renderHandToScreen();
+
+    playersArray.forEach((player) => {
+      player.classList.remove("active");
+      if (player.id === currentPlayer.id) {
+        player.classList.add("active");
       }
-    })
-  );
+    });
+  }
 }

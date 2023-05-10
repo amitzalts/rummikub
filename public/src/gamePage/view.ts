@@ -1,11 +1,6 @@
 const board: HTMLDivElement | null = document.querySelector(".board");
 
-const gridArray: Array<HTMLElement> = [];
-
-const playerTiles = document.querySelectorAll(
-  ".tile"
-) as NodeListOf<HTMLDivElement>;
-
+// page areas
 const activePlayerArea = document.querySelector(
   ".activePlayerArea"
 ) as HTMLDivElement;
@@ -14,7 +9,18 @@ const playersInGameArea = document.querySelector(
   ".playersInGameArea"
 ) as HTMLDivElement;
 
+// buttons
+const sortByColorBtn = document.querySelector(
+  "#sortByColorBtn"
+) as HTMLButtonElement;
 
+const sortByNumbersBtn = document.querySelector(
+  "#sortByNumbersBtn"
+) as HTMLButtonElement;
+
+const endTurnBtn = document.querySelector("#endTurnBtn") as HTMLButtonElement;
+
+// current entities
 let currentPlayer: Player;
 let currentTile: HTMLDivElement | undefined;
 
