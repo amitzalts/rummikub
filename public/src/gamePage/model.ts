@@ -1,62 +1,11 @@
-const allTiles = [
-  "b1",
-  "g1",
-  "y1",
-  "r1",
-  "b2",
-  "g2",
-  "y2",
-  "r2",
-  "b3",
-  "g3",
-  "y3",
-  "r3",
-  "b4",
-  "g4",
-  "y4",
-  "r4",
-  "b5",
-  "g5",
-  "y5",
-  "r5",
-  "b6",
-  "g6",
-  "y6",
-  "r6",
-  "b7",
-  "g7",
-  "y7",
-  "r7",
-  "b8",
-  "g8",
-  "y8",
-  "r8",
-  "b9",
-  "g9",
-  "y9",
-  "r9",
-  "b10",
-  "g10",
-  "y10",
-  "r10",
-  "b11",
-  "g11",
-  "y11",
-  "r11",
-  "b12",
-  "g12",
-  "y12",
-  "r12",
-  "b13",
-  "g13",
-  "y13",
-  "r13",
-  "jocker",
-];
-
 class Player {
-  public divsArray: Array<HTMLElement> = [];
-  constructor(public name: string, public hand: string[] = []) {}
+  public divsArray: Array<HTMLDivElement> = [];
+  public id: string;
+  public isActive: boolean = false;
+
+  constructor(public name: string, public hand: string[] = []) {
+    this.id = Math.random().toString(36).slice(-9);
+  }
 
   getNewHand(deck: Deck) {
     for (let i = 1; i < 15; i++) {
@@ -77,37 +26,40 @@ class Player {
 
     switch (getTile[0]) {
       case "r":
-        tileDiv.classList.add("red");
+        tileDiv.classList.add("red", "tile");
         tileDiv.innerHTML = getTile.slice(1);
         break;
       case "b":
-        tileDiv.classList.add("blue");
+        tileDiv.classList.add("blue", "tile");
         tileDiv.innerHTML = getTile.slice(1);
         break;
       case "y":
-        tileDiv.classList.add("gold");
+        tileDiv.classList.add("gold", "tile");
         tileDiv.innerHTML = getTile.slice(1);
         break;
       case "g":
-        tileDiv.classList.add("green");
+        tileDiv.classList.add("green", "tile");
         tileDiv.innerHTML = getTile.slice(1);
         break;
       case "j":
-        tileDiv.classList.add("jocker");
+        tileDiv.classList.add("jocker", "tile");
         tileDiv.innerHTML = '<i class="fa-regular fa-face-smile"></i>';
         break;
       default:
         console.error("Switch statement didn't work well.");
     }
-    this.addTileToHande(tileDiv);
+    this.divsArray.push(tileDiv);
+    this.renderHandToScreen();
   }
 
-  addTileToHande(div: HTMLDivElement) {
-    if (this.divsArray.length === 40) {
-      activePlayer.style.gridTemplateColumns = "repeat(25, 1fr)";
+  renderHandToScreen() {
+    activePlayerArea.innerHTML = "";
+
+    if (this.divsArray.length > 30) {
+      activePlayerArea.style.gridTemplateColumns = "repeat(20, 1fr)";
     }
-    this.divsArray.push(div);
-    activePlayer.append(div);
+
+    this.divsArray.forEach((div) => activePlayerArea.append(div));
   }
 }
 
@@ -127,10 +79,12 @@ class Deck {
 }
 
 class Game {
-  public board: Array<HTMLElement> = [];
+  public board: Array<HTMLDivElement> = [];
+  public deck: Deck;
 
   constructor(public players: Player[]) {
-    // this.board = this.getBoardFromUser()
+    this.deck = new Deck();
+    this.players.forEach((player) => player.getNewHand(this.deck));
   }
 
   getBoardFromUser() {
