@@ -75,18 +75,6 @@ function moveTile(squareDiv: HTMLDivElement) {
   return true;
 }
 
-function activatePlayers() {
-  players.forEach((player) =>
-    player.addEventListener("click", (e: MouseEvent) => {
-      players.forEach((player) => player.classList.remove("active"));
-      const target = e.target as HTMLElement;
-      if (target.classList.contains("player")) {
-        target.classList.add("active");
-      }
-    })
-  );
-}
-
 function moveFromPlayerHand(squareDiv: HTMLDivElement) {
   if (!currentTile) return;
 
@@ -107,7 +95,7 @@ function moveFromPlayerHand(squareDiv: HTMLDivElement) {
 
     renderBoard(newGame.board);
     currentPlayer.renderHandToScreen();
-    
+
     currentTile = undefined;
     console.log("object");
   } else {
@@ -125,4 +113,46 @@ function moveFromPlayerHand(squareDiv: HTMLDivElement) {
 
     currentTile = undefined;
   }
+}
+
+function renderPlayers(playersArray: Player[]) {
+  const html = playersArray
+    .map(
+      (player) => `<div class="player" id="${player.id}"">${player.name}</div>`
+    )
+    .join("");
+
+  playersInGameArea.innerHTML = html;
+
+  activatePlayers();
+}
+
+function activatePlayers() {
+  const playersArray = playersInGameArea.querySelectorAll(
+    ".player"
+  ) as NodeListOf<HTMLDivElement>;
+
+  playersArray.forEach((player) => {
+    if (player.id === currentPlayer.id) {
+      player.classList.add("active");
+    }
+  });
+
+  playersArray.forEach((player) =>
+    player.addEventListener("click", (e: MouseEvent) => {
+      playersArray.forEach((player) => player.classList.remove("active"));
+
+      const target = e.target as HTMLElement;
+
+      if (target.classList.contains("player")) {
+        target.classList.add("active");
+        const findPlayer = newGame.players.find(
+          (player) => player.id === target.id
+        );
+        if (findPlayer) currentPlayer = findPlayer;
+
+        currentPlayer.renderHandToScreen();
+      }
+    })
+  );
 }

@@ -5,6 +5,7 @@ class Player {
         this.hand = hand;
         this.divsArray = [];
         this.isActive = false;
+        this.id = Math.random().toString(36).slice(-9);
     }
     getNewHand(deck) {
         for (let i = 1; i < 15; i++) {
@@ -66,14 +67,13 @@ class Deck {
     }
 }
 class Game {
-    constructor(players, deck) {
+    constructor(players) {
         this.players = players;
-        this.deck = deck;
         this.board = [];
-        // this.board = this.getBoardFromUser()
+        this.deck = new Deck();
+        this.players.forEach((player) => player.getNewHand(this.deck));
     }
     getBoardFromUser() {
         //or Game route???
     }
 }
-// const newGame = new Game()

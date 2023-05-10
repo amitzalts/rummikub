@@ -1,9 +1,11 @@
 class Player {
   public divsArray: Array<HTMLDivElement> = [];
-
+  public id: string;
   public isActive: boolean = false;
 
-  constructor(public name: string, public hand: string[] = []) {}
+  constructor(public name: string, public hand: string[] = []) {
+    this.id = Math.random().toString(36).slice(-9);
+  }
 
   getNewHand(deck: Deck) {
     for (let i = 1; i < 15; i++) {
@@ -78,14 +80,14 @@ class Deck {
 
 class Game {
   public board: Array<HTMLDivElement> = [];
+  public deck: Deck;
 
-  constructor(public players: Player[], public deck: Deck) {
-    // this.board = this.getBoardFromUser()
+  constructor(public players: Player[]) {
+    this.deck = new Deck();
+    this.players.forEach((player) => player.getNewHand(this.deck));
   }
 
   getBoardFromUser() {
     //or Game route???
   }
 }
-
-// const newGame = new Game()

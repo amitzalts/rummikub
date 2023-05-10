@@ -57,15 +57,6 @@ function moveTile(squareDiv) {
     }
     return true;
 }
-function activatePlayers() {
-    players.forEach((player) => player.addEventListener("click", (e) => {
-        players.forEach((player) => player.classList.remove("active"));
-        const target = e.target;
-        if (target.classList.contains("player")) {
-            target.classList.add("active");
-        }
-    }));
-}
 function moveFromPlayerHand(squareDiv) {
     if (!currentTile)
         return;
@@ -94,4 +85,30 @@ function moveFromPlayerHand(squareDiv) {
         renderBoard(newGame.board);
         currentTile = undefined;
     }
+}
+function renderPlayers(playersArray) {
+    const html = playersArray
+        .map((player) => `<div class="player" id="${player.id}"">${player.name}</div>`)
+        .join("");
+    playersInGameArea.innerHTML = html;
+    activatePlayers();
+}
+function activatePlayers() {
+    const playersArray = playersInGameArea.querySelectorAll(".player");
+    playersArray.forEach((player) => {
+        if (player.id === currentPlayer.id) {
+            player.classList.add("active");
+        }
+    });
+    playersArray.forEach((player) => player.addEventListener("click", (e) => {
+        playersArray.forEach((player) => player.classList.remove("active"));
+        const target = e.target;
+        if (target.classList.contains("player")) {
+            target.classList.add("active");
+            const findPlayer = newGame.players.find((player) => player.id === target.id);
+            if (findPlayer)
+                currentPlayer = findPlayer;
+            currentPlayer.renderHandToScreen();
+        }
+    }));
 }

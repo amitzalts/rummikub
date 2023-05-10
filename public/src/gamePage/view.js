@@ -2,8 +2,8 @@
 const board = document.querySelector(".board");
 const gridArray = [];
 const playerTiles = document.querySelectorAll(".tile");
-const activePlayerArea = document.querySelector(".activePlayer");
-const players = document.querySelectorAll(".player");
+const activePlayerArea = document.querySelector(".activePlayerArea");
+const playersInGameArea = document.querySelector(".playersInGameArea");
 let currentPlayer;
 let currentTile;
 //

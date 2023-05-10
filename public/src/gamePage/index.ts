@@ -1,7 +1,5 @@
 activatePlayers();
 
-const newDeck = new Deck();
-
 const playerOne = new Player("vladi");
 
 const playerTwo = new Player("shlomi");
@@ -10,16 +8,16 @@ const playerThree = new Player("amit");
 
 const playerFour = new Player("bob");
 
-const newGame = new Game(
-  [playerOne, playerTwo, playerThree, playerFour],
-  newDeck
-);
-
-newGame.players.forEach((player) => player.getNewHand(newGame.deck));
+const newGame = new Game([playerOne, playerTwo, playerThree, playerFour]);
 
 createEmptyBoard(newGame.board);
 
-currentPlayer = playerOne;
+currentPlayer =
+  newGame.players[Math.floor(Math.random() * newGame.players.length)];
+
+currentPlayer.isActive = true;
+
+renderPlayers(newGame.players);
 
 currentPlayer.renderHandToScreen();
 
@@ -28,7 +26,7 @@ activePlayerArea.addEventListener("click", (e: MouseEvent) => {
 
   const target = e.target as HTMLElement;
 
-  if (target.classList.contains("activePlayer")) {
+  if (target.classList.contains("activePlayerArea")) {
     if (newGame.board.find((x) => x === currentTile)) {
       //create empty div to replace tile
       const emptySquare = document.createElement("div");

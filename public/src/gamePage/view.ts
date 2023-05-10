@@ -7,12 +7,13 @@ const playerTiles = document.querySelectorAll(
 ) as NodeListOf<HTMLDivElement>;
 
 const activePlayerArea = document.querySelector(
-  ".activePlayer"
+  ".activePlayerArea"
 ) as HTMLDivElement;
 
-const players = document.querySelectorAll(
-  ".player"
-) as NodeListOf<HTMLDivElement>;
+const playersInGameArea = document.querySelector(
+  ".playersInGameArea"
+) as HTMLDivElement;
+
 
 let currentPlayer: Player;
 let currentTile: HTMLDivElement | undefined;
