@@ -7,19 +7,21 @@
     <title>Login Page</title>
   </head>
   <body>
-    <form action="/api/v1/users/login" method="post">
+    <form action="/api/v1/users/userLogin" method="post">
       <label for="userName"
         ><input type="text" name="userName" required placeholder="user-name"
       /></label>
       <label for="password"
         ><input
-          type="text"
+          type="password"
           name="password"
           required
           placeholder="password"
           minlength="8"
       /></label>
+    <button type="submit">Login</button>
     </form>
+
     <a href="/signUp">Don't have an account yet?</a>
   </body>
 </html>
