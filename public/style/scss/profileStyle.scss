@@ -22,10 +22,6 @@ body {
 }
 
 
-button{
-  background-color: yellow;
-}
-
 .container{
   height: 80vh;
   width: 80vw;
@@ -37,7 +33,7 @@ button{
 .profileLogo {
   position: absolute;
   top: 2rem;
-  right: 2rem;
+  right: 7rem;
   color: rgba(6, 39, 39, 0.808);
   font-size: 3rem;
   &:hover {
@@ -54,17 +50,70 @@ button{
   margin:auto;  
 }
 
+
 .personalDetailsWrapper{
   width: 15rem;
-  height: 20rem;
-  border: 0.1rem solid black;
+  height: 22rem;
   display: flex;
   flex-direction: column;
   position: absolute;
   top: 6rem;
-  right: 0rem;
+  right: 1rem;
   background: rgba(255, 255, 255, 0.28);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(0px);
+  align-items: center;
+  &__buttons{
+    width: 14rem;
+    height: 2rem;
+    position: relative;
+    top: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    i{
+      font-size: 26px;
+      color: rgba(6, 39, 39, 0.808);
+      &:hover{
+        scale: 1.15;
+      }
+      &:active{
+        color: blue;
+      }
+    }
+  }
+
+  &__detailsBox{
+    width: 14rem;
+    height: 19rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__detail{
+      width: 14rem;
+      height: 4rem;
+      background: rgba(255, 255, 255, 0.51);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(0px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-weight: 700;
+      div{
+        width: 13rem;
+        height: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(0px);
+        border: 1px solid rgba(14, 14, 14, 0.3);
+        line-height: 2rem;
+        font-weight: 100;
+      }
+    }
+  }
+  
+  
 }

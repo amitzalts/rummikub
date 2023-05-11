@@ -46,7 +46,15 @@ export const createUser = async (
 
       if (!secret) throw new Error("Missing jwt secret");
 
-      const token = jwt.encode({ userId: user._id, firstName:user.firstName, lastName:user.lastName, gender:user.gender, userName:user.userName, userRole: user.userRole,   role: "public" }, secret);
+      const token = jwt.encode({ 
+        userId: user._id,
+        firstName:user.firstName,
+        lastName:user.lastName,
+        gender:user.gender,
+        userName:user.userName,
+        email:user.email, 
+        userRole: user.userRole,
+        role: "public" }, secret);
 
       res.cookie("user", token, {
         maxAge: 24 * 60 * 60 * 1000, //24 hours
@@ -68,7 +76,6 @@ export const createUser = async (
     next: NextFunction
   ) => {
     try {
-      
       const { user } = req.cookies;
       
       if (!secret) throw new Error("No secret")
@@ -103,12 +110,21 @@ export const createUser = async (
 
       if (!secret) throw new Error("Missing jwt secret");
 
-      const token = jwt.encode({ userId: user._id, firstName:user.firstName, lastName:user.lastName, gender:user.gender, userName:user.userName, userRole: user.userRole, role: "public" }, secret);
+      const token = jwt.encode({ 
+        userId: user._id,
+        firstName:user.firstName,
+        lastName:user.lastName,
+        gender:user.gender,
+        userName:user.userName,
+        email:user.email, 
+        userRole: user.userRole,
+        role: "public" }, secret);
 
       res.cookie("user", token, {
         maxAge: 60 * 60 * 1000, //1 hours
         httpOnly: true,
       });
+
       res.redirect("/profile");
     } catch (error: any) {
       console.error(error);

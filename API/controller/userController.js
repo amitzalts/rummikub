@@ -46,7 +46,16 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         }
         if (!secret)
             throw new Error("Missing jwt secret");
-        const token = jwt_simple_1.default.encode({ userId: user._id, firstName: user.firstName, lastName: user.lastName, gender: user.gender, userName: user.userName, userRole: user.userRole, role: "public" }, secret);
+        const token = jwt_simple_1.default.encode({
+            userId: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            gender: user.gender,
+            userName: user.userName,
+            email: user.email,
+            userRole: user.userRole,
+            role: "public"
+        }, secret);
         res.cookie("user", token, {
             maxAge: 24 * 60 * 60 * 1000,
             httpOnly: true,
@@ -86,7 +95,16 @@ const userLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function
             throw new Error("User not found on get user function");
         if (!secret)
             throw new Error("Missing jwt secret");
-        const token = jwt_simple_1.default.encode({ userId: user._id, firstName: user.firstName, lastName: user.lastName, gender: user.gender, userName: user.userName, userRole: user.userRole, role: "public" }, secret);
+        const token = jwt_simple_1.default.encode({
+            userId: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            gender: user.gender,
+            userName: user.userName,
+            email: user.email,
+            userRole: user.userRole,
+            role: "public"
+        }, secret);
         res.cookie("user", token, {
             maxAge: 60 * 60 * 1000,
             httpOnly: true,
