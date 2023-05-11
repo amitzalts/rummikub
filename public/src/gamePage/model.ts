@@ -86,19 +86,19 @@ class Deck {
   createDeck() {
     const colors = ["green", "red", "blue", "yellow"];
     const halfDeck: {}[] = [];
-  
+
     colors.forEach((color) => {
       for (let i = 1; i <= 13; i++) {
         const tile = { [color]: i };
         halfDeck.push(tile);
       }
     });
-  
+
     const jocker = { jocker: "<i class='fa-regular fa-face-smile'></i>" };
     halfDeck.push(jocker);
-  
+
     const deck = [...halfDeck, ...halfDeck];
-    
+
     return deck;
   }
 
@@ -110,7 +110,7 @@ class Deck {
 class Game {
   public board: Array<HTMLDivElement> = [];
   public deck: Deck;
-
+  public sets: number[][] = [];
   constructor(public players: Player[]) {
     this.deck = new Deck();
     this.players.forEach((player) => player.getNewHand(this.deck));

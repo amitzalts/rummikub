@@ -86,6 +86,7 @@ class Game {
     constructor(players) {
         this.players = players;
         this.board = [];
+        this.sets = [];
         this.deck = new Deck();
         this.players.forEach((player) => player.getNewHand(this.deck));
     }
