@@ -62,13 +62,13 @@ function moveTile(squareDiv: HTMLDivElement) {
   else {
     currentTile.classList.remove("active");
 
-    const indexOfcurrentTile = newGame.board.indexOf(currentTile);
-    const indexOfNewLocation = newGame.board.indexOf(squareDiv);
+    const indexOfcurrentTile = currentGame.board.indexOf(currentTile);
+    const indexOfNewLocation = currentGame.board.indexOf(squareDiv);
 
-    newGame.board[indexOfcurrentTile] = squareDiv;
-    newGame.board[indexOfNewLocation] = currentTile;
+    currentGame.board[indexOfcurrentTile] = squareDiv;
+    currentGame.board[indexOfNewLocation] = currentTile;
 
-    renderBoard(newGame.board);
+    renderBoard(currentGame.board);
     currentTile = undefined;
   }
 
@@ -87,13 +87,13 @@ function moveFromPlayerHand(squareDiv: HTMLDivElement) {
   if (squareDiv.classList.contains("tile")) {
     currentTile.classList.remove("active");
 
-    const indexOfNewLocation = newGame.board.indexOf(squareDiv);
+    const indexOfNewLocation = currentGame.board.indexOf(squareDiv);
     const indexOfcurrentTile = currentPlayer.divsArray.indexOf(currentTile);
 
-    newGame.board[indexOfNewLocation] = currentTile;
+    currentGame.board[indexOfNewLocation] = currentTile;
     currentPlayer.divsArray[indexOfcurrentTile] = squareDiv;
 
-    renderBoard(newGame.board);
+    renderBoard(currentGame.board);
     currentPlayer.renderHandToScreen();
 
     currentTile = undefined;
@@ -101,15 +101,15 @@ function moveFromPlayerHand(squareDiv: HTMLDivElement) {
   } else {
     currentTile.classList.remove("active");
 
-    const indexOfNewLocation = newGame.board.indexOf(squareDiv);
+    const indexOfNewLocation = currentGame.board.indexOf(squareDiv);
 
-    newGame.board[indexOfNewLocation] = currentTile;
+    currentGame.board[indexOfNewLocation] = currentTile;
 
     const index = currentPlayer.divsArray.indexOf(currentTile);
 
     currentPlayer.divsArray.splice(index, 1);
 
-    renderBoard(newGame.board);
+    renderBoard(currentGame.board);
 
     currentTile = undefined;
   }
@@ -146,9 +146,9 @@ function moveToNextPlayer() {
     ".player"
   ) as NodeListOf<HTMLDivElement>;
 
-  const numOfPlayers = newGame.players.length;
+  const numOfPlayers = currentGame.players.length;
 
-  const indexCurrentPlayer = newGame.players.indexOf(currentPlayer);
+  const indexCurrentPlayer = currentGame.players.indexOf(currentPlayer);
 
   // if current player is last player on array of players
   if (indexCurrentPlayer === numOfPlayers - 1) activateNextPlayer(0);
@@ -156,7 +156,7 @@ function moveToNextPlayer() {
 
   function activateNextPlayer(index: number) {
     currentPlayer.isActive = false;
-    currentPlayer = newGame.players[index];
+    currentPlayer = currentGame.players[index];
     currentPlayer.isActive = true;
     currentPlayer.renderHandToScreen();
 

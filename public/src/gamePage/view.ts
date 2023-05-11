@@ -22,4 +22,5 @@ const endTurnBtn = document.querySelector("#endTurnBtn") as HTMLButtonElement;
 
 // current entities
 let currentPlayer: Player;
+let currentGame: Game;
 let currentTile: HTMLDivElement | undefined;

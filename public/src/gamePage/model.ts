@@ -74,15 +74,36 @@ class Player {
 class Deck {
   public deck: {}[];
   constructor() {
-    this.deck = createDeck();
+    this.deck = this.createDeck();
   }
+
   deal() {
     const randomDeckIndex = Math.floor(Math.random() * this.deck.length);
     const tile = this.deck.splice(randomDeckIndex, 1)[0];
     return tile;
   }
+
+  createDeck() {
+    const colors = ["green", "red", "blue", "yellow"];
+    const halfDeck: {}[] = [];
+  
+    colors.forEach((color) => {
+      for (let i = 1; i <= 13; i++) {
+        const tile = { [color]: i };
+        halfDeck.push(tile);
+      }
+    });
+  
+    const jocker = { jocker: "<i class='fa-regular fa-face-smile'></i>" };
+    halfDeck.push(jocker);
+  
+    const deck = [...halfDeck, ...halfDeck];
+    
+    return deck;
+  }
+
   resetDeck() {
-    this.deck = [...createDeck()];
+    this.deck = [...this.createDeck()];
   }
 }
 

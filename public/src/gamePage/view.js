@@ -9,4 +9,5 @@ const sortByNumbersBtn = document.querySelector("#sortByNumbersBtn");
 const endTurnBtn = document.querySelector("#endTurnBtn");
 // current entities
 let currentPlayer;
+let currentGame;
 let currentTile;
