@@ -14,28 +14,30 @@ class Player {
     }
     getRandomTile(deck) {
         const getTile = deck.deal();
+        const key = Object.keys(getTile)[0];
+        const value = Object.values(getTile)[0];
         this.hand.push(getTile);
         const tileDiv = document.createElement("div");
         tileDiv.classList.add("square");
         toggleActive(tileDiv, this.divsArray);
-        switch (getTile[0]) {
-            case "r":
+        switch (key) {
+            case "red":
                 tileDiv.classList.add("red", "tile");
-                tileDiv.innerHTML = getTile.slice(1);
+                tileDiv.innerHTML = value.toString();
                 break;
-            case "b":
+            case "blue":
                 tileDiv.classList.add("blue", "tile");
-                tileDiv.innerHTML = getTile.slice(1);
+                tileDiv.innerHTML = value.toString();
                 break;
-            case "y":
+            case "yellow":
                 tileDiv.classList.add("gold", "tile");
-                tileDiv.innerHTML = getTile.slice(1);
+                tileDiv.innerHTML = value.toString();
                 break;
-            case "g":
+            case "green":
                 tileDiv.classList.add("green", "tile");
-                tileDiv.innerHTML = getTile.slice(1);
+                tileDiv.innerHTML = value.toString();
                 break;
-            case "j":
+            case "jocker":
                 tileDiv.classList.add("jocker", "tile");
                 tileDiv.innerHTML = '<i class="fa-regular fa-face-smile"></i>';
                 break;
@@ -55,15 +57,15 @@ class Player {
 }
 class Deck {
     constructor() {
-        this.deck = [...allTiles, ...allTiles];
+        this.deck = createDeck();
     }
     deal() {
         const randomDeckIndex = Math.floor(Math.random() * this.deck.length);
-        const tile = this.deck.splice(randomDeckIndex, 1).join("");
+        const tile = this.deck.splice(randomDeckIndex, 1)[0];
         return tile;
     }
     resetDeck() {
-        this.deck = [...allTiles, ...allTiles];
+        this.deck = [...createDeck()];
     }
 }
 class Game {

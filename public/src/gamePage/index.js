@@ -34,3 +34,17 @@ activePlayerArea.addEventListener("click", (e) => {
         }
     }
 });
+function createDeck() {
+    const colors = ["green", "red", "blue", "yellow"];
+    const halfDeck = [];
+    colors.forEach((color) => {
+        for (let i = 1; i <= 13; i++) {
+            const tile = { [color]: i };
+            halfDeck.push(tile);
+        }
+    });
+    const jocker = { jocker: "<i class='fa-regular fa-face-smile'></i>" };
+    halfDeck.push(jocker);
+    const deck = [...halfDeck, ...halfDeck];
+    return deck;
+}
