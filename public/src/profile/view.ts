@@ -16,7 +16,7 @@ function renderPersonalDetailsBar(user: any){
     if(!personalDetailsRoot) throw new Error ("personalDetailsRoot not found on DOM")
 
     personalDetailsRoot.innerHTML=`
-      <div class="personalDetailsWrapper">
+      <div id="personalDetailsWrapperRoot" class="personalDetailsWrapper" style="max-height:0px;">
           <div class="personalDetailsWrapper__buttons">
               <i onclick="handleEditUserDetails()" class="fa-solid fa-pen-to-square personalDetailsWrapper__buttons__button"></i>
               <i onclick="handleSaveEditUserDetails()" class="fa-solid fa-floppy-disk personalDetailsWrapper__buttons__button"></i>
@@ -61,3 +61,20 @@ function renderGameButtons(){
     console.error(error)
   }
 }
+
+function collapsePersonalDetailsWrapper(){
+  try {
+    const wrapper:HTMLDivElement | null = document.querySelector("#personalDetailsWrapperRoot")
+    if(!wrapper) throw new Error ("personalDetailsWrapperRoot not found on DOM")
+
+    if (wrapper.style.maxHeight === "0px"){
+      wrapper.style.maxHeight = wrapper.scrollHeight + "px"
+    } else {
+      wrapper.style.maxHeight = "0px"
+    } 
+
+  } catch (error) {
+    console.error(error)
+  }
+}
+

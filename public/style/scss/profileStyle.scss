@@ -28,6 +28,9 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
+  h1{
+    margin-bottom: 4rem;
+  }
 }
 
 .profileLogo {
@@ -81,6 +84,8 @@ body {
 
 
 .personalDetailsWrapper{
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
   width: 15rem;
   height: 22rem;
   display: flex;
