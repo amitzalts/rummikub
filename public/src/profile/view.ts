@@ -18,24 +18,24 @@ function renderpersonalDetailsBar(user: any){
     personalDetailsRoot.innerHTML=`
       <div class="personalDetailsWrapper">
           <div class="personalDetailsWrapper__buttons">
-              <i class="fa-solid fa-pen-to-square personalDetailsWrapper__buttons__button"></i>
-              <i class="fa-solid fa-floppy-disk personalDetailsWrapper__buttons__button"></i>
+              <i onclick="handleEditUserDetails()" class="fa-solid fa-pen-to-square personalDetailsWrapper__buttons__button"></i>
+              <i onclick="handleSaveEditUserDetails()" class="fa-solid fa-floppy-disk personalDetailsWrapper__buttons__button"></i>
           </div>
           <div  class="personalDetailsWrapper__detailsBox">
             <div class="personalDetailsWrapper__detailsBox__detail">first name:
-              <div> ${user.firstName}</div>
+              <div id="firstNameRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.firstName}</div>
             </div>
             <div class="personalDetailsWrapper__detailsBox__detail">last name:
-              <div> ${user.lastName}</div>
+              <div id="lastNameRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.lastName}</div>
             </div>  
             <div class="personalDetailsWrapper__detailsBox__detail">gender: 
-              <div> ${user.gender}</div>
+              <div id="genderRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.gender}</div>
             </div>
             <div class="personalDetailsWrapper__detailsBox__detail">user name: 
-            <div> ${user.userName}</div>
+            <div id="userNameRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.userName}</div>
               </div>
             <div class="personalDetailsWrapper__detailsBox__detail">e-mail:
-              <div> ${user.email}</div>
+              <div id="emailRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.email}</div>
             </div>
           </div>  
       </div>

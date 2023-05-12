@@ -26,9 +26,43 @@ export const createUser = async (
   try {
     const { firstName, lastName, gender, userName, password, email, adminToken } = req.body;
 
-    const findUser = await User.findOne({ email });
+    const takenEmail = await User.findOne({ email });
+    if (takenEmail){
+      res.status(500).json({ ok: false, errorMessage:`Email already exists in the system` })
+    } else{
+      const user = await User.create({
+        firstName: firstName.toLowerCase(),
+        lastName: lastName.toLowerCase(),
+        gender: gender.toLowerCase(),
+        userName,
+        password,
+        email: email.toLowerCase(),
+      });
 
-    if (findUser) return res.send(`Email already exists in the system`);
+      if (adminToken === "amit" && user.userRole === "simple") {
+        user.userRole = "admin"
+        user.save()
+    }
+
+      if (!secret) throw new Error("Missing jwt secret");
+
+      const token = jwt.encode({ 
+        userId: user._id,
+        firstName:user.firstName,
+        lastName:user.lastName,
+        gender:user.gender,
+        userName:user.userName,
+        email:user.email, 
+        userRole: user.userRole,
+        role: "public" }, secret);
+
+      res.cookie("user", token, {
+        maxAge: 24 * 60 * 60 * 1000, //24 hours
+        httpOnly: true,
+      });
+
+      res.redirect("/signIn");
+    }
 
       const user = await User.create({
         firstName: firstName.toLowerCase(),
@@ -103,13 +137,12 @@ export const createUser = async (
     try {
       const { userName, password } = req.body;
       console.log("entered userlogin")
-      //User Authentication....
+      //User Authentication...
 
       const user = await User.findOne({ userName, password });
       if (!user) throw new Error("User not found on get user function");
 
       if (!secret) throw new Error("Missing jwt secret");
-
       const token = jwt.encode({ 
         userId: user._id,
         firstName:user.firstName,
@@ -131,6 +164,9 @@ export const createUser = async (
       res.status(500).send({ error: error.message });
     }
   };
+
+
+
 
   export const passwordRecovery = async (
     req: Request,
@@ -155,6 +191,9 @@ export const createUser = async (
     }
   };
 
+
+
+
   export const deleteUser = async (
     req: Request,
     res: Response,
@@ -176,30 +215,51 @@ export const createUser = async (
     }
   };
 
+
+
   export const updateUser = async (
     req: Request,
     res: Response,
     next: NextFunction
   ) => {
     try {
-      const { userId, firstName, lastName, gender, userName, password, email } =
-        req.body;
+      const { userId, firstName, lastName, gender, userName, email } = req.body;
 
-      const updateUser = await User.findByIdAndUpdate(
-        { _id: userId },
-        {
-          firstName,
-          lastName,
-          gender,
-          userName,
-          password,
-          email,
-        }
-      );
-
-      const user = await User.findById(userId);
-
-      res.status(201).json({ user });
+      const takenEmail = await User.findOne({ email })
+      if (takenEmail){
+        res.status(500).json({ ok: false, errorMessage:`Email already exists in the system` })
+      } else{
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: userId },
+          {
+            firstName,
+            lastName,
+            gender,
+            userName,
+            email,
+          }
+        );
+  
+        const user = await User.findById(userId);
+  
+        if (!secret) throw new Error("Missing jwt secret");
+        const token = jwt.encode({ 
+          userId: userId,
+          firstName: firstName,
+          lastName: lastName,
+          gender: gender,
+          userName: userName,
+          email: email, 
+          userRole: "simple",
+          role: "public" }, secret);
+  
+        res.cookie("user", token, {
+          maxAge: 24 * 60 * 60 * 1000, //24 hours
+          httpOnly: true,
+        });
+  
+        res.status(201).json({ ok: true, user });
+      } 
     } catch (error: any) {
       console.error(error);
       res.status(500).send({ error: error.message });
