@@ -29,27 +29,33 @@ class Player {
 
     switch (key) {
       case "red":
-        tileDiv.classList.add("red", "tile");
+        tileDiv.classList.add("tile");
+        tileDiv.dataset.color = "red";
+        // tileDiv.style.backgroundColor = "red"
         tileDiv.innerHTML = value.toString();
         break;
 
       case "blue":
-        tileDiv.classList.add("blue", "tile");
+        tileDiv.classList.add("tile");
+        tileDiv.dataset.color = "blue";
         tileDiv.innerHTML = value.toString();
         break;
 
       case "yellow":
-        tileDiv.classList.add("gold", "tile");
+        tileDiv.classList.add("tile");
+        tileDiv.dataset.color = "yellow";
         tileDiv.innerHTML = value.toString();
         break;
 
       case "green":
-        tileDiv.classList.add("green", "tile");
+        tileDiv.classList.add("tile");
+        tileDiv.dataset.color = "green";
         tileDiv.innerHTML = value.toString();
         break;
 
       case "jocker":
-        tileDiv.classList.add("jocker", "tile");
+        tileDiv.classList.add("tile");
+        tileDiv.dataset.color = "jocker";
         tileDiv.innerHTML = '<i class="fa-regular fa-face-smile"></i>';
         break;
 
