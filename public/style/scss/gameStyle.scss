@@ -89,6 +89,7 @@ body {
   border: 1px solid black;
   border-radius: 2px;
   cursor: pointer;
+  font-weight: bold;
 }
 
 // .tile {
@@ -106,27 +107,22 @@ body {
   box-shadow: 0 0 5px black;
 }
 
-.red {
+.square[data-color="red"] {
   background-color: red;
-  font-weight: bold;
 }
 
-.gold {
+.square[data-color="yellow"] {
   background-color: darkgoldenrod;
-  font-weight: bold;
 }
 
-.green {
+.square[data-color="green"] {
   background-color: green;
-  font-weight: bold;
 }
 
-.blue {
+.square[data-color="blue"] {
   background-color: blue;
-  font-weight: bold;
 }
 
-.jocker {
+.square[data-color="jocker"] {
   background-color: purple;
-  font-weight: bold;
 }
