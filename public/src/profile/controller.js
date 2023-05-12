@@ -7,7 +7,8 @@ function handleGetUserDetails() {
             .then(({ cookieUser }) => {
             if (cookieUser.userRole === "simple") { // simple user case
                 renderPageHeader(cookieUser);
-                renderpersonalDetailsBar(cookieUser);
+                renderPersonalDetailsBar(cookieUser);
+                renderGameButtons();
             }
             else if (cookieUser.userRole === "admin") { // admin case
                 console.log("admin case");

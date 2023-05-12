@@ -50,6 +50,35 @@ body {
   margin:auto;  
 }
 
+.gameButtons{
+  height: 3rem;
+  width: 44rem;
+  position: relative;
+  top: -19rem;
+  right: 0rem;
+  display: flex;
+  justify-content: space-between;
+  
+  button{
+    font-size: 0.8rem;
+    height: 3rem;
+    width: 5rem;
+    background-color: gold;
+    box-shadow: 0px 0px 20px;
+    font-weight: 900;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    &:hover{
+      box-shadow: none;
+      background-color: beige;
+    }
+    &:active{
+      background-color: seagreen;
+      box-shadow: none;
+    }
+  }
+}
+
 
 .personalDetailsWrapper{
   width: 15rem;
@@ -114,6 +143,4 @@ body {
       }
     }
   }
-  
-  
 }

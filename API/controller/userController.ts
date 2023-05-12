@@ -102,8 +102,6 @@ export const createUser = async (
     }
   };
 
-
-
   export const getUser = async (
     req: Request,
     res: Response,

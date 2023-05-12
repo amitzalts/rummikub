@@ -10,7 +10,7 @@ function renderPageHeader(user: any){
     }
 }
 
-function renderpersonalDetailsBar(user: any){
+function renderPersonalDetailsBar(user: any){
   try {
     const personalDetailsRoot: HTMLDivElement | null  = document.querySelector("#personalDetailsRoot")
     if(!personalDetailsRoot) throw new Error ("personalDetailsRoot not found on DOM")
@@ -40,6 +40,23 @@ function renderpersonalDetailsBar(user: any){
           </div>  
       </div>
     `
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+function renderGameButtons(){
+  try {
+    const GameButtonsRoot: HTMLDivElement | null  = document.querySelector("#GameButtonsRoot")
+    if(!GameButtonsRoot) throw new Error ("GameButtonsRoot not found on DOM")
+
+    GameButtonsRoot.innerHTML=`
+    <div class="gameButtons">
+      <button>join game</button>
+      <button>create game</button>
+    </div>
+    `
+    
   } catch (error) {
     console.error(error)
   }

@@ -10,7 +10,7 @@ function renderPageHeader(user) {
         console.error(error);
     }
 }
-function renderpersonalDetailsBar(user) {
+function renderPersonalDetailsBar(user) {
     try {
         const personalDetailsRoot = document.querySelector("#personalDetailsRoot");
         if (!personalDetailsRoot)
@@ -39,6 +39,22 @@ function renderpersonalDetailsBar(user) {
             </div>
           </div>  
       </div>
+    `;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+function renderGameButtons() {
+    try {
+        const GameButtonsRoot = document.querySelector("#GameButtonsRoot");
+        if (!GameButtonsRoot)
+            throw new Error("GameButtonsRoot not found on DOM");
+        GameButtonsRoot.innerHTML = `
+    <div class="gameButtons">
+      <button>join game</button>
+      <button>create game</button>
+    </div>
     `;
     }
     catch (error) {
