@@ -43,9 +43,7 @@ activePlayerArea.addEventListener("click", (e: MouseEvent) => {
       currentPlayer.divsArray.push(currentTile);
       currentPlayer.renderHandToScreen();
 
-      currentTile.classList.remove("active");
-
-      currentTile = undefined;
+      resetCurrentTile()
     }
   }
 });

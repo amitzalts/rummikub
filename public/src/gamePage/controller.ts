@@ -32,8 +32,7 @@ function toggleActive(
     }
 
     if (squareDiv.classList.contains("active")) {
-      squareDiv.classList.remove("active");
-      currentTile = undefined;
+      resetCurrentTile()
     } else {
       const findEle = squareDivArray.find((ele) =>
         ele.classList.contains("active")
@@ -60,7 +59,6 @@ function moveTile(squareDiv: HTMLDivElement) {
 
   // moving tile on board from one square to another
   else {
-    currentTile.classList.remove("active");
 
     const indexOfcurrentTile = currentGame.board.indexOf(currentTile);
     const indexOfNewLocation = currentGame.board.indexOf(squareDiv);
@@ -69,7 +67,7 @@ function moveTile(squareDiv: HTMLDivElement) {
     currentGame.board[indexOfNewLocation] = currentTile;
 
     renderBoard(currentGame.board);
-    currentTile = undefined;
+    resetCurrentTile()
   }
 
   return true;
@@ -85,7 +83,6 @@ function moveFromPlayerHand(squareDiv: HTMLDivElement) {
   }
 
   if (squareDiv.classList.contains("tile")) {
-    currentTile.classList.remove("active");
 
     const indexOfNewLocation = currentGame.board.indexOf(squareDiv);
     const indexOfcurrentTile = currentPlayer.divsArray.indexOf(currentTile);
@@ -96,10 +93,8 @@ function moveFromPlayerHand(squareDiv: HTMLDivElement) {
     renderBoard(currentGame.board);
     currentPlayer.renderHandToScreen();
 
-    currentTile = undefined;
-    console.log("object");
+    resetCurrentTile()
   } else {
-    currentTile.classList.remove("active");
 
     const indexOfNewLocation = currentGame.board.indexOf(squareDiv);
 
@@ -111,7 +106,7 @@ function moveFromPlayerHand(squareDiv: HTMLDivElement) {
 
     renderBoard(currentGame.board);
 
-    currentTile = undefined;
+    resetCurrentTile()
   }
 }
 

@@ -29,8 +29,7 @@ activePlayerArea.addEventListener("click", (e) => {
             // add tile back to player's hand
             currentPlayer.divsArray.push(currentTile);
             currentPlayer.renderHandToScreen();
-            currentTile.classList.remove("active");
-            currentTile = undefined;
+            resetCurrentTile();
         }
     }
 });

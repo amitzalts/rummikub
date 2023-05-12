@@ -24,8 +24,7 @@ function toggleActive(squareDiv, squareDivArray) {
             return console.log("Not activating empty square");
         }
         if (squareDiv.classList.contains("active")) {
-            squareDiv.classList.remove("active");
-            currentTile = undefined;
+            resetCurrentTile();
         }
         else {
             const findEle = squareDivArray.find((ele) => ele.classList.contains("active"));
@@ -47,13 +46,12 @@ function moveTile(squareDiv) {
     }
     // moving tile on board from one square to another
     else {
-        currentTile.classList.remove("active");
         const indexOfcurrentTile = currentGame.board.indexOf(currentTile);
         const indexOfNewLocation = currentGame.board.indexOf(squareDiv);
         currentGame.board[indexOfcurrentTile] = squareDiv;
         currentGame.board[indexOfNewLocation] = currentTile;
         renderBoard(currentGame.board);
-        currentTile = undefined;
+        resetCurrentTile();
     }
     return true;
 }
@@ -66,24 +64,21 @@ function moveFromPlayerHand(squareDiv) {
         return;
     }
     if (squareDiv.classList.contains("tile")) {
-        currentTile.classList.remove("active");
         const indexOfNewLocation = currentGame.board.indexOf(squareDiv);
         const indexOfcurrentTile = currentPlayer.divsArray.indexOf(currentTile);
         currentGame.board[indexOfNewLocation] = currentTile;
         currentPlayer.divsArray[indexOfcurrentTile] = squareDiv;
         renderBoard(currentGame.board);
         currentPlayer.renderHandToScreen();
-        currentTile = undefined;
-        console.log("object");
+        resetCurrentTile();
     }
     else {
-        currentTile.classList.remove("active");
         const indexOfNewLocation = currentGame.board.indexOf(squareDiv);
         currentGame.board[indexOfNewLocation] = currentTile;
         const index = currentPlayer.divsArray.indexOf(currentTile);
         currentPlayer.divsArray.splice(index, 1);
         renderBoard(currentGame.board);
-        currentTile = undefined;
+        resetCurrentTile();
     }
 }
 function renderPlayers(playersArray) {
