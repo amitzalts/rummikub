@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.deleteUser = exports.passwordRecovery = exports.userLogin = exports.getUser = exports.createUser = exports.getAllUsers = void 0;
+exports.updateUser = exports.deleteUser = exports.passwordRecovery = exports.userLogout = exports.userLogin = exports.getUser = exports.createUser = exports.getAllUsers = void 0;
 const userModel_1 = __importDefault(require("../model/userModel"));
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const secret = process.env.JWT_SECRET;
@@ -120,7 +120,6 @@ exports.getUser = getUser;
 const userLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userName, password } = req.body;
-        console.log("entered userlogin");
         //User Authentication...
         const user = yield userModel_1.default.findOne({ userName, password });
         if (!user)
@@ -149,6 +148,28 @@ const userLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.userLogin = userLogin;
+const userLogout = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId } = req.cookies;
+        const user = yield userModel_1.default.findById(userId);
+        if (!secret)
+            throw new Error("Missing jwt secret");
+        const token = jwt_simple_1.default.encode({
+            userId: userId,
+            role: "public"
+        }, secret);
+        res.cookie("user", token, {
+            maxAge: -1,
+            httpOnly: true,
+        });
+        res.send({ ok: true });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+});
+exports.userLogout = userLogout;
 const passwordRecovery = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { firstName, lastName, userName, email } = req.body;

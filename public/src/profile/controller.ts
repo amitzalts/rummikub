@@ -1,4 +1,4 @@
-import { error } from "console"
+import { error, log } from "console"
 
 function handleGetUserDetails() {
   try {
@@ -75,7 +75,7 @@ function handleSaveEditUserDetails() {
           .then((data) => {
             console.log(data)
             alert(data.errorMessage)
-            if(!data.errorMessage){
+            if (!data.errorMessage) {
               personalDetailsPropertiesRoot.map((prop) => {
                 prop.contentEditable = "false"
                 prop.style.color = "black"
@@ -83,11 +83,22 @@ function handleSaveEditUserDetails() {
             }
           })
       })
-
-   
-      
-
   } catch (error) {
+    console.error(error)
+  }
+}
+
+
+function handleLogout() {
+  try {
+    fetch("/api/v1/users/userLogout")
+    .then((res) => res.json())
+      .then(( data) => {
+        console.log(data)
+        window.location.href = "./index.html"
+      })
+  }
+  catch (error) {
     console.error(error)
   }
 }

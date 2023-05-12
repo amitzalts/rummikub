@@ -33,6 +33,18 @@ body {
   }
 }
 
+.logoutButton{
+  font-size: 12px;
+  color: white;
+  position: relative;
+  top:-8rem;
+  right: 27rem;
+  &:hover{
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
 .profileLogo {
   position: absolute;
   top: 2rem;

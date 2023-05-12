@@ -10,6 +10,7 @@ function renderPageHeader(user: any){
     }
 }
 
+
 function renderPersonalDetailsBar(user: any){
   try {
     const personalDetailsRoot: HTMLDivElement | null  = document.querySelector("#personalDetailsRoot")

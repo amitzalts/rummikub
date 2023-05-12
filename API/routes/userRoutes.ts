@@ -6,6 +6,7 @@ import {
   createUser,
   getUser,
   userLogin,
+  userLogout,
   deleteUser,
   updateUser,
 } from "../controller/userController";
@@ -19,6 +20,8 @@ userRouter.route("/deleteUser").delete(deleteUser);
 userRouter.route("/updateUser").patch(updateUser);
 
 userRouter.route("/userLogin").post(userLogin);
+
+userRouter.route("/userLogout").get(userLogout);
 
 // userRouter.route("/userPassword").post(passwordRecovery);
 

@@ -87,3 +87,16 @@ function handleSaveEditUserDetails() {
         console.error(error);
     }
 }
+function handleLogout() {
+    try {
+        fetch("/api/v1/users/userLogout")
+            .then((res) => res.json())
+            .then((data) => {
+            console.log(data);
+            window.location.href = "./index.html";
+        });
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
