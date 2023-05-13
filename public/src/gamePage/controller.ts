@@ -32,7 +32,7 @@ function toggleActive(
     }
 
     if (squareDiv.classList.contains("active")) {
-      resetCurrentTile()
+      resetCurrentTile();
     } else {
       const findEle = squareDivArray.find((ele) =>
         ele.classList.contains("active")
@@ -59,7 +59,6 @@ function moveTile(squareDiv: HTMLDivElement) {
 
   // moving tile on board from one square to another
   else {
-
     const indexOfcurrentTile = currentGame.board.indexOf(currentTile);
     const indexOfNewLocation = currentGame.board.indexOf(squareDiv);
 
@@ -67,7 +66,7 @@ function moveTile(squareDiv: HTMLDivElement) {
     currentGame.board[indexOfNewLocation] = currentTile;
 
     renderBoard(currentGame.board);
-    resetCurrentTile()
+    resetCurrentTile();
   }
 
   return true;
@@ -83,7 +82,6 @@ function moveFromPlayerHand(squareDiv: HTMLDivElement) {
   }
 
   if (squareDiv.classList.contains("tile")) {
-
     const indexOfNewLocation = currentGame.board.indexOf(squareDiv);
     const indexOfcurrentTile = currentPlayer.divsArray.indexOf(currentTile);
 
@@ -93,9 +91,8 @@ function moveFromPlayerHand(squareDiv: HTMLDivElement) {
     renderBoard(currentGame.board);
     currentPlayer.renderHandToScreen();
 
-    resetCurrentTile()
+    resetCurrentTile();
   } else {
-
     const indexOfNewLocation = currentGame.board.indexOf(squareDiv);
 
     currentGame.board[indexOfNewLocation] = currentTile;
@@ -106,7 +103,7 @@ function moveFromPlayerHand(squareDiv: HTMLDivElement) {
 
     renderBoard(currentGame.board);
 
-    resetCurrentTile()
+    resetCurrentTile();
   }
 }
 
@@ -118,51 +115,36 @@ function renderPlayers(playersArray: Player[]) {
     .join("");
 
   playersInGameArea.innerHTML = html;
-
-  activatePlayers();
-}
-
-function activatePlayers() {
-  const playersArray = playersInGameArea.querySelectorAll(
-    ".player"
-  ) as NodeListOf<HTMLDivElement>;
-
-  playersArray.forEach((player) => {
-    if (player.id === currentPlayer.id) {
-      player.classList.add("active");
-    }
-  });
-
-  endTurnBtn.addEventListener("click", moveToNextPlayer);
 }
 
 function moveToNextPlayer() {
   if (!validateBoard()) return;
-  const playersArray = playersInGameArea.querySelectorAll(
-    ".player"
-  ) as NodeListOf<HTMLDivElement>;
 
   const numOfPlayers = currentGame.players.length;
 
   const indexCurrentPlayer = currentGame.players.indexOf(currentPlayer);
 
   // if current player is last player on array of players
-  if (indexCurrentPlayer === numOfPlayers - 1) activateNextPlayer(0);
-  else activateNextPlayer(indexCurrentPlayer + 1);
+  if (indexCurrentPlayer === numOfPlayers - 1) activatePlayer(0);
+  else activatePlayer(indexCurrentPlayer + 1);
+}
 
-  function activateNextPlayer(index: number) {
-    currentPlayer.isActive = false;
-    currentPlayer = currentGame.players[index];
-    currentPlayer.isActive = true;
-    currentPlayer.renderHandToScreen();
+function activatePlayer(index: number) {
+  const playersArray: NodeListOf<HTMLDivElement> | null =
+    playersInGameArea.querySelectorAll(".player");
 
-    playersArray.forEach((player) => {
-      player.classList.remove("active");
-      if (player.id === currentPlayer.id) {
-        player.classList.add("active");
-      }
-    });
-  }
+  currentPlayer.isActive = false;
+  currentPlayer = currentGame.players[index];
+  currentPlayer.isActive = true;
+  currentPlayer.renderHandToScreen();
+  currentPlayer.initializeStartHend();
+
+  playersArray.forEach((player) => {
+    player.classList.remove("active");
+    if (player.id === currentPlayer.id) {
+      player.classList.add("active");
+    }
+  });
 }
 
 function validateBoard() {

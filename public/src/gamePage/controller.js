@@ -86,40 +86,54 @@ function renderPlayers(playersArray) {
         .map((player) => `<div class="player" id="${player.id}"">${player.name}</div>`)
         .join("");
     playersInGameArea.innerHTML = html;
-    activatePlayers();
 }
-function activatePlayers() {
-    const playersArray = playersInGameArea.querySelectorAll(".player");
-    playersArray.forEach((player) => {
-        if (player.id === currentPlayer.id) {
-            player.classList.add("active");
-        }
-    });
-    endTurnBtn.addEventListener("click", moveToNextPlayer);
-}
+// function activatePlayers() {
+//   const playersArray = playersInGameArea.querySelectorAll(
+//     ".player"
+//   ) as NodeListOf<HTMLDivElement>;
+//   playersArray.forEach((player) => {
+//     if (player.id === currentPlayer.id) {
+//       player.classList.add("active");
+//     }
+//   });
+// }
 function moveToNextPlayer() {
     if (!validateBoard())
         return;
-    const playersArray = playersInGameArea.querySelectorAll(".player");
     const numOfPlayers = currentGame.players.length;
     const indexCurrentPlayer = currentGame.players.indexOf(currentPlayer);
     // if current player is last player on array of players
     if (indexCurrentPlayer === numOfPlayers - 1)
-        activateNextPlayer(0);
+        activatePlayer(0);
     else
-        activateNextPlayer(indexCurrentPlayer + 1);
-    function activateNextPlayer(index) {
-        currentPlayer.isActive = false;
-        currentPlayer = currentGame.players[index];
-        currentPlayer.isActive = true;
-        currentPlayer.renderHandToScreen();
-        playersArray.forEach((player) => {
-            player.classList.remove("active");
-            if (player.id === currentPlayer.id) {
-                player.classList.add("active");
-            }
-        });
-    }
+        activatePlayer(indexCurrentPlayer + 1);
+    // function activateNextPlayer(index: number) {
+    //   currentPlayer.isActive = false;
+    //   currentPlayer = currentGame.players[index];
+    //   currentPlayer.isActive = true;
+    //   currentPlayer.renderHandToScreen();
+    //   currentPlayer.initializeStartHend();
+    //   playersArray.forEach((player) => {
+    //     player.classList.remove("active");
+    //     if (player.id === currentPlayer.id) {
+    //       player.classList.add("active");
+    //     }
+    //   });
+    // }
+}
+function activatePlayer(index) {
+    const playersArray = playersInGameArea.querySelectorAll(".player");
+    currentPlayer.isActive = false;
+    currentPlayer = currentGame.players[index];
+    currentPlayer.isActive = true;
+    currentPlayer.renderHandToScreen();
+    currentPlayer.initializeStartHend();
+    playersArray.forEach((player) => {
+        player.classList.remove("active");
+        if (player.id === currentPlayer.id) {
+            player.classList.add("active");
+        }
+    });
 }
 function validateBoard() {
     let validBoard = true;

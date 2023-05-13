@@ -5,7 +5,11 @@ class Player {
         this.hand = hand;
         this.divsArray = [];
         this.isActive = false;
+        this.handAtStartTurn = [];
         this.id = Math.random().toString(36).slice(-9);
+    }
+    initializeStartHend() {
+        this.handAtStartTurn = [...this.divsArray];
     }
     getNewHand(deck) {
         for (let i = 1; i < 15; i++) {
@@ -95,6 +99,13 @@ class Game {
         this.sets = [];
         this.deck = new Deck();
         this.players.forEach((player) => player.getNewHand(this.deck));
+    }
+    startGame() {
+        createEmptyBoard(this.board);
+        currentPlayer =
+            this.players[Math.floor(Math.random() * this.players.length)];
+        renderPlayers(currentGame.players);
+        activatePlayer(currentGame.players.indexOf(currentPlayer));
     }
     getBoardFromUser() {
         //or Game route???

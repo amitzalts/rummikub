@@ -1,4 +1,6 @@
-activatePlayers();
+// activatePlayers();
+
+endTurnBtn.addEventListener("click", moveToNextPlayer);
 
 const playerOne = new Player("vladi");
 
@@ -10,16 +12,7 @@ const playerFour = new Player("bob");
 
 currentGame = new Game([playerOne, playerTwo, playerThree, playerFour]);
 
-createEmptyBoard(currentGame.board);
-
-currentPlayer =
-  currentGame.players[Math.floor(Math.random() * currentGame.players.length)];
-
-currentPlayer.isActive = true;
-
-renderPlayers(currentGame.players);
-
-currentPlayer.renderHandToScreen();
+currentGame.startGame();
 
 activePlayerArea.addEventListener("click", (e: MouseEvent) => {
   if (!currentTile || !board) return;
@@ -27,7 +20,7 @@ activePlayerArea.addEventListener("click", (e: MouseEvent) => {
   const target = e.target as HTMLElement;
 
   if (target.classList.contains("activePlayerArea")) {
-    if (currentGame.board.find((x) => x === currentTile)) {
+    if (currentGame.board.includes(currentTile)) {
       //create empty div to replace tile
       const emptySquare = document.createElement("div");
       emptySquare.classList.add("square");
@@ -43,7 +36,9 @@ activePlayerArea.addEventListener("click", (e: MouseEvent) => {
       currentPlayer.divsArray.push(currentTile);
       currentPlayer.renderHandToScreen();
 
-      resetCurrentTile()
+      resetCurrentTile();
     }
   }
 });
+
+function checkIfTileBelongedToPlayer() {}

@@ -2,9 +2,13 @@ class Player {
   public divsArray: Array<HTMLDivElement> = [];
   public id: string;
   public isActive: boolean = false;
-
+  public handAtStartTurn: Array<HTMLDivElement> = [];
   constructor(public name: string, public hand: {}[] = []) {
     this.id = Math.random().toString(36).slice(-9);
+  }
+
+  initializeStartHend() {
+    this.handAtStartTurn = [...this.divsArray];
   }
 
   getNewHand(deck: Deck) {
@@ -120,6 +124,17 @@ class Game {
   constructor(public players: Player[]) {
     this.deck = new Deck();
     this.players.forEach((player) => player.getNewHand(this.deck));
+  }
+
+  startGame() {
+    createEmptyBoard(this.board);
+
+    currentPlayer =
+      this.players[Math.floor(Math.random() * this.players.length)];
+
+    renderPlayers(currentGame.players);
+
+    activatePlayer(currentGame.players.indexOf(currentPlayer));
   }
 
   getBoardFromUser() {
