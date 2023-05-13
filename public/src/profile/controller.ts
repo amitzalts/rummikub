@@ -10,7 +10,9 @@ function handleGetUserDetails() {
           renderPersonalDetailsBar(cookieUser)
           renderGameButtons()
         } else if (cookieUser.userRole === "admin") { // admin case
-          console.log("admin case")
+          renderPageHeader(cookieUser)
+          renderPersonalDetailsBar(cookieUser)
+          renderAllUsersWrapper()
         }
       })
   } catch (error) {
@@ -74,8 +76,9 @@ function handleSaveEditUserDetails() {
           .then((res) => res.json())
           .then((data) => {
             console.log(data)
-            alert(data.errorMessage)
-            if (!data.errorMessage) {
+            if (data.errorMessage) {
+              alert(data.errorMessage)
+            } else {
               personalDetailsPropertiesRoot.map((prop) => {
                 prop.contentEditable = "false"
                 prop.style.color = "black"
@@ -92,8 +95,8 @@ function handleSaveEditUserDetails() {
 function handleLogout() {
   try {
     fetch("/api/v1/users/userLogout")
-    .then((res) => res.json())
-      .then(( data) => {
+      .then((res) => res.json())
+      .then((data) => {
         console.log(data)
         window.location.href = "./index.html"
       })

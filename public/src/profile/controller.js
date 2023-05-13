@@ -11,7 +11,9 @@ function handleGetUserDetails() {
                 renderGameButtons();
             }
             else if (cookieUser.userRole === "admin") { // admin case
-                console.log("admin case");
+                renderPageHeader(cookieUser);
+                renderPersonalDetailsBar(cookieUser);
+                renderAllUsersWrapper();
             }
         });
     }
@@ -73,8 +75,10 @@ function handleSaveEditUserDetails() {
                 .then((res) => res.json())
                 .then((data) => {
                 console.log(data);
-                alert(data.errorMessage);
-                if (!data.errorMessage) {
+                if (data.errorMessage) {
+                    alert(data.errorMessage);
+                }
+                else {
                     personalDetailsPropertiesRoot.map((prop) => {
                         prop.contentEditable = "false";
                         prop.style.color = "black";

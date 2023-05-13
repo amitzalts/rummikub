@@ -207,9 +207,38 @@ exports.deleteUser = deleteUser;
 const updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId, firstName, lastName, gender, userName, email } = req.body;
-        const takenEmail = yield userModel_1.default.findOne({ email });
-        if (takenEmail) {
-            res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` });
+        const takenEmailUser = yield userModel_1.default.findOne({ email });
+        if (takenEmailUser) {
+            if (takenEmailUser.email !== email) {
+                res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` });
+            }
+            else if (takenEmailUser.email === email) {
+                const updatedUser = yield userModel_1.default.findByIdAndUpdate({ _id: userId }, {
+                    firstName,
+                    lastName,
+                    gender,
+                    userName,
+                    email,
+                });
+                const user = yield userModel_1.default.findById(userId);
+                if (!secret)
+                    throw new Error("Missing jwt secret");
+                const token = jwt_simple_1.default.encode({
+                    userId: userId,
+                    firstName: firstName,
+                    lastName: lastName,
+                    gender: gender,
+                    userName: userName,
+                    email: email,
+                    userRole: "simple",
+                    role: "public"
+                }, secret);
+                res.cookie("user", token, {
+                    maxAge: 24 * 60 * 60 * 1000,
+                    httpOnly: true,
+                });
+                res.status(201).json({ ok: true, user });
+            }
         }
         else {
             const updatedUser = yield userModel_1.default.findByIdAndUpdate({ _id: userId }, {

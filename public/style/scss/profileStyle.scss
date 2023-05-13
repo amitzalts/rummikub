@@ -59,6 +59,9 @@ body {
 .middleImage{
   height: 30rem;
   width: 30rem;
+  position: absolute;
+  top: 8rem;
+  left: 27rem;
   background: url("https://www.johnadams.co.uk/wp-content/uploads/2021/01/Rummikub-Black-lifestyle.jpg")
     no-repeat center / cover;
   border: 0.5rem solid rgb(0, 0, 0);
@@ -73,7 +76,6 @@ body {
   right: 0rem;
   display: flex;
   justify-content: space-between;
-  
   button{
     font-size: 0.8rem;
     height: 3rem;
@@ -158,6 +160,33 @@ body {
         line-height: 2rem;
         font-weight: 100;
       }
+    }
+  }
+}
+
+////////////////////////ADMIN/////////////////////
+
+.AllUsersWrapper{
+  width: 25rem;
+  height: 10rem; //auto
+  border: 0.1rem solid black;
+  position: relative;
+  bottom: 3rem;
+  right: 30rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  &__filterBar{
+    width: 25rem;
+    height: 5rem;
+    border: 0.1rem solid black;
+    background-color: salmon;
+    display: flex;
+    flex-direction: column;
+    &__searchBar{
+      width: 24.8rem;
+      height: 2rem;
+      border: 0.1rem solid black;
     }
   }
 }

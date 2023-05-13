@@ -79,3 +79,24 @@ function collapsePersonalDetailsWrapper(){
   }
 }
 
+
+
+
+function renderAllUsersWrapper(){
+  try {
+    const AllUsersWrapperRoot: HTMLDivElement | null  = document.querySelector("#AllUsersWrapperRoot")
+    if(!AllUsersWrapperRoot) throw new Error ("AllUsersWrapperRoot not found on DOM")
+
+    AllUsersWrapperRoot.innerHTML=`
+    <div class="AllUsersWrapper">users
+      <div class="AllUsersWrapper__filterBar">
+        <input class="AllUsersWrapper__filterBar__searchBar" placeholder="search">
+      </div>
+        <div id="AllUsersRoot"></div>
+      </div>
+    </div>
+    `
+  } catch (error) {
+    
+  }
+}

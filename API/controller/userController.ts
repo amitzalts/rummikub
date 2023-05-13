@@ -175,17 +175,17 @@ export const userLogout = async (
 
     const user = await User.findById(userId);
 
-      if (!secret) throw new Error("Missing jwt secret");
-      const token = jwt.encode({
-        userId: userId,
-        role: "public"
-      }, secret);
+    if (!secret) throw new Error("Missing jwt secret");
+    const token = jwt.encode({
+      userId: userId,
+      role: "public"
+    }, secret);
 
-      res.cookie("user", token, {
-        maxAge: -1, //delete
-        httpOnly: true,
-      })
-      
+    res.cookie("user", token, {
+      maxAge: -1, //delete
+      httpOnly: true,
+    })
+
     res.send({ ok: true })
   } catch (error: any) {
     console.error(error);
@@ -253,9 +253,44 @@ export const updateUser = async (
   try {
     const { userId, firstName, lastName, gender, userName, email } = req.body;
 
-    const takenEmail = await User.findOne({ email })
-    if (takenEmail) {
-      res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` })
+    const takenEmailUser = await User.findOne({ email })
+   
+    if (takenEmailUser){
+      if (takenEmailUser.email !== email) {
+        res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` })
+      }else if(takenEmailUser.email === email){
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: userId },
+          {
+            firstName,
+            lastName,
+            gender,
+            userName,
+            email,
+          }
+        );
+  
+        const user = await User.findById(userId);
+  
+        if (!secret) throw new Error("Missing jwt secret");
+        const token = jwt.encode({
+          userId: userId,
+          firstName: firstName,
+          lastName: lastName,
+          gender: gender,
+          userName: userName,
+          email: email,
+          userRole: "simple",
+          role: "public"
+        }, secret)
+  
+        res.cookie("user", token, {
+          maxAge: 24 * 60 * 60 * 1000, //24 hours
+          httpOnly: true,
+        })
+
+        res.status(201).json({ ok: true, user })
+      }
     } else {
       const updatedUser = await User.findByIdAndUpdate(
         { _id: userId },
@@ -280,17 +315,17 @@ export const updateUser = async (
         email: email,
         userRole: "simple",
         role: "public"
-      }, secret);
+      }, secret)
 
       res.cookie("user", token, {
         maxAge: 24 * 60 * 60 * 1000, //24 hours
         httpOnly: true,
-      });
+      })
 
-      res.status(201).json({ ok: true, user });
+      res.status(201).json({ ok: true, user })
     }
   } catch (error: any) {
     console.error(error);
-    res.status(500).send({ error: error.message });
+    res.status(500).send({ error: error.message })
   }
 };
