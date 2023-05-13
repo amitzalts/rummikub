@@ -83,15 +83,36 @@ function renderAllUsersWrapper() {
         if (!AllUsersWrapperRoot)
             throw new Error("AllUsersWrapperRoot not found on DOM");
         AllUsersWrapperRoot.innerHTML = `
-    <div class="AllUsersWrapper">users
-      <div class="AllUsersWrapper__filterBar">
-        <input class="AllUsersWrapper__filterBar__searchBar" placeholder="search">
+    <div class="allUsersWrapper">
+      <h1>users</h1>
+      <div class="allUsersWrapper__filterBar">
+        <input class="allUsersWrapper__filterBar__searchBar" placeholder="search">
       </div>
-        <div id="AllUsersRoot"></div>
-      </div>
+      <div class="allUsersWrapper__users" id="allUsersRoot"></div>
     </div>
     `;
+        handleGetAllUsers();
     }
     catch (error) {
+        console.error(error);
+    }
+}
+function renderAllUsers(users) {
+    try {
+        const allUsersRoot = document.querySelector("#allUsersRoot");
+        if (!allUsersRoot)
+            throw new Error("allUsersRoot not found on DOM");
+        const html = users.map((user) => {
+            return `
+        <div class="allUsersWrapper__users__user">${user.email}
+          <i class="fa-solid fa-angle-up"></i>
+        </div>
+      `;
+        }).join(" ");
+        allUsersRoot.innerHTML = html;
+        console.log("html", html);
+    }
+    catch (error) {
+        console.error(error);
     }
 }

@@ -1,22 +1,22 @@
-function renderPageHeader(user: any){
-    try {
-      const headerRoot: HTMLDivElement | null  = document.querySelector("#headerRoot")
-      if(!headerRoot) throw new Error ("headerRoot not found on DOM")
-      
-      headerRoot.innerText = `${user.userName} welcome to your profile page`
+function renderPageHeader(user: any) {
+  try {
+    const headerRoot: HTMLDivElement | null = document.querySelector("#headerRoot")
+    if (!headerRoot) throw new Error("headerRoot not found on DOM")
 
-    } catch (error) {
-       console.error(error) 
-    }
+    headerRoot.innerText = `${user.userName} welcome to your profile page`
+
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 
-function renderPersonalDetailsBar(user: any){
+function renderPersonalDetailsBar(user: any) {
   try {
-    const personalDetailsRoot: HTMLDivElement | null  = document.querySelector("#personalDetailsRoot")
-    if(!personalDetailsRoot) throw new Error ("personalDetailsRoot not found on DOM")
+    const personalDetailsRoot: HTMLDivElement | null = document.querySelector("#personalDetailsRoot")
+    if (!personalDetailsRoot) throw new Error("personalDetailsRoot not found on DOM")
 
-    personalDetailsRoot.innerHTML=`
+    personalDetailsRoot.innerHTML = `
       <div id="personalDetailsWrapperRoot" class="personalDetailsWrapper" style="max-height:0px;">
           <div class="personalDetailsWrapper__buttons">
               <i onclick="handleEditUserDetails()" class="fa-solid fa-pen-to-square personalDetailsWrapper__buttons__button"></i>
@@ -46,33 +46,33 @@ function renderPersonalDetailsBar(user: any){
   }
 }
 
-function renderGameButtons(){
+function renderGameButtons() {
   try {
-    const GameButtonsRoot: HTMLDivElement | null  = document.querySelector("#GameButtonsRoot")
-    if(!GameButtonsRoot) throw new Error ("GameButtonsRoot not found on DOM")
+    const GameButtonsRoot: HTMLDivElement | null = document.querySelector("#GameButtonsRoot")
+    if (!GameButtonsRoot) throw new Error("GameButtonsRoot not found on DOM")
 
-    GameButtonsRoot.innerHTML=`
+    GameButtonsRoot.innerHTML = `
     <div class="gameButtons">
       <button>join game</button>
       <button>create game</button>
     </div>
     `
-    
+
   } catch (error) {
     console.error(error)
   }
 }
 
-function collapsePersonalDetailsWrapper(){
+function collapsePersonalDetailsWrapper() {
   try {
-    const wrapper:HTMLDivElement | null = document.querySelector("#personalDetailsWrapperRoot")
-    if(!wrapper) throw new Error ("personalDetailsWrapperRoot not found on DOM")
+    const wrapper: HTMLDivElement | null = document.querySelector("#personalDetailsWrapperRoot")
+    if (!wrapper) throw new Error("personalDetailsWrapperRoot not found on DOM")
 
-    if (wrapper.style.maxHeight === "0px"){
+    if (wrapper.style.maxHeight === "0px") {
       wrapper.style.maxHeight = wrapper.scrollHeight + "px"
     } else {
       wrapper.style.maxHeight = "0px"
-    } 
+    }
 
   } catch (error) {
     console.error(error)
@@ -82,21 +82,47 @@ function collapsePersonalDetailsWrapper(){
 
 
 
-function renderAllUsersWrapper(){
+function renderAllUsersWrapper() {
   try {
-    const AllUsersWrapperRoot: HTMLDivElement | null  = document.querySelector("#AllUsersWrapperRoot")
-    if(!AllUsersWrapperRoot) throw new Error ("AllUsersWrapperRoot not found on DOM")
+    const AllUsersWrapperRoot: HTMLDivElement | null = document.querySelector("#AllUsersWrapperRoot")
+    if (!AllUsersWrapperRoot) throw new Error("AllUsersWrapperRoot not found on DOM")
 
-    AllUsersWrapperRoot.innerHTML=`
-    <div class="AllUsersWrapper">users
-      <div class="AllUsersWrapper__filterBar">
-        <input class="AllUsersWrapper__filterBar__searchBar" placeholder="search">
+    AllUsersWrapperRoot.innerHTML = `
+    <div class="allUsersWrapper">
+      <h1>users</h1>
+      <div class="allUsersWrapper__filterBar">
+        <input class="allUsersWrapper__filterBar__searchBar" placeholder="search">
       </div>
-        <div id="AllUsersRoot"></div>
-      </div>
+      <div class="allUsersWrapper__users" id="allUsersRoot"></div>
     </div>
     `
+    handleGetAllUsers()
+
   } catch (error) {
-    
+    console.error(error)
+
+  }
+}
+
+
+
+function renderAllUsers(users:any){
+  try {
+    const allUsersRoot: HTMLDivElement | null = document.querySelector("#allUsersRoot")
+    if (!allUsersRoot) throw new Error("allUsersRoot not found on DOM")
+
+    const html:string  = users.map((user:any)=>{
+      return `
+        <div class="allUsersWrapper__users__user">${user.email}
+          <i class="fa-solid fa-angle-up"></i>
+        </div>
+      `
+    }).join(" ")
+
+    allUsersRoot.innerHTML = html
+    console.log("html", html)
+  } catch (error) {
+    console.error(error)
+
   }
 }

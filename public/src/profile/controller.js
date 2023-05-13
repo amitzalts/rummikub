@@ -104,3 +104,15 @@ function handleLogout() {
         console.error(error);
     }
 }
+function handleGetAllUsers() {
+    try {
+        fetch("/api/v1/users/getAllUsers")
+            .then((res) => res.json())
+            .then(({ users }) => {
+            renderAllUsers(users);
+        });
+    }
+    catch (error) {
+        console.error(error);
+    }
+}

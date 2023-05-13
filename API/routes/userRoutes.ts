@@ -13,6 +13,8 @@ import {
 
 userRouter.route("/").get(getAllUsers).post(createUser);
 
+userRouter.route("/getAllUsers").get(getAllUsers)
+
 userRouter.route("/getUser").get(getUser);
 
 userRouter.route("/deleteUser").delete(deleteUser);

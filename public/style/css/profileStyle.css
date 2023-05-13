@@ -20,8 +20,8 @@ body {
   justify-content: center; }
 
 .container {
-  height: 80vh;
-  width: 80vw;
+  height: 90vh;
+  width: 90vw;
   display: flex;
   align-items: center;
   flex-direction: column; }
@@ -139,24 +139,45 @@ body {
         line-height: 2rem;
         font-weight: 100; }
 
-.AllUsersWrapper {
+.allUsersWrapper {
   width: 25rem;
-  height: 10rem;
+  height: 30rem;
   border: 0.1rem solid black;
   position: relative;
   bottom: 3rem;
   right: 30rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly; }
-  .AllUsersWrapper__filterBar {
+  justify-content: space-evenly;
+  text-align: center; }
+  .allUsersWrapper h1 {
+    margin: auto; }
+  .allUsersWrapper__filterBar {
     width: 25rem;
-    height: 5rem;
-    border: 0.1rem solid black;
-    background-color: salmon;
+    height: 2rem;
     display: flex;
     flex-direction: column; }
-    .AllUsersWrapper__filterBar__searchBar {
+    .allUsersWrapper__filterBar__searchBar {
       width: 24.8rem;
       height: 2rem;
       border: 0.1rem solid black; }
+  .allUsersWrapper__users {
+    width: 25rem;
+    height: 20rem;
+    overflow-y: scroll;
+    font-size: 1rem;
+    border: 0.1rem solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; }
+    .allUsersWrapper__users__user {
+      width: 23rem;
+      height: 2rem;
+      background-color: teal;
+      border: 0.1rem solid black;
+      padding: 0.4rem 0.4rem;
+      line-height: 1rem;
+      vertical-align: middle;
+      display: flex;
+      justify-content: space-between; }
