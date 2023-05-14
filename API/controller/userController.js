@@ -158,10 +158,7 @@ const userLogout = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             userId: userId,
             role: "public"
         }, secret);
-        res.cookie("user", token, {
-            maxAge: -1,
-            httpOnly: true,
-        });
+        res.clearCookie("user");
         res.send({ ok: true });
     }
     catch (error) {

@@ -181,10 +181,7 @@ export const userLogout = async (
       role: "public"
     }, secret);
 
-    res.cookie("user", token, {
-      maxAge: -1, //delete
-      httpOnly: true,
-    })
+    res.clearCookie("user")
 
     res.send({ ok: true })
   } catch (error: any) {
