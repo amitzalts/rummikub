@@ -19,20 +19,29 @@ body {
   align-items: center;
   justify-content: center; }
 
-button {
-  background-color: yellow; }
-
 .container {
-  height: 80vh;
-  width: 80vw;
+  height: 90vh;
+  width: 90vw;
   display: flex;
   align-items: center;
   flex-direction: column; }
+  .container h1 {
+    margin-bottom: 4rem; }
+
+.logoutButton {
+  font-size: 12px;
+  color: white;
+  position: relative;
+  top: -8rem;
+  right: 27rem; }
+  .logoutButton:hover {
+    text-decoration: underline;
+    cursor: pointer; }
 
 .profileLogo {
   position: absolute;
   top: 2rem;
-  right: 2rem;
+  right: 7rem;
   color: rgba(6, 39, 39, 0.808);
   font-size: 3rem; }
   .profileLogo:hover {
@@ -41,20 +50,165 @@ button {
 .middleImage {
   height: 30rem;
   width: 30rem;
+  position: absolute;
+  top: 8rem;
+  left: 35rem;
   background: url("https://www.johnadams.co.uk/wp-content/uploads/2021/01/Rummikub-Black-lifestyle.jpg") no-repeat center/cover;
   border: 0.5rem solid black;
   margin: auto; }
 
+.gameButtons {
+  height: 3rem;
+  width: 44rem;
+  position: relative;
+  top: -19rem;
+  right: 0rem;
+  display: flex;
+  justify-content: space-between; }
+  .gameButtons button {
+    font-size: 0.8rem;
+    height: 3rem;
+    width: 5rem;
+    background-color: gold;
+    box-shadow: 0px 0px 20px;
+    font-weight: 900;
+    border-radius: 0.5rem;
+    padding: 0.5rem; }
+    .gameButtons button:hover {
+      box-shadow: none;
+      background-color: beige; }
+    .gameButtons button:active {
+      background-color: seagreen;
+      box-shadow: none; }
+
 .personalDetailsWrapper {
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
   width: 15rem;
-  height: 20rem;
-  border: 0.1rem solid black;
+  height: 22rem;
   display: flex;
   flex-direction: column;
   position: absolute;
   top: 6rem;
-  right: 0rem;
+  right: 1rem;
   background: rgba(255, 255, 255, 0.28);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(0px); }
+  align-items: center; }
+  .personalDetailsWrapper__buttons {
+    width: 14rem;
+    height: 2rem;
+    position: relative;
+    top: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem; }
+    .personalDetailsWrapper__buttons i {
+      font-size: 26px;
+      color: rgba(6, 39, 39, 0.808); }
+      .personalDetailsWrapper__buttons i:hover {
+        scale: 1.15; }
+      .personalDetailsWrapper__buttons i:active {
+        color: blue; }
+  .personalDetailsWrapper__detailsBox {
+    width: 14rem;
+    height: 19rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+    .personalDetailsWrapper__detailsBox__detail {
+      width: 14rem;
+      height: 4rem;
+      background: rgba(255, 255, 255, 0.51);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(0px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-weight: 700; }
+      .personalDetailsWrapper__detailsBox__detail div {
+        width: 13rem;
+        height: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(0px);
+        border: 1px solid rgba(14, 14, 14, 0.3);
+        line-height: 2rem;
+        font-weight: 100; }
+
+.allUsersWrapper {
+  width: 25rem;
+  height: 35rem;
+  border: 0.1rem solid black;
+  position: relative;
+  bottom: 3rem;
+  right: 30rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: center; }
+  .allUsersWrapper h1 {
+    margin: auto; }
+  .allUsersWrapper__filterBar {
+    width: 25rem;
+    height: 2rem;
+    display: flex;
+    flex-direction: column; }
+    .allUsersWrapper__filterBar__searchBar {
+      width: 24.8rem;
+      height: 2rem;
+      border: 0.1rem solid black; }
+  .allUsersWrapper__users {
+    width: 25rem;
+    height: 30rem;
+    overflow-y: scroll;
+    font-size: 1rem;
+    border: 0.1rem solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; }
+    .allUsersWrapper__users__user {
+      width: 23rem;
+      height: 15rem;
+      background-color: teal;
+      border: 0.1rem solid black;
+      padding: 0.4rem 0.4rem;
+      line-height: 1rem;
+      vertical-align: middle;
+      display: flex;
+      flex-direction: column; }
+      .allUsersWrapper__users__user h2 {
+        width: 22rem;
+        height: 2rem;
+        display: flex;
+        justify-content: space-between;
+        margin: 0; }
+      .allUsersWrapper__users__user__details {
+        width: 22rem;
+        height: 10rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        font-size: 1rem;
+        text-align: left;
+        line-height: 1.5rem;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out; }
+        .allUsersWrapper__users__user__details__buttons {
+          width: 22rem;
+          height: 1rem;
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 1rem;
+          margin-top: 1rem; }
+          .allUsersWrapper__users__user__details__buttons i {
+            font-size: 26px;
+            margin: 0.4rem; }
+            .allUsersWrapper__users__user__details__buttons i:hover {
+              scale: 1.1; }
+        .allUsersWrapper__users__user__details p {
+          font-weight: 200; }

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- link to style -->
-    <link rel="stylesheet" href="./style/profileStyle.css" />
+    <link rel="stylesheet" href="./style/css/profileStyle.css" />
 
     <!-- link to fontawesome -->
     <script
@@ -19,27 +19,23 @@
     <script src="./src/profile/controller.js" defer></script>
     <title>User's page</title>
   </head>
-  <body onload="getUserDetails()">
+  <body onload="handleGetUserDetails()">
   <div class="container">
     <h1 id="headerRoot">Welcome to user profile page</h1>
-    <div class="profileLogo" onclick="renderpersonalDetailsBar()">
+    <div class="logoutButton" onclick="handleLogout()">logout</div>
+    <div class="profileLogo" onclick="collapsePersonalDetailsWrapper()">
       <i class="fa-regular fa-circle-user"></i>
-    </div>
-    <div id="personalDetailsRoot">
-      <div class="personalDetailsWrapper">
-        <div class="personalDetailsWrapper__buttons">
-          <button>edit</button>
-          <button>save</button>
-        </div>
-        <div contenteditable="false" class="personalDetailsWrapper__detail">first name:</div>
-        <div contenteditable="false" class="personalDetailsWrapper__detail">last name:</div>
-        <div contenteditable="false" class="personalDetailsWrapper__detail">gender:</div>
-        <div contenteditable="false" class="personalDetailsWrapper__detail">user name:</div>
-        <div contenteditable="false" class="personalDetailsWrapper__detail">e-mail:</div>
-      </div>
     </div>
 
     <div class="middleImage"></div>
+    
+    <div id="GameButtonsRoot"></div>
+
+    <div id="personalDetailsRoot"></div>
+
+    <div id="AllUsersWrapperRoot"></div>
+
+    <div id="GameButtonsRoot"></div>
   </div>
    
 
