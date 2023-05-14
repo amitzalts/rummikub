@@ -213,34 +213,22 @@ const updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
                 res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` });
             }
             else if (takenEmailUser.email === email) {
-                const updatedUser = yield userModel_1.default.findByIdAndUpdate({ _id: userId }, {
-                    firstName,
-                    lastName,
-                    gender,
-                    userName,
-                    email,
-                });
-                const user = yield userModel_1.default.findById(userId);
-                if (!secret)
-                    throw new Error("Missing jwt secret");
-                const token = jwt_simple_1.default.encode({
-                    userId: userId,
-                    firstName: firstName,
-                    lastName: lastName,
-                    gender: gender,
-                    userName: userName,
-                    email: email,
-                    userRole: "simple",
-                    role: "public"
-                }, secret);
-                res.cookie("user", token, {
-                    maxAge: 24 * 60 * 60 * 1000,
-                    httpOnly: true,
-                });
-                res.status(201).json({ ok: true, user });
+                updatedUser(userId, firstName, lastName, gender, userName, email, res);
             }
         }
         else {
+            updatedUser(userId, firstName, lastName, gender, userName, email, res);
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+});
+exports.updateUser = updateUser;
+function updatedUser(userId, firstName, lastName, gender, userName, email, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
             const updatedUser = yield userModel_1.default.findByIdAndUpdate({ _id: userId }, {
                 firstName,
                 lastName,
@@ -267,10 +255,8 @@ const updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             });
             res.status(201).json({ ok: true, user });
         }
-    }
-    catch (error) {
-        console.error(error);
-        res.status(500).send({ error: error.message });
-    }
-});
-exports.updateUser = updateUser;
+        catch (error) {
+            console.error(error);
+        }
+    });
+}

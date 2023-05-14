@@ -67,7 +67,7 @@ function collapsePersonalDetailsWrapper() {
         if (!wrapper)
             throw new Error("personalDetailsWrapperRoot not found on DOM");
         if (wrapper.style.maxHeight === "0px") {
-            wrapper.style.maxHeight = wrapper.scrollHeight + "px";
+            wrapper.style.maxHeight = wrapper.scrollHeight + "rem";
         }
         else {
             wrapper.style.maxHeight = "0px";
@@ -104,13 +104,46 @@ function renderAllUsers(users) {
             throw new Error("allUsersRoot not found on DOM");
         const html = users.map((user) => {
             return `
-        <div class="allUsersWrapper__users__user">${user.email}
-          <i class="fa-solid fa-angle-up"></i>
+        <div class="allUsersWrapper__users__user">
+          <h2>${user.email}
+            <i id="collapsibleArrow-${user._id}" onclick="collapseUserDetails('${user._id}')" class="fa-solid fa-angle-up"></i>
+          </h2>
+          <div id="userDetailsRoot-${user._id}" class="allUsersWrapper__users__user__details" style="max-height:0px;">
+            <div class="allUsersWrapper__users__user__details__buttons">
+                <i onclick="handleEditUserDetailsByAdmin('${user._id}')" class="fa-solid fa-pen-to-square"></i>
+                <i onclick="handleSaveEditUserDetailsByAdmin('${user._id}')" class="fa-solid fa-floppy-disk"></i>
+            </div>
+            <p id="editableUserDataRoot-firstName-${user._id}">first name: ${user.firstName}</p>
+            <p id="editableUserDataRoot-lastName-${user._id}">last name: ${user.lastName}</p>
+            <p id="editableUserDataRoot-userName-${user._id}">user name: ${user.userName}</p>
+            <p id="editableUserDataRoot-gender-${user._id}">gender: ${user.gender}</p>
+            <p id="editableUserDataRoot-email-${user._id}">email: ${user.email}</p>
+          </div>
         </div>
       `;
         }).join(" ");
         allUsersRoot.innerHTML = html;
-        console.log("html", html);
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+function collapseUserDetails(userId) {
+    try {
+        const collapsible = document.querySelector(`#userDetailsRoot-${userId}`);
+        if (!collapsible)
+            throw new Error("userDetailsRoot not found on DOM");
+        const collapsibleArrow = document.querySelector(`#collapsibleArrow-${userId}`);
+        if (!collapsibleArrow)
+            throw new Error("collapsibleArrow not found on DOM");
+        if (collapsible.style.maxHeight === "0px") {
+            collapsible.style.maxHeight = "9.5rem";
+            collapsibleArrow.style.transform = "scaleY(-1)";
+        }
+        else {
+            collapsible.style.maxHeight = "0px";
+            collapsibleArrow.style.transform = "scaleY(1)";
+        }
     }
     catch (error) {
         console.error(error);
