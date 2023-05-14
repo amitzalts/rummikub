@@ -5,3 +5,4 @@ const resetCurrentTile = () => {
     currentTile.classList.remove("active");
     currentTile = undefined;
 };
+const compareArrays = (a, b) => a.length === b.length && a.every((element, index) => element === b[index]);

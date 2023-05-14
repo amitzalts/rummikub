@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function handleGetUserDetails() {
     try {
         fetch("/api/v1/users/getUser")

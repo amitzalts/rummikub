@@ -2,13 +2,13 @@ class Player {
   public divsArray: Array<HTMLDivElement> = [];
   public id: string;
   public isActive: boolean = false;
-  public handAtStartTurn: Array<HTMLDivElement> = [];
+  public startingTurnDivs: Array<HTMLDivElement> = [];
   constructor(public name: string, public hand: {}[] = []) {
     this.id = Math.random().toString(36).slice(-9);
   }
 
   initializeStartHend() {
-    this.handAtStartTurn = [...this.divsArray];
+    this.startingTurnDivs = [...this.divsArray];
   }
 
   getNewHand(deck: Deck) {
