@@ -1,5 +1,3 @@
-// activatePlayers();
-
 endTurnBtn.addEventListener("click", moveToNextPlayer);
 
 const playerOne = new Player("vladi");
@@ -19,25 +17,25 @@ activePlayerArea.addEventListener("click", (e: MouseEvent) => {
 
   const target = e.target as HTMLElement;
 
-  if (target.classList.contains("activePlayerArea")) {
-    if (currentGame.board.includes(currentTile)) {
-      //create empty div to replace tile
-      const emptySquare = document.createElement("div");
-      emptySquare.classList.add("square");
+  // if (target.classList.contains("tile")) return;
 
-      // find the index on the tile in board array
-      const index = currentGame.board.indexOf(currentTile);
+  if (currentGame.board.includes(currentTile)) {
+    //create empty div to replace tile
+    const emptySquare = document.createElement("div");
+    emptySquare.classList.add("square");
 
-      // replace empty div with current tile at board and board array
-      board.replaceChild(emptySquare, currentTile);
-      currentGame.board[index] = emptySquare;
-      toggleActive(emptySquare, currentGame.board);
-      // add tile back to player's hand
-      currentPlayer.divsArray.push(currentTile);
-      currentPlayer.renderHandToScreen();
+    // find the index on the tile in board array
+    const index = currentGame.board.indexOf(currentTile);
 
-      resetCurrentTile();
-    }
+    // replace empty div with current tile at board and board array
+    board.replaceChild(emptySquare, currentTile);
+    currentGame.board[index] = emptySquare;
+    toggleTileActive(emptySquare, currentGame.board);
+    // add tile back to player's hand
+    currentPlayer.divsArray.push(currentTile);
+    currentPlayer.renderHandToScreen();
+
+    resetCurrentTile();
   }
 });
 

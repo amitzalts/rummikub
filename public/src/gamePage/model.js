@@ -23,7 +23,7 @@ class Player {
         this.hand.push(getTile);
         const tileDiv = document.createElement("div");
         tileDiv.classList.add("square");
-        toggleActive(tileDiv, this.divsArray);
+        toggleTileActive(tileDiv, this.divsArray);
         switch (key) {
             case "red":
                 tileDiv.classList.add("tile");

@@ -29,7 +29,7 @@ class Player {
 
     tileDiv.classList.add("square");
 
-    toggleActive(tileDiv, this.divsArray);
+    toggleTileActive(tileDiv, this.divsArray);
 
     switch (key) {
       case "red":
