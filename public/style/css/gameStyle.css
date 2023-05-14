@@ -77,27 +77,23 @@ body {
   background-color: #f3f3f3;
   border: 1px solid black;
   border-radius: 2px;
-  cursor: pointer; }
+  cursor: pointer;
+  font-weight: bold; }
 
 .active {
   box-shadow: 0 0 5px black; }
 
-.red {
-  background-color: red;
-  font-weight: bold; }
+.square[data-color="red"] {
+  background-color: red; }
 
-.gold {
-  background-color: darkgoldenrod;
-  font-weight: bold; }
+.square[data-color="yellow"] {
+  background-color: darkgoldenrod; }
 
-.green {
-  background-color: green;
-  font-weight: bold; }
+.square[data-color="green"] {
+  background-color: green; }
 
-.blue {
-  background-color: blue;
-  font-weight: bold; }
+.square[data-color="blue"] {
+  background-color: blue; }
 
-.jocker {
-  background-color: purple;
-  font-weight: bold; }
+.square[data-color="jocker"] {
+  background-color: purple; }
