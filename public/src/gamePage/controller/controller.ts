@@ -44,8 +44,10 @@ function activatePlayer(index: number) {
     playersInGameArea.querySelectorAll(".player");
 
   currentPlayer.isActive = false;
+
   currentPlayer = currentGame.players[index];
   currentPlayer.isActive = true;
+
   currentPlayer.renderHandToScreen();
   currentPlayer.initializeStartHend();
 
@@ -78,4 +80,23 @@ function activatePlayerArea() {
 
     resetCurrentTile();
   }
+}
+
+function sortHandByNumber() {
+  currentPlayer.divsArray.sort(
+    (a, b) => parseInt(a.innerHTML) - parseInt(b.innerHTML)
+  );
+  currentPlayer.renderHandToScreen();
+}
+
+function sortHandByColor() {
+  currentPlayer.divsArray.sort(
+    (a, b) => parseInt(a.innerHTML) - parseInt(b.innerHTML)
+  );
+  currentPlayer.divsArray.sort((a, b) => {
+    const x = a.dataset.color as string;
+    const y = b.dataset.color as string;
+    return x.localeCompare(y);
+  });
+  currentPlayer.renderHandToScreen();
 }

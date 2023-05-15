@@ -1,4 +1,6 @@
 endTurnBtn.addEventListener("click", moveToNextPlayer);
+sortByNumbersBtn.addEventListener("click", sortHandByNumber);
+sortByColorBtn.addEventListener("click", sortHandByColor);
 
 const playerOne = new Player("vladi");
 
@@ -13,4 +15,3 @@ currentGame = new Game([playerOne, playerTwo, playerThree, playerFour]);
 currentGame.startGame();
 
 activePlayerArea.addEventListener("click", activatePlayerArea);
-

@@ -65,3 +65,16 @@ function activatePlayerArea() {
         resetCurrentTile();
     }
 }
+function sortHandByNumber() {
+    currentPlayer.divsArray.sort((a, b) => parseInt(a.innerHTML) - parseInt(b.innerHTML));
+    currentPlayer.renderHandToScreen();
+}
+function sortHandByColor() {
+    currentPlayer.divsArray.sort((a, b) => parseInt(a.innerHTML) - parseInt(b.innerHTML));
+    currentPlayer.divsArray.sort((a, b) => {
+        const x = a.dataset.color;
+        const y = b.dataset.color;
+        return x.localeCompare(y);
+    });
+    currentPlayer.renderHandToScreen();
+}
