@@ -39,7 +39,7 @@ class Deck {
         return tile;
     }
     createDeck() {
-        const colors = ["green", "red", "blue", "yellow"];
+        const colors = ["black", "red", "blue", "yellow"];
         const deck = [];
         for (let j = 1; j < 3; j++) {
             const jocker = new Tile("jocker", 0);
@@ -91,22 +91,29 @@ class Tile {
             case "red":
                 tileDiv.classList.add("tile");
                 tileDiv.dataset.color = "red";
-                // tileDiv.style.backgroundColor = "red"
+                tileDiv.dataset.value = `${value}`;
+                tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / cover`;
                 tileDiv.innerHTML = value.toString();
                 break;
             case "blue":
                 tileDiv.classList.add("tile");
                 tileDiv.dataset.color = "blue";
+                tileDiv.dataset.value = `${value}`;
+                tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / cover`;
                 tileDiv.innerHTML = value.toString();
                 break;
             case "yellow":
                 tileDiv.classList.add("tile");
                 tileDiv.dataset.color = "yellow";
+                tileDiv.dataset.value = `${value}`;
+                tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / cover`;
                 tileDiv.innerHTML = value.toString();
                 break;
-            case "green":
+            case "black":
                 tileDiv.classList.add("tile");
-                tileDiv.dataset.color = "green";
+                tileDiv.dataset.color = "black";
+                tileDiv.dataset.value = `${value}`;
+                tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / cover`;
                 tileDiv.innerHTML = value.toString();
                 break;
             case "jocker":

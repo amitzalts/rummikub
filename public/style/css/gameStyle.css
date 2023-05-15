@@ -72,9 +72,8 @@ body {
 .square {
   display: flex;
   justify-content: center;
-  align-items: center;
-  color: #f3f3f3;
-  background-color: #f3f3f3;
+  padding-top: 20%;
+  color: transparent;
   border: 1px solid black;
   border-radius: 2px;
   cursor: pointer;
@@ -83,17 +82,6 @@ body {
 .active {
   box-shadow: 0 0 5px black; }
 
-.square[data-color="red"] {
-  background-color: red; }
-
-.square[data-color="yellow"] {
-  background-color: darkgoldenrod; }
-
-.square[data-color="green"] {
-  background-color: green; }
-
-.square[data-color="blue"] {
-  background-color: blue; }
-
 .square[data-color="jocker"] {
-  background-color: purple; }
+  background-color: #F9E3D1;
+  color: purple; }

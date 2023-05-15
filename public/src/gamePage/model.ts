@@ -2,7 +2,10 @@ class Player {
   public id: string;
   public isActive: boolean = false;
   public startingTurnDivs: Array<HTMLDivElement> = [];
-  constructor(public name: string, public divsArray: Array<HTMLDivElement> = []) {
+  constructor(
+    public name: string,
+    public divsArray: Array<HTMLDivElement> = []
+  ) {
     this.id = Math.random().toString(36).slice(-9);
   }
 
@@ -49,7 +52,7 @@ class Deck {
   }
 
   createDeck() {
-    const colors = ["green", "red", "blue", "yellow"];
+    const colors = ["black", "red", "blue", "yellow"];
     const deck: Tile[] = [];
 
     for (let j = 1; j < 3; j++) {
@@ -118,25 +121,32 @@ class Tile {
       case "red":
         tileDiv.classList.add("tile");
         tileDiv.dataset.color = "red";
-        // tileDiv.style.backgroundColor = "red"
+        tileDiv.dataset.value = `${value}`;
+        tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / cover`;
         tileDiv.innerHTML = value.toString();
         break;
 
       case "blue":
         tileDiv.classList.add("tile");
         tileDiv.dataset.color = "blue";
+        tileDiv.dataset.value = `${value}`;
+        tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / cover`;
         tileDiv.innerHTML = value.toString();
         break;
 
       case "yellow":
         tileDiv.classList.add("tile");
         tileDiv.dataset.color = "yellow";
+        tileDiv.dataset.value = `${value}`;
+        tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / cover`;
         tileDiv.innerHTML = value.toString();
         break;
 
-      case "green":
+      case "black":
         tileDiv.classList.add("tile");
-        tileDiv.dataset.color = "green";
+        tileDiv.dataset.color = "black";
+        tileDiv.dataset.value = `${value}`;
+        tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / cover`;
         tileDiv.innerHTML = value.toString();
         break;
 

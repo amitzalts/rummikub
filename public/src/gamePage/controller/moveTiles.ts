@@ -30,8 +30,6 @@ function moveTile(clickedOnSquare: HTMLDivElement) {
     renderBoard(currentGame.board);
     resetCurrentTile();
   }
-
-  // return true;
 }
 
 function moveFromPlayerHandToBoard(clickedOnSquare: HTMLDivElement) {

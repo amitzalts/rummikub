@@ -23,7 +23,6 @@ function moveTile(clickedOnSquare) {
         renderBoard(currentGame.board);
         resetCurrentTile();
     }
-    // return true;
 }
 function moveFromPlayerHandToBoard(clickedOnSquare) {
     if (!currentTile)

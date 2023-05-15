@@ -66,6 +66,8 @@ function activatePlayerArea() {
     //create empty div to replace tile
     const emptySquare = document.createElement("div");
     emptySquare.classList.add("square");
+    emptySquare.style.background =
+      "url('../../img/tileBack.png')no-repeat center / cover";
 
     // find the index on the tile in board array
     const index = currentGame.board.indexOf(currentTile);
@@ -83,16 +85,22 @@ function activatePlayerArea() {
 }
 
 function sortHandByNumber() {
-  currentPlayer.divsArray.sort(
-    (a, b) => parseInt(a.innerHTML) - parseInt(b.innerHTML)
-  );
+  currentPlayer.divsArray.sort((a, b) => {
+    const x = a.dataset.value as string;
+    const y = b.dataset.value as string;
+    return parseInt(x) - parseInt(y);
+  });
   currentPlayer.renderHandToScreen();
 }
 
 function sortHandByColor() {
-  currentPlayer.divsArray.sort(
-    (a, b) => parseInt(a.innerHTML) - parseInt(b.innerHTML)
-  );
+  //first sort by number
+  currentPlayer.divsArray.sort((a, b) => {
+    const x = a.dataset.value as string;
+    const y = b.dataset.value as string;
+    return parseInt(x) - parseInt(y);
+  });
+
   currentPlayer.divsArray.sort((a, b) => {
     const x = a.dataset.color as string;
     const y = b.dataset.color as string;
