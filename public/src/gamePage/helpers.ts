@@ -5,4 +5,6 @@ const resetCurrentTile = () => {
 };
 
 const compareArrays = (a: Array<HTMLDivElement>, b: Array<HTMLDivElement>) =>
-  a.length === b.length && a.every((element, index) => element === b[index]);
+  a.length === b.length;
+
+  // && a.every((element, index) => element === b[index]

@@ -120,7 +120,7 @@ class Deck {
 class Game {
   public board: Array<HTMLDivElement> = [];
   public deck: Deck;
-  public sets: number[][] = [];
+  public sets: Array<HTMLDivElement>[] = [];
   constructor(public players: Player[]) {
     this.deck = new Deck();
     this.players.forEach((player) => player.getNewHand(this.deck));
