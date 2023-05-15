@@ -23,7 +23,7 @@ function moveTile(clickedOnSquare) {
         renderBoard(currentGame.board);
         resetCurrentTile();
     }
-    return true;
+    // return true;
 }
 function moveFromPlayerHandToBoard(clickedOnSquare) {
     if (!currentTile)
@@ -45,6 +45,7 @@ function moveFromPlayerHandToBoard(clickedOnSquare) {
         const index = currentPlayer.divsArray.indexOf(currentTile);
         currentPlayer.divsArray.splice(index, 1);
         renderBoard(currentGame.board);
+        currentPlayer.renderHandToScreen();
         resetCurrentTile();
     }
 }

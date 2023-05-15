@@ -5,11 +5,11 @@ class Player {
         this.hand = hand;
         this.divsArray = [];
         this.isActive = false;
-        this.handAtStartTurn = [];
+        this.startingTurnDivs = [];
         this.id = Math.random().toString(36).slice(-9);
     }
     initializeStartHend() {
-        this.handAtStartTurn = [...this.divsArray];
+        this.startingTurnDivs = [...this.divsArray];
     }
     getNewHand(deck) {
         for (let i = 1; i < 15; i++) {

@@ -23,6 +23,7 @@ function toggleTileActive(clickedDiv, divArray) {
 function moveToNextPlayer() {
     if (!validateBoard())
         return;
+    checkIfPlayerMadeAMove();
     const numOfPlayers = currentGame.players.length;
     const indexCurrentPlayer = currentGame.players.indexOf(currentPlayer);
     // if current player is last player on array of players
@@ -44,4 +45,23 @@ function activatePlayer(index) {
             player.classList.add("active");
         }
     });
+}
+function activatePlayerArea() {
+    if (!currentTile || !board)
+        return;
+    if (currentGame.board.includes(currentTile)) {
+        //create empty div to replace tile
+        const emptySquare = document.createElement("div");
+        emptySquare.classList.add("square");
+        // find the index on the tile in board array
+        const index = currentGame.board.indexOf(currentTile);
+        // replace empty div with current tile at board and board array
+        board.replaceChild(emptySquare, currentTile);
+        currentGame.board[index] = emptySquare;
+        toggleTileActive(emptySquare, currentGame.board);
+        // add tile back to player's hand
+        currentPlayer.divsArray.push(currentTile);
+        currentPlayer.renderHandToScreen();
+        resetCurrentTile();
+    }
 }

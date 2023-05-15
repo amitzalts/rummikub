@@ -11,19 +11,21 @@ function validateBoard() {
             //
             if (square.innerHTML == "" && set.length > 0) {
                 let lastValue = set[0] - 1;
-                set.forEach((x) => {
-                    let nextValue = x;
-                    if (nextValue - 1 != lastValue) {
-                        set = [];
-                        console.error("not valid board");
-                        validBoard = false;
-                    }
-                    lastValue++;
-                });
                 if (set.length < 3) {
                     set = [];
-                    console.error("set too short. minimun 3 tiles needed");
+                    alert("set too short. minimun 3 tiles needed");
                     validBoard = false;
+                }
+                else {
+                    set.forEach((x) => {
+                        let nextValue = x;
+                        if (nextValue - 1 != lastValue) {
+                            set = [];
+                            alert("Not valid board.");
+                            validBoard = false;
+                        }
+                        lastValue++;
+                    });
                 }
                 currentGame.sets.push(set);
                 set = [];
@@ -33,5 +35,10 @@ function validateBoard() {
     }
     catch (error) {
         console.error(error);
+    }
+}
+function checkIfPlayerMadeAMove() {
+    if (compareArrays(currentPlayer.divsArray, currentPlayer.startingTurnDivs)) {
+        currentPlayer.getRandomTile(currentGame.deck);
     }
 }

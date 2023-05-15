@@ -31,7 +31,7 @@ function moveTile(clickedOnSquare: HTMLDivElement) {
     resetCurrentTile();
   }
 
-  return true;
+  // return true;
 }
 
 function moveFromPlayerHandToBoard(clickedOnSquare: HTMLDivElement) {
@@ -62,6 +62,7 @@ function moveFromPlayerHandToBoard(clickedOnSquare: HTMLDivElement) {
     currentPlayer.divsArray.splice(index, 1);
 
     renderBoard(currentGame.board);
+    currentPlayer.renderHandToScreen();
 
     resetCurrentTile();
   }
