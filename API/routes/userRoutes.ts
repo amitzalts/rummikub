@@ -9,11 +9,14 @@ import {
   userLogout,
   deleteUser,
   updateUser,
+  getAllSimpleUsers,
 } from "../controller/userController";
 
-userRouter.route("/").get(getAllUsers).post(createUser);
+userRouter.route("/").get(getAllUsers).post(createUser)
 
-userRouter.route("/getAllUsers").get(getAllUsers)
+userRouter.route("/getAllSimpleUsers").get(getAllSimpleUsers);
+
+userRouter.route("/getAllUsers").get(getAllUsers);
 
 userRouter.route("/getUser").get(getUser);
 

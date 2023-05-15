@@ -91,13 +91,13 @@ function renderAllUsersWrapper() {
       <div class="allUsersWrapper__users" id="allUsersRoot"></div>
     </div>
     `;
-        handleGetAllUsers();
+        handleGetAllSimpleUsers();
     }
     catch (error) {
         console.error(error);
     }
 }
-function renderAllUsers(users) {
+function renderAllSimpleUsers(users) {
     try {
         const allUsersRoot = document.querySelector("#allUsersRoot");
         if (!allUsersRoot)

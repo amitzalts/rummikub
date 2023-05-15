@@ -96,7 +96,7 @@ function renderAllUsersWrapper() {
       <div class="allUsersWrapper__users" id="allUsersRoot"></div>
     </div>
     `
-    handleGetAllUsers()
+    handleGetAllSimpleUsers()
 
   } catch (error) {
     console.error(error)
@@ -105,7 +105,7 @@ function renderAllUsersWrapper() {
 }
 
 
-function renderAllUsers(users:any){
+function renderAllSimpleUsers(users:any){
   try {
     
     const allUsersRoot: HTMLDivElement | null = document.querySelector("#allUsersRoot")

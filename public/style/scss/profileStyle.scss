@@ -199,19 +199,20 @@ body {
     border: 0.1rem solid black;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.51);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(0px);
     &__user{
       width: 23rem;
-      height: 15rem;
-      background-color: teal;
+      height: auto;
       border: 0.1rem solid black;
       padding: 0.4rem 0.4rem;
       line-height: 1rem;
       vertical-align: middle;
       display: flex;
       flex-direction: column;
-      // justify-content: space-between;
       h2{
         width: 22rem;
         height: 2rem;

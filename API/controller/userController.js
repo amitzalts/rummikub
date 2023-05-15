@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.deleteUser = exports.passwordRecovery = exports.userLogout = exports.userLogin = exports.getUser = exports.createUser = exports.getAllUsers = void 0;
+exports.updateUser = exports.deleteUser = exports.passwordRecovery = exports.userLogout = exports.userLogin = exports.getUser = exports.createUser = exports.getAllSimpleUsers = exports.getAllUsers = void 0;
 const userModel_1 = __importDefault(require("../model/userModel"));
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const secret = process.env.JWT_SECRET;
@@ -26,6 +26,18 @@ const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.getAllUsers = getAllUsers;
+const getAllSimpleUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log("test");
+        const users = yield userModel_1.default.find({ userRole: "simple" });
+        console.log("users", users);
+        res.status(200).json({ users });
+    }
+    catch (error) {
+        console.error(error);
+    }
+});
+exports.getAllSimpleUsers = getAllSimpleUsers;
 const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { firstName, lastName, gender, userName, password, email, adminToken } = req.body;

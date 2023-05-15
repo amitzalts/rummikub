@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function handleGetUserDetails() {
     try {
         fetch("/api/v1/users/getUser")
@@ -104,12 +103,12 @@ function handleLogout() {
         console.error(error);
     }
 }
-function handleGetAllUsers() {
+function handleGetAllSimpleUsers() {
     try {
-        fetch("/api/v1/users/getAllUsers")
+        fetch("/api/v1/users/getAllSimpleUsers")
             .then((res) => res.json())
             .then(({ users }) => {
-            renderAllUsers(users);
+            renderAllSimpleUsers(users);
         });
     }
     catch (error) {

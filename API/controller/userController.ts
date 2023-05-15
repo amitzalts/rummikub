@@ -9,12 +9,30 @@ export const getAllUsers = async (
   next: NextFunction
 ) => {
   try {
-    const users = await User.find({});
-    res.status(200).json({ users });
+    const users = await User.find({})
+    res.status(200).json({ users })
   } catch (error) {
     console.error(error);
   }
-};
+}
+
+
+export const getAllSimpleUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    console.log("test")
+    const users = await User.find({ userRole: "simple" })
+
+    console.log("users", users)
+    res.status(200).json({ users })
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 
 
 

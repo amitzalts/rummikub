@@ -1,5 +1,3 @@
-import { error, log } from "console"
-
 function handleGetUserDetails() {
   try {
     fetch("/api/v1/users/getUser")
@@ -106,12 +104,12 @@ function handleLogout() {
   }
 }
 
-function handleGetAllUsers(){
+function handleGetAllSimpleUsers(){
   try {
-    fetch("/api/v1/users/getAllUsers")
+    fetch("/api/v1/users/getAllSimpleUsers")
       .then((res) => res.json())
       .then(({ users }) => {
-        renderAllUsers(users)
+        renderAllSimpleUsers(users)
       })
   } catch (error) {
     console.error(error)
