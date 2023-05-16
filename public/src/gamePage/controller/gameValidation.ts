@@ -9,6 +9,7 @@ function validateBoard() {
     currentGame.sets = [];
 
     boardCopy.forEach((square) => {
+      if(!validBoard) return
       if (square.innerHTML != "") set.push(square);
 
       //

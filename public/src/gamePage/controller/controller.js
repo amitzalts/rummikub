@@ -50,6 +50,9 @@ function activatePlayerArea() {
     if (!currentTile || !board)
         return;
     if (currentGame.board.includes(currentTile)) {
+        if (!tileBelongesToPlayer(currentTile)) {
+            return alert("Tile does not belong to current player.");
+        }
         //create empty div to replace tile
         const emptySquare = document.createElement("div");
         emptySquare.classList.add("square");

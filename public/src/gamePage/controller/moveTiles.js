@@ -29,6 +29,9 @@ function moveFromPlayerHandToBoard(clickedOnSquare) {
         return;
     //if clicked on square is a tile
     if (clickedOnSquare.classList.contains("tile")) {
+        if (!tileBelongesToPlayer(clickedOnSquare)) {
+            return alert("Tile does not belong to current player.");
+        }
         const indexOfNewLocation = currentGame.board.indexOf(clickedOnSquare);
         const indexOfcurrentTile = currentPlayer.divsArray.indexOf(currentTile);
         currentGame.board[indexOfNewLocation] = currentTile;
@@ -52,6 +55,9 @@ function switchTileFromBoardToHand(clickedOnSquare) {
     try {
         if (!currentTile)
             return;
+        if (!tileBelongesToPlayer(currentTile)) {
+            return alert("Tile does not belong to current player.");
+        }
         const indexOfNewLocation = currentPlayer.divsArray.indexOf(clickedOnSquare);
         const indexOfcurrentTile = currentGame.board.indexOf(currentTile);
         currentGame.board[indexOfcurrentTile] = clickedOnSquare;

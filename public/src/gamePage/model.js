@@ -11,7 +11,7 @@ class Player {
         this.startingTurnDivs = [...this.divsArray];
     }
     getNewHand(deck) {
-        for (let i = 1; i < 15; i++) {
+        for (let i = 1; i < 20; i++) {
             this.getRandomTile(deck);
         }
     }

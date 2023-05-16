@@ -7,3 +7,9 @@ const resetCurrentTile = () => {
 };
 const compareArrays = (a, b) => a.length === b.length;
 // && a.every((element, index) => element === b[index])
+function tileBelongesToPlayer(div) {
+    if (!currentPlayer.startingTurnDivs.includes(div)) {
+        resetCurrentTile();
+        return false;
+    }
+}

@@ -22,6 +22,7 @@ function moveTile(clickedOnSquare: HTMLDivElement) {
   // moving tile on board from one square to another
   else {
     const indexOfcurrentTile = currentGame.board.indexOf(currentTile);
+    
     const indexOfNewLocation = currentGame.board.indexOf(clickedOnSquare);
 
     currentGame.board[indexOfcurrentTile] = clickedOnSquare;
@@ -37,6 +38,10 @@ function moveFromPlayerHandToBoard(clickedOnSquare: HTMLDivElement) {
 
   //if clicked on square is a tile
   if (clickedOnSquare.classList.contains("tile")) {
+    if (!tileBelongesToPlayer(clickedOnSquare)) {
+      return alert("Tile does not belong to current player.");
+    }
+
     const indexOfNewLocation = currentGame.board.indexOf(clickedOnSquare);
     const indexOfcurrentTile = currentPlayer.divsArray.indexOf(currentTile);
 
@@ -69,6 +74,10 @@ function moveFromPlayerHandToBoard(clickedOnSquare: HTMLDivElement) {
 function switchTileFromBoardToHand(clickedOnSquare: HTMLDivElement) {
   try {
     if (!currentTile) return;
+
+    if (!tileBelongesToPlayer(currentTile)) {
+      return alert("Tile does not belong to current player.");
+    }
 
     const indexOfNewLocation = currentPlayer.divsArray.indexOf(clickedOnSquare);
     const indexOfcurrentTile = currentGame.board.indexOf(currentTile);

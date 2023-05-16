@@ -63,6 +63,10 @@ function activatePlayerArea() {
   if (!currentTile || !board) return;
 
   if (currentGame.board.includes(currentTile)) {
+    if(!tileBelongesToPlayer(currentTile)){
+      return alert("Tile does not belong to current player.")
+    }
+
     //create empty div to replace tile
     const emptySquare = document.createElement("div");
     emptySquare.classList.add("square");
@@ -76,6 +80,7 @@ function activatePlayerArea() {
     board.replaceChild(emptySquare, currentTile);
     currentGame.board[index] = emptySquare;
     toggleTileActive(emptySquare, currentGame.board);
+
     // add tile back to player's hand
     currentPlayer.divsArray.push(currentTile);
     currentPlayer.renderHandToScreen();
