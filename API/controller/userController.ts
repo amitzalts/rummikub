@@ -23,10 +23,7 @@ export const getAllSimpleUsers = async (
   next: NextFunction
 ) => {
   try {
-    console.log("test")
     const users = await User.find({ userRole: "simple" })
-
-    console.log("users", users)
     res.status(200).json({ users })
   } catch (error) {
     console.error(error);
@@ -243,20 +240,19 @@ export const deleteUser = async (
   next: NextFunction
 ) => {
   try {
-    const { userId } = req.body;
+    const { userId } = req.body
 
-    const findUser = await User.findByIdAndDelete(userId);
+    const deletedUser = await User.findByIdAndDelete(userId)
+    if (!deletedUser) throw new Error("User  was not found in delete user route")
 
-    if (!findUser) throw new Error("User not found in delete user route.");
+    const users = await User.find({ userRole: "simple" })
 
-    const users = await User.find({});
-
-    res.status(200).send({ findUser, users });
+    res.status(200).send({ users });
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: error.message });
   }
-};
+}
 
 
 
@@ -318,6 +314,58 @@ async function updatedUser(userId:any, firstName:any, lastName:any, gender:any, 
     })
 
     res.status(201).json({ ok: true, user })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+
+
+//////////////////////////
+
+export const updateUserByAdmin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userId, firstName, lastName, gender, userName, email } = req.body;
+
+    const takenEmailUser = await User.findOne({ email })
+   
+    if (takenEmailUser){
+      if (takenEmailUser.email !== email) {
+        res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` })
+      }else if(takenEmailUser.email === email){
+        updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, res)
+      }
+    } else {
+      updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, res)
+    }
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message })
+  }
+}
+
+async function updatedUserByAdmin(userId:any, firstName:any, lastName:any, gender:any, userName:any, email:any, res: Response,){
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      { _id: userId },
+      {
+        firstName,
+        lastName,
+        gender,
+        userName,
+        email,
+      }
+    );
+
+    const user = await User.findById(userId);
+
+    // const users = await User.find({ userRole: "simple" })
+
+    res.status(201).json({ ok: true, user})
   } catch (error) {
     console.error(error)
   }

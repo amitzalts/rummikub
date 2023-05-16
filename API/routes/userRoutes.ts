@@ -10,6 +10,7 @@ import {
   deleteUser,
   updateUser,
   getAllSimpleUsers,
+  updateUserByAdmin,
 } from "../controller/userController";
 
 userRouter.route("/").get(getAllUsers).post(createUser)
@@ -23,6 +24,8 @@ userRouter.route("/getUser").get(getUser);
 userRouter.route("/deleteUser").delete(deleteUser);
 
 userRouter.route("/updateUser").patch(updateUser);
+
+userRouter.route("/updateUserByAdmin").patch(updateUserByAdmin);
 
 userRouter.route("/userLogin").post(userLogin);
 

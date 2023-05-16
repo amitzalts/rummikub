@@ -88,6 +88,7 @@ body {
     &:hover{
       box-shadow: none;
       background-color: beige;
+      transition: 0.2s ease-out;
     }
     &:active{
       background-color: seagreen;
@@ -222,7 +223,7 @@ body {
       }
       &__details{
         width: 22rem;
-        height: 10rem;
+        height: auto;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
@@ -231,6 +232,23 @@ body {
         line-height: 1.5rem;
         overflow: hidden;
         transition: max-height 0.2s ease-out;
+        button{
+          margin:0.5rem;
+          background-color: red;
+          box-shadow: 0px 0px 15px;
+          font-weight: 900;
+          border-radius: 0.5rem;
+          padding: 0.5rem;
+          font-size: 16px;
+          margin-bottom: 0.5rem;
+          &:hover{
+            box-shadow: none;
+            background-color: black;
+            transition: 0.2s ease-out;
+            color: red;
+          }
+        
+        }
         &__buttons{
           width: 22rem;
           height: 1rem;
@@ -247,6 +265,9 @@ body {
           }
         }
         p{
+          font-weight: 900;
+        }
+        span{
           font-weight: 200;
         }
       }

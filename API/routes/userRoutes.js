@@ -14,5 +14,6 @@ userRouter.route("/getAllUsers").get(userController_1.getAllUsers);
 userRouter.route("/getUser").get(userController_1.getUser);
 userRouter.route("/deleteUser").delete(userController_1.deleteUser);
 userRouter.route("/updateUser").patch(userController_1.updateUser);
+userRouter.route("/updateUserByAdmin").patch(userController_1.updateUserByAdmin);
 userRouter.route("/userLogin").post(userController_1.userLogin);
 userRouter.route("/userLogout").get(userController_1.userLogout);

@@ -105,7 +105,7 @@ function renderAllSimpleUsers(users) {
         const html = users.map((user) => {
             return `
         <div class="allUsersWrapper__users__user">
-          <h2>${user.email}
+          <h2 id="emailInHeaderRoot-${user._id}">${user.email}
             <i id="collapsibleArrow-${user._id}" onclick="collapseUserDetails('${user._id}')" class="fa-solid fa-angle-up"></i>
           </h2>
           <div id="userDetailsRoot-${user._id}" class="allUsersWrapper__users__user__details" style="max-height:0px;">
@@ -113,11 +113,23 @@ function renderAllSimpleUsers(users) {
                 <i onclick="handleEditUserDetailsByAdmin('${user._id}')" class="fa-solid fa-pen-to-square"></i>
                 <i onclick="handleSaveEditUserDetailsByAdmin('${user._id}')" class="fa-solid fa-floppy-disk"></i>
             </div>
-            <p id="editableUserDataRoot-firstName-${user._id}">first name: ${user.firstName}</p>
-            <p id="editableUserDataRoot-lastName-${user._id}">last name: ${user.lastName}</p>
-            <p id="editableUserDataRoot-userName-${user._id}">user name: ${user.userName}</p>
-            <p id="editableUserDataRoot-gender-${user._id}">gender: ${user.gender}</p>
-            <p id="editableUserDataRoot-email-${user._id}">email: ${user.email}</p>
+            <p>first name: 
+              <span id="editableUserDataRoot-firstName-${user._id}"> ${user.firstName}</span>
+            </p>
+            <p>last name:
+              <span id="editableUserDataRoot-lastName-${user._id}"> ${user.lastName}</span>
+            </p>
+            <p>user name:
+              <span id="editableUserDataRoot-userName-${user._id}"> ${user.userName}</span>
+            </p>
+            <p>gender:
+              <span id="editableUserDataRoot-gender-${user._id}"> ${user.gender}</span>
+            </p>
+            <p>email:
+              <span id="editableUserDataRoot-email-${user._id}"> ${user.email}</span>
+            </p>
+            
+            <button onclick="handleDeleteUserByAdmin('${user._id}')" >DELETE USER</button>
           </div>
         </div>
       `;
@@ -137,7 +149,7 @@ function collapseUserDetails(userId) {
         if (!collapsibleArrow)
             throw new Error("collapsibleArrow not found on DOM");
         if (collapsible.style.maxHeight === "0px") {
-            collapsible.style.maxHeight = "9.5rem";
+            collapsible.style.maxHeight = "13rem";
             collapsibleArrow.style.transform = "scaleY(-1)";
         }
         else {

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.deleteUser = exports.passwordRecovery = exports.userLogout = exports.userLogin = exports.getUser = exports.createUser = exports.getAllSimpleUsers = exports.getAllUsers = void 0;
+exports.updateUserByAdmin = exports.updateUser = exports.deleteUser = exports.passwordRecovery = exports.userLogout = exports.userLogin = exports.getUser = exports.createUser = exports.getAllSimpleUsers = exports.getAllUsers = void 0;
 const userModel_1 = __importDefault(require("../model/userModel"));
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const secret = process.env.JWT_SECRET;
@@ -28,9 +28,7 @@ const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 exports.getAllUsers = getAllUsers;
 const getAllSimpleUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log("test");
         const users = yield userModel_1.default.find({ userRole: "simple" });
-        console.log("users", users);
         res.status(200).json({ users });
     }
     catch (error) {
@@ -201,11 +199,11 @@ exports.passwordRecovery = passwordRecovery;
 const deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId } = req.body;
-        const findUser = yield userModel_1.default.findByIdAndDelete(userId);
-        if (!findUser)
-            throw new Error("User not found in delete user route.");
-        const users = yield userModel_1.default.find({});
-        res.status(200).send({ findUser, users });
+        const deletedUser = yield userModel_1.default.findByIdAndDelete(userId);
+        if (!deletedUser)
+            throw new Error("User  was not found in delete user route");
+        const users = yield userModel_1.default.find({ userRole: "simple" });
+        res.status(200).send({ users });
     }
     catch (error) {
         console.error(error);
@@ -262,6 +260,48 @@ function updatedUser(userId, firstName, lastName, gender, userName, email, res) 
                 maxAge: 24 * 60 * 60 * 1000,
                 httpOnly: true,
             });
+            res.status(201).json({ ok: true, user });
+        }
+        catch (error) {
+            console.error(error);
+        }
+    });
+}
+//////////////////////////
+const updateUserByAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId, firstName, lastName, gender, userName, email } = req.body;
+        const takenEmailUser = yield userModel_1.default.findOne({ email });
+        if (takenEmailUser) {
+            if (takenEmailUser.email !== email) {
+                res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` });
+            }
+            else if (takenEmailUser.email === email) {
+                updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, res);
+            }
+        }
+        else {
+            updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, res);
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+});
+exports.updateUserByAdmin = updateUserByAdmin;
+function updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const updatedUser = yield userModel_1.default.findByIdAndUpdate({ _id: userId }, {
+                firstName,
+                lastName,
+                gender,
+                userName,
+                email,
+            });
+            const user = yield userModel_1.default.findById(userId);
+            // const users = await User.find({ userRole: "simple" })
             res.status(201).json({ ok: true, user });
         }
         catch (error) {
