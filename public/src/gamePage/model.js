@@ -66,7 +66,7 @@ class Game {
         this.players.forEach((player) => player.getNewHand(this.deck));
     }
     startGame() {
-        createEmptyBoard(this.board);
+        createEmptyBoard(this.board, 160);
         currentPlayer =
             this.players[Math.floor(Math.random() * this.players.length)];
         renderPlayers(currentGame.players);
