@@ -86,8 +86,9 @@ function renderAllUsersWrapper() {
     <div class="allUsersWrapper">
       <h1>users</h1>
       <div class="allUsersWrapper__filterBar">
-        <input class="allUsersWrapper__filterBar__searchBar" placeholder="search">
+        <input id="userSearchInput" class="allUsersWrapper__filterBar__searchBar" placeholder="search" onkeyup="handleSearchUsers()">
       </div>
+      <div id="noResultsRoot"></div>
       <div class="allUsersWrapper__users" id="allUsersRoot"></div>
     </div>
     `;
@@ -128,7 +129,6 @@ function renderAllSimpleUsers(users) {
             <p>email:
               <span id="editableUserDataRoot-email-${user._id}"> ${user.email}</span>
             </p>
-            
             <button onclick="handleDeleteUserByAdmin('${user._id}')" >DELETE USER</button>
           </div>
         </div>

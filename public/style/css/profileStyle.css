@@ -161,7 +161,8 @@ body {
     .allUsersWrapper__filterBar__searchBar {
       width: 24.8rem;
       height: 2rem;
-      border: 0.1rem solid black; }
+      border: 0.1rem solid black;
+      padding-left: 0.5rem; }
   .allUsersWrapper__users {
     width: 25rem;
     height: 30rem;

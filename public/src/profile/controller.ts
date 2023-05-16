@@ -161,7 +161,7 @@ function handleSaveEditUserDetailsByAdmin(userId: string) {
 
     const EmailInHeaderRoot: HTMLDivElement | null = document.querySelector(`#emailInHeaderRoot-${userId}`)
     if (!EmailInHeaderRoot) throw new Error("EmailInHeaderRoot not found on DOM")
-    
+
 
     const firstName = editableFirstNameRoot.innerText
     const lastName = editableLastNameRoot.innerText
@@ -190,9 +190,9 @@ function handleSaveEditUserDetailsByAdmin(userId: string) {
           })
         }
       })
-} catch (error) {
-  console.error(error)
-}
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 function handleDeleteUserByAdmin(userId: any) {
@@ -214,3 +214,32 @@ function handleDeleteUserByAdmin(userId: any) {
   }
 }
 
+function handleSearchUsers() {
+  try {
+    const userInput: Element | null = document.querySelector("#userSearchInput")
+    if (!userInput) throw new Error("userInput not found on DOM")
+    const noResultsRoot: HTMLDivElement | null = document.querySelector("#noResultsRoot")
+    if (!noResultsRoot) throw new Error("noResultsRoot not found on DOM")
+
+    userInput?.addEventListener("input", (search) => {
+      const _userInputValue = (search.target as HTMLInputElement).value
+      const userInputValue = _userInputValue.toLocaleLowerCase()
+
+      const results = document.querySelectorAll<HTMLElement>(".allUsersWrapper__users__user");//
+      for (let i = 0; i < results.length; i++) {
+        if (results[i].innerText.toLowerCase().includes(userInputValue) && noResultsRoot) {
+          results[i].style.display = ""
+          noResultsRoot.style.display = "none"
+        } else {
+          results[i].style.display = "none"
+          noResultsRoot.style.display = ""
+          noResultsRoot.innerHTML = `Sorry, there isn't a user email that icludes <u><b>${userInputValue}</b></u> on our store...`
+          noResultsRoot.style.backgroundColor = "white"
+        }
+      }
+    })
+  } catch (error) {
+    console.error(error)
+
+  }
+}
