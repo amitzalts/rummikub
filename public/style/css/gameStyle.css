@@ -26,9 +26,9 @@ body {
   border-right: 5px solid black;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem; }
+  padding: 1rem;
+  gap: 1rem; }
   .playersInGameArea .active {
     box-shadow: 0 0 10px red; }
 
@@ -82,6 +82,26 @@ body {
 .active {
   box-shadow: 0 0 5px black; }
 
+#playerNamesForm {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: darkblue;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  gap: 5px; }
+  #playerNamesForm h1 {
+    color: whitesmoke; }
+  #playerNamesForm input {
+    background-color: #eee;
+    border: 1px solid rgba(0, 0, 0, 0.058);
+    border-radius: 3px;
+    padding: 0.3rem;
+    width: 30%;
+    outline: none; }
+
 .square[data-color="jocker"] {
-  background-color: #F9E3D1;
+  background-color: #f9e3d1;
   color: purple; }

@@ -1,5 +1,6 @@
 "use strict";
 const board = document.querySelector(".board");
+const playerNamesForm = document.querySelector("#playerNamesForm");
 // page areas
 const activePlayerArea = document.querySelector(".activePlayerArea");
 const playersInGameArea = document.querySelector(".playersInGameArea");

@@ -1,5 +1,8 @@
 const board: HTMLDivElement | null = document.querySelector(".board");
 
+const playerNamesForm: HTMLFormElement | null =
+  document.querySelector("#playerNamesForm");
+
 // page areas
 const activePlayerArea = document.querySelector(
   ".activePlayerArea"

@@ -10,6 +10,7 @@
     ></script>
     <link rel="icon" type="image/png" href="./img/pngwing.com.png" />
     <link rel="stylesheet" href="./style/css/gameStyle.css" />
+    <link rel="stylesheet" href="./style/css/button.css">
     <script src="./src/gamePage/view.js" defer></script>
     <script src="./src/gamePage/helpers.js" defer></script>
     <script src="./src/gamePage/model.js" defer></script>
@@ -20,7 +21,15 @@
     <script src="./src/gamePage/index.js" defer></script>
     <title>Game Page</title>
   </head>
-  <body>
+  <body onload="checkIfGameStarted()">
+    <form id="playerNamesForm">
+      <h1>Enter names of players</h1>
+      <input type="text" name="playerOne" placeholder="player one" required />
+      <input type="text" name="playerTwo" placeholder="player two" required />
+      <input type="text" name="playerThree" placeholder="player three" />
+      <input type="text" name="playerFour" placeholder="player four" />
+      <button class="buttonStyleOne" type="submit">Start</button>
+    </form>
     <div class="wrapper">
       <div class="playersInGameArea"></div>
       <div class="activePlayerArea"></div>
