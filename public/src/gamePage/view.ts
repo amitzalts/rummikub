@@ -23,6 +23,10 @@ const sortByNumbersBtn = document.querySelector(
 
 const endTurnBtn = document.querySelector("#endTurnBtn") as HTMLButtonElement;
 
+const resetTurnBtn = document.querySelector(
+  "#resetTurnBtn"
+) as HTMLButtonElement;
+
 // current entities
 let currentPlayer: Player;
 let currentGame: Game;

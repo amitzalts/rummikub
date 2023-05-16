@@ -48,8 +48,9 @@ function activatePlayer(index: number) {
   currentPlayer = currentGame.players[index];
   currentPlayer.isActive = true;
 
-  currentPlayer.renderHandToScreen();
+  currentPlayer.renderHandToScreen(currentPlayer.divsArray);
   currentPlayer.initializeStartHend();
+  currentGame.saveCurrentGameStatus();
 
   playersArray.forEach((player) => {
     player.classList.remove("active");
@@ -63,8 +64,8 @@ function activatePlayerArea() {
   if (!currentTile || !board) return;
 
   if (currentGame.board.includes(currentTile)) {
-    if(!tileBelongesToPlayer(currentTile)){
-      return alert("Tile does not belong to current player.")
+    if (!tileBelongesToPlayer(currentTile)) {
+      return alert("Tile does not belong to current player.");
     }
 
     //create empty div to replace tile
@@ -83,7 +84,7 @@ function activatePlayerArea() {
 
     // add tile back to player's hand
     currentPlayer.divsArray.push(currentTile);
-    currentPlayer.renderHandToScreen();
+    currentPlayer.renderHandToScreen(currentPlayer.divsArray);
 
     resetCurrentTile();
   }
@@ -95,7 +96,7 @@ function sortHandByNumber() {
     const y = b.dataset.value as string;
     return parseInt(x) - parseInt(y);
   });
-  currentPlayer.renderHandToScreen();
+  currentPlayer.renderHandToScreen(currentPlayer.divsArray);
 }
 
 function sortHandByColor() {
@@ -111,5 +112,12 @@ function sortHandByColor() {
     const y = b.dataset.color as string;
     return x.localeCompare(y);
   });
-  currentPlayer.renderHandToScreen();
+  currentPlayer.renderHandToScreen(currentPlayer.divsArray);
+}
+
+function resetMoves() {
+  currentPlayer.renderHandToScreen(currentGame.currentGameStatus.playerHand);
+  renderBoard(currentGame.currentGameStatus.board);
+  currentGame.board = [...currentGame.currentGameStatus.board]
+  currentPlayer.divsArray = [...currentGame.currentGameStatus.playerHand]
 }

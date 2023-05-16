@@ -49,7 +49,7 @@ function moveFromPlayerHandToBoard(clickedOnSquare: HTMLDivElement) {
     currentPlayer.divsArray[indexOfcurrentTile] = clickedOnSquare;
 
     renderBoard(currentGame.board);
-    currentPlayer.renderHandToScreen();
+    currentPlayer.renderHandToScreen(currentPlayer.divsArray);
 
     resetCurrentTile();
   }
@@ -65,7 +65,7 @@ function moveFromPlayerHandToBoard(clickedOnSquare: HTMLDivElement) {
     currentPlayer.divsArray.splice(index, 1);
 
     renderBoard(currentGame.board);
-    currentPlayer.renderHandToScreen();
+    currentPlayer.renderHandToScreen(currentPlayer.divsArray);
 
     resetCurrentTile();
   }
@@ -86,7 +86,7 @@ function switchTileFromBoardToHand(clickedOnSquare: HTMLDivElement) {
     currentPlayer.divsArray[indexOfNewLocation] = currentTile;
 
     renderBoard(currentGame.board);
-    currentPlayer.renderHandToScreen();
+    currentPlayer.renderHandToScreen(currentPlayer.divsArray);
 
     resetCurrentTile();
   } catch (error) {

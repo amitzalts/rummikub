@@ -37,7 +37,7 @@ function moveFromPlayerHandToBoard(clickedOnSquare) {
         currentGame.board[indexOfNewLocation] = currentTile;
         currentPlayer.divsArray[indexOfcurrentTile] = clickedOnSquare;
         renderBoard(currentGame.board);
-        currentPlayer.renderHandToScreen();
+        currentPlayer.renderHandToScreen(currentPlayer.divsArray);
         resetCurrentTile();
     }
     // if clicked on square is an empty square
@@ -47,7 +47,7 @@ function moveFromPlayerHandToBoard(clickedOnSquare) {
         const index = currentPlayer.divsArray.indexOf(currentTile);
         currentPlayer.divsArray.splice(index, 1);
         renderBoard(currentGame.board);
-        currentPlayer.renderHandToScreen();
+        currentPlayer.renderHandToScreen(currentPlayer.divsArray);
         resetCurrentTile();
     }
 }
@@ -63,7 +63,7 @@ function switchTileFromBoardToHand(clickedOnSquare) {
         currentGame.board[indexOfcurrentTile] = clickedOnSquare;
         currentPlayer.divsArray[indexOfNewLocation] = currentTile;
         renderBoard(currentGame.board);
-        currentPlayer.renderHandToScreen();
+        currentPlayer.renderHandToScreen(currentPlayer.divsArray);
         resetCurrentTile();
     }
     catch (error) {

@@ -25,17 +25,17 @@ class Player {
     toggleTileActive(getTile.div, this.divsArray);
 
     this.divsArray.push(getTile.div);
-    this.renderHandToScreen();
+    this.renderHandToScreen(this.divsArray);
   }
 
-  renderHandToScreen() {
+  renderHandToScreen(tileArr: Array<HTMLDivElement>) {
     activePlayerArea.innerHTML = "";
 
-    if (this.divsArray.length > 30) {
+    if (tileArr.length > 30) {
       activePlayerArea.style.gridTemplateColumns = "repeat(20, 1fr)";
     }
 
-    this.divsArray.forEach((div) => activePlayerArea.append(div));
+    tileArr.forEach((div) => activePlayerArea.append(div));
   }
 }
 
@@ -73,9 +73,13 @@ class Deck {
     this.deck = [...this.createDeck()];
   }
 }
-
+type GameStatus = {
+  board: Array<HTMLDivElement>;
+  playerHand: Array<HTMLDivElement>;
+};
 class Game {
   public board: Array<HTMLDivElement> = [];
+  public currentGameStatus: GameStatus = { board: [], playerHand: [] };
   public deck: Deck;
   public sets: Array<HTMLDivElement>[] = [];
   constructor(public players: Player[]) {
@@ -94,8 +98,11 @@ class Game {
     activatePlayer(currentGame.players.indexOf(currentPlayer));
   }
 
-  getBoardFromUser() {
-    //or Game route???
+  saveCurrentGameStatus() {
+    this.currentGameStatus = {
+      board: [...this.board],
+      playerHand: [...currentPlayer.divsArray],
+    };
   }
 }
 
@@ -122,7 +129,7 @@ class Tile {
         tileDiv.classList.add("tile");
         tileDiv.dataset.color = "red";
         tileDiv.dataset.value = `${value}`;
-        tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / cover`;
+        tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / contain`;
         tileDiv.innerHTML = value.toString();
         break;
 
@@ -130,7 +137,7 @@ class Tile {
         tileDiv.classList.add("tile");
         tileDiv.dataset.color = "blue";
         tileDiv.dataset.value = `${value}`;
-        tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / cover`;
+        tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / contain`;
         tileDiv.innerHTML = value.toString();
         break;
 
@@ -138,7 +145,7 @@ class Tile {
         tileDiv.classList.add("tile");
         tileDiv.dataset.color = "yellow";
         tileDiv.dataset.value = `${value}`;
-        tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / cover`;
+        tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / contain`;
         tileDiv.innerHTML = value.toString();
         break;
 
@@ -146,14 +153,15 @@ class Tile {
         tileDiv.classList.add("tile");
         tileDiv.dataset.color = "black";
         tileDiv.dataset.value = `${value}`;
-        tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / cover`;
+        tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / contain`;
         tileDiv.innerHTML = value.toString();
         break;
 
       case "jocker":
         tileDiv.classList.add("tile");
         tileDiv.dataset.color = "jocker";
-        tileDiv.innerHTML = '<i class="fa-regular fa-face-smile"></i>';
+        // tileDiv.innerHTML = '<i class="fa-regular fa-face-smile"></i>';
+        tileDiv.style.background = `url('../../img/pngwing.com.png')no-repeat center / contain`;
         break;
 
       default:

@@ -6,10 +6,13 @@ function checkIfGameStarted() {
         playerNamesForm.style.display = "none";
     }
 }
-playerNamesForm === null || playerNamesForm === void 0 ? void 0 : playerNamesForm.addEventListener("submit", handlePlayerForm);
+if (playerNamesForm) {
+    playerNamesForm.addEventListener("submit", handlePlayerForm);
+}
 endTurnBtn.addEventListener("click", moveToNextPlayer);
 sortByNumbersBtn.addEventListener("click", sortHandByNumber);
 sortByColorBtn.addEventListener("click", sortHandByColor);
+resetTurnBtn.addEventListener("click", resetMoves);
 const playerOne = new Player("vladi");
 const playerTwo = new Player("shlomi");
 const playerThree = new Player("amit");

@@ -8,6 +8,7 @@ const playersInGameArea = document.querySelector(".playersInGameArea");
 const sortByColorBtn = document.querySelector("#sortByColorBtn");
 const sortByNumbersBtn = document.querySelector("#sortByNumbersBtn");
 const endTurnBtn = document.querySelector("#endTurnBtn");
+const resetTurnBtn = document.querySelector("#resetTurnBtn");
 // current entities
 let currentPlayer;
 let currentGame;

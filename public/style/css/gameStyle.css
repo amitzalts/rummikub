@@ -20,23 +20,24 @@ body {
   display: grid;
   grid-template-columns: 10vw repeat(4, 1fr);
   grid-template-rows: repeat(5, 1fr);
-  background: #008aff;
-  background: linear-gradient(270deg, #008aff 0%, #0f144f 90%); }
+  background: #0012ff;
+  background: radial-gradient(circle, #0012ff 15%, black 100%); }
 
 .playersInGameArea {
   grid-area: 1 / 1 / 6 / 2;
-  border-right: 5px solid black;
+  border-right: 3px solid whitesmoke;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  gap: 2rem; }
+  gap: 10%; }
   .playersInGameArea .active {
     box-shadow: 0 0 10px white; }
 
 .player {
   width: 100%;
+  max-width: 150px;
   aspect-ratio: 1/1;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 50%;
@@ -46,24 +47,28 @@ body {
   background-color: #f3f3f3;
   font-size: calc(10vw / 10); }
 
+.player.active {
+  background-color: gold;
+  box-shadow: 0 0 20px gold; }
+
 .activePlayerArea {
   grid-area: 5 / 2 / 6 / 5;
-  border-top: 5px solid black;
+  border-top: 3px solid whitesmoke;
   display: grid;
   grid-template-columns: repeat(15, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
+  gap: 0.5rem;
   padding: 5px; }
 
 .action {
   grid-area: 5 / 5 / 6 / 6;
-  border-top: 5px solid black;
-  border-left: 5px solid black;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 0.5rem; }
+  border-top: 3px solid whitesmoke;
+  border-left: 3px solid whitesmoke;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 0.7rem; }
 
 .board {
   grid-area: 1 / 2 / 5 / 6;
@@ -83,8 +88,8 @@ body {
   cursor: pointer;
   font-weight: bold; }
 
-.active {
-  box-shadow: 0 0 5px white; }
+.square.active {
+  transform: scale(0.7); }
 
 #playerNamesForm {
   position: absolute;
@@ -108,4 +113,7 @@ body {
 
 .square[data-color="jocker"] {
   background-color: #f9e3d1;
-  color: purple; }
+  color: purple;
+  width: 80%;
+  height: 80%;
+  margin: auto; }
