@@ -105,7 +105,8 @@ body {
   align-items: center;
   justify-content: space-around;
   flex-direction: column;
-  gap: 5px; }
+  gap: 5px;
+  z-index: 10; }
   #playerNamesForm h1 {
     color: whitesmoke; }
   #playerNamesForm input {
