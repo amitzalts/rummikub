@@ -4,8 +4,7 @@ function createEmptyBoard(array: Array<HTMLDivElement>) {
   for (let i = 1; i <= 160; i++) {
     const squareDiv: HTMLDivElement = document.createElement("div");
     squareDiv.classList.add("square");
-    squareDiv.style.background =
-      "url('../../img/tileBack.png')no-repeat center / contain";
+    // squareDiv.innerHTML = `<i class="fa-regular fa-circle-down"></i>`;
     array.push(squareDiv);
 
     toggleTileActive(squareDiv, array);
