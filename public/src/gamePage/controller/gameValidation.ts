@@ -12,16 +12,18 @@ function validateBoard() {
       if (!validBoard) return;
       if (square.innerHTML != "") set.push(square);
 
+      const squareIndex = boardCopy.indexOf(square) + 1;
       //
-      if (square.innerHTML == "" && set.length > 0) {
+      if (
+        (square.innerHTML == "" && set.length > 0) ||
+        (set.length > 0 && squareIndex % 20 == 0)
+      ) {
+        console.log(squareIndex);
         const tileArr: Tile[] = set.map((div) => {
           const color = div.dataset.color as string;
           const number = parseInt(div.innerHTML) as number;
           return new Tile(color, number);
         });
-
-        console.log(tileArr);
-        console.log("set has duplicates: " + hasDuplicates(tileArr));
 
         //check set length
         if (set.length < 3) {

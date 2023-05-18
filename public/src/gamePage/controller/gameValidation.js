@@ -10,15 +10,16 @@ function validateBoard() {
                 return;
             if (square.innerHTML != "")
                 set.push(square);
+            const squareIndex = boardCopy.indexOf(square) + 1;
             //
-            if (square.innerHTML == "" && set.length > 0) {
+            if ((square.innerHTML == "" && set.length > 0) ||
+                (set.length > 0 && squareIndex % 20 == 0)) {
+                console.log(squareIndex);
                 const tileArr = set.map((div) => {
                     const color = div.dataset.color;
                     const number = parseInt(div.innerHTML);
                     return new Tile(color, number);
                 });
-                console.log(tileArr);
-                console.log("set has duplicates: " + hasDuplicates(tileArr));
                 //check set length
                 if (set.length < 3) {
                     set = [];
