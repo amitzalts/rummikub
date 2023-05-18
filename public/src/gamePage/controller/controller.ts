@@ -117,11 +117,13 @@ function sortHandByColor() {
 
 function validSetWithJocker(tileArr: Tile[]) {
   let isValid = true;
-  if (isSameColor(tileArr.filter((tile) => tile.color === "jocker"))) {
-    if (!isValidRunWithJocker(tileArr)) {
-      isValid = false;
-    }
+
+  if (isSameColor(tileArr.filter((tile) => tile.color !== "jocker"))) {
+    console.log("1");
+    if (!isValidRunWithJocker(tileArr)) isValid = false;
   } else {
+    console.log("2");
+    if (!isValidGroupWithJocker(tileArr)) isValid = false;
   }
   return isValid;
 }
@@ -147,14 +149,17 @@ function isValidGroupWithJocker(tileArr: Tile[]) {
     return false;
   }
 
-  const stringArr = tileArr.map((tile) => tile.value + tile.color);
-  const setArr = [...new Set(stringArr)];
-
   if (
-    !tileArr.map((tile) => tile.value).reduce((a, b) => (a === b ? a : NaN))
+    !tileArr
+      .filter((tile) => tile.color !== "jocker")
+      .map((tile) => tile.value)
+      .reduce((a, b) => (a === b ? a : NaN))
   ) {
     return false;
   }
+
+  const stringArr = tileArr.map((tile) => tile.value + tile.color);
+  const setArr = [...new Set(stringArr)];
 
   return setArr.length === stringArr.length;
 }
