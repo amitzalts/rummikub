@@ -34,7 +34,7 @@ body {
 
 .playersInGameArea {
   grid-area: 1 / 1 / 6 / 2;
-  border-right: 3px solid whitesmoke;
+  border-right: 1px solid whitesmoke;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,7 +66,7 @@ body {
 
 .activePlayerArea {
   grid-area: 5 / 2 / 6 / 5;
-  border-top: 3px solid whitesmoke;
+  border-top: 1px solid whitesmoke;
   display: grid;
   grid-template-columns: repeat(15, 1fr);
   grid-template-rows: repeat(2, 1fr);
@@ -76,8 +76,8 @@ body {
 
 .action {
   grid-area: 5 / 5 / 6 / 6;
-  border-top: 3px solid whitesmoke;
-  border-left: 3px solid whitesmoke;
+  border-top: 1px solid whitesmoke;
+  border-left: 1px solid whitesmoke;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
@@ -105,6 +105,9 @@ body {
   border-radius: 2px;
   cursor: pointer;
   font-weight: bold;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none;
 }
 .square.active {
   // box-shadow: 0 0 5px white;

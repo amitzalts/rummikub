@@ -9,12 +9,20 @@ function validateBoard() {
     currentGame.sets = [];
 
     boardCopy.forEach((square) => {
-      if(!validBoard) return
+      if (!validBoard) return;
       if (square.innerHTML != "") set.push(square);
 
       //
       if (square.innerHTML == "" && set.length > 0) {
-        let lastValue = parseInt(set[0].innerHTML) - 1;
+        const setObjArr = set.map((div) => {
+          return {
+            number: parseInt(div.innerHTML),
+            color: div.dataset.color,
+          };
+        });
+
+        console.log(setObjArr);
+        console.log(hasDuplicates(setObjArr));
 
         //check set length
         if (set.length < 3) {
@@ -24,7 +32,7 @@ function validateBoard() {
         }
 
         // check if the set is of the same color
-        else if (
+        if (
           !set
             .map((div) => div.dataset.color)
             .reduce((a, b) => (a === b ? a : undefined))
@@ -35,9 +43,10 @@ function validateBoard() {
 
         // check if the set is going up by one number by each tile
         else {
+          let lastValue = setObjArr[0].number;
           set.forEach((div) => {
             let nextValue = parseInt(div.innerHTML);
-            if (nextValue - 1 != lastValue) {
+            if (nextValue != lastValue) {
               set = [];
               alert("Not valid board.");
               validBoard = false;

@@ -14,4 +14,9 @@ function tileBelongesToPlayer(div: HTMLDivElement) {
     resetCurrentTile();
     return false;
   }
+  return true;
+}
+
+function IsGroup(set:{}[]){
+  
 }
