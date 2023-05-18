@@ -90,7 +90,6 @@ class Tile {
     buildTileDiv(color, value) {
         const tileDiv = document.createElement("div");
         tileDiv.classList.add("square");
-        // toggleTileActive(tileDiv, currentPlayer.divsArray);
         switch (color) {
             case "red":
                 tileDiv.classList.add("tile");
@@ -123,7 +122,8 @@ class Tile {
             case "jocker":
                 tileDiv.classList.add("tile");
                 tileDiv.dataset.color = "jocker";
-                // tileDiv.innerHTML = '<i class="fa-regular fa-face-smile"></i>';
+                tileDiv.innerHTML = "jocker";
+                tileDiv.dataset.value = `0`;
                 tileDiv.style.background = `url('../../img/pngwing.com.png')no-repeat center / contain`;
                 break;
             default:

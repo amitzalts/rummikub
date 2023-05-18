@@ -88,9 +88,7 @@ body {
   cursor: pointer;
   font-weight: bold;
   -webkit-user-select: none;
-  /* Safari */
   -ms-user-select: none;
-  /* IE 10 and IE 11 */
   user-select: none; }
 
 .square.active {
@@ -118,8 +116,6 @@ body {
     outline: none; }
 
 .square[data-color="jocker"] {
-  background-color: #f9e3d1;
-  color: purple;
   width: 80%;
   height: 80%;
   margin: auto; }

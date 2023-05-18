@@ -13,16 +13,16 @@ function validateBoard() {
       if (square.innerHTML != "") set.push(square);
 
       const squareIndex = boardCopy.indexOf(square) + 1;
-      //
+
+      // check if reached end of set of end of row -> than run validation on set
       if (
         (square.innerHTML == "" && set.length > 0) ||
         (set.length > 0 && squareIndex % 20 == 0)
       ) {
-        console.log(squareIndex);
         const tileArr: Tile[] = set.map((div) => {
           const color = div.dataset.color as string;
-          const number = parseInt(div.innerHTML) as number;
-          return new Tile(color, number);
+          const number = div.dataset.value as string;
+          return new Tile(color, parseInt(number));
         });
 
         //check set length
@@ -32,11 +32,19 @@ function validateBoard() {
           validBoard = false;
         }
 
+        console.log(tileArr);
+        if (tileArr.find((tile) => tile.color === "jocker")) {
+          if (!validSetWithJocker(tileArr)) {
+            validBoard = false;
+          }
+        }
+
         // check if the set is not the same color
-        if (!isSameColor(tileArr)) {
-          // alert("Colors don't match in set.");
-          console.log("is valid group: " + IsValidGroup(tileArr));
-          if (!IsValidGroup(tileArr)) validBoard = false;
+        else if (!isSameColor(tileArr)) {
+          if (!isValidGroup(tileArr)) {
+            alert("Not valid board.");
+            validBoard = false;
+          }
         }
 
         // check if the set is going up by one number by each tile
@@ -69,7 +77,7 @@ function hasDuplicates(array: Tile[]) {
   return [...new Set(newArr)].length !== newArr.length;
 }
 
-function IsValidGroup(tileArr: Tile[]) {
+function isValidGroup(tileArr: Tile[]) {
   if (tileArr.length > 4) {
     return false;
   }
