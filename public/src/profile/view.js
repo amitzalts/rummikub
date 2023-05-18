@@ -106,7 +106,8 @@ function renderAllSimpleUsers(users) {
         const html = users.map((user) => {
             return `
         <div class="allUsersWrapper__users__user">
-          <h2 id="emailInHeaderRoot-${user._id}">${user.email}
+          <h2>
+            <span id="emailInHeaderRoot-${user._id}">${user.email}</span>
             <i id="collapsibleArrow-${user._id}" onclick="collapseUserDetails('${user._id}')" class="fa-solid fa-angle-up"></i>
           </h2>
           <div id="userDetailsRoot-${user._id}" class="allUsersWrapper__users__user__details" style="max-height:0px;">
