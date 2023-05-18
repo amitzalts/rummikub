@@ -1,29 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login Page</title>
-    <link rel="icon" type="image/png" href="./img/pngwing.com.png" />
-  </head>
-  <body>
-    <form action="/api/v1/users/userLogin" method="post">
-      <label for="userName"
-        ><input type="text" name="userName" required placeholder="user-name"
-      /></label>
-      <label for="password"
-        ><input
-          type="password"
-          name="password"
-          required
-          placeholder="password"
-          minlength="8"
-      /></label>
-    <button type="submit">Login</button>
-    </form>
 
-    <a href="/signUp">Don't have an account yet??</a>
-    <h1>bla bla nnnn</h1>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Page</title>
+  <link rel="icon" type="image/png" href="./img/pngwing.com.png" />
+  <link rel="stylesheet" href="./style/css/loginStyle.css">
+  <script src="https://kit.fontawesome.com/9655756982.js" crossorigin="anonymous"></script>
+  <script defer src="./src/loginPage/login.js"></script>
+</head>
+
+<body>
+  <!-- <form action="/api/v1/users/userLogin" method="post">
+    <label for="userName"><input type="text" name="userName" required placeholder="user-name" /></label>
+    <label for="password"><input type="password" name="password" required placeholder="password"
+        minlength="8" /></label>
+    <button type="submit">Login</button>
+  </form> -->
+
+  <div class="loginWarps1">
+    <div class="loginWarps">
+      <h2 class="loginWarps__titel">Login</h2>
+      <p class="loginWarps__paragraph">Log in to the game</p>
+
+      <form class="from" action="/api/v1/users/userLogin" method="post">
+        <input name="checkUserName" class="checkUserName" required type="text" placeholder="user-name" />
+        <span class="fa-solid fa-eye iconOpenEye"></span>
+        <span class="fa-solid fa-eye-slash iconClosedEye"></span>
+        <input required type="password" name="checkPassword" class="checkPassword" placeholder="password"  minlength="8"/>
+
+        <span class="text"></span>
+
+        <button type="submit" class="login__Button">
+          Login
+        </button>
+      </form>
+
+      <a class="signUp" href="/signUp">Don't have an account yet?</a>
+
+</body>
+
 </html>
