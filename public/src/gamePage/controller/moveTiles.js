@@ -23,19 +23,21 @@ function moveTile(clickedOnSquare) {
         renderBoard(currentGame.board);
         resetCurrentTile();
     }
-    // return true;
 }
 function moveFromPlayerHandToBoard(clickedOnSquare) {
     if (!currentTile)
         return;
     //if clicked on square is a tile
     if (clickedOnSquare.classList.contains("tile")) {
+        if (!tileBelongesToPlayer(clickedOnSquare)) {
+            return alert("Tile does not belong to current player.");
+        }
         const indexOfNewLocation = currentGame.board.indexOf(clickedOnSquare);
         const indexOfcurrentTile = currentPlayer.divsArray.indexOf(currentTile);
         currentGame.board[indexOfNewLocation] = currentTile;
         currentPlayer.divsArray[indexOfcurrentTile] = clickedOnSquare;
         renderBoard(currentGame.board);
-        currentPlayer.renderHandToScreen();
+        currentPlayer.renderHandToScreen(currentPlayer.divsArray);
         resetCurrentTile();
     }
     // if clicked on square is an empty square
@@ -45,7 +47,7 @@ function moveFromPlayerHandToBoard(clickedOnSquare) {
         const index = currentPlayer.divsArray.indexOf(currentTile);
         currentPlayer.divsArray.splice(index, 1);
         renderBoard(currentGame.board);
-        currentPlayer.renderHandToScreen();
+        currentPlayer.renderHandToScreen(currentPlayer.divsArray);
         resetCurrentTile();
     }
 }
@@ -53,15 +55,24 @@ function switchTileFromBoardToHand(clickedOnSquare) {
     try {
         if (!currentTile)
             return;
+        if (!tileBelongesToPlayer(currentTile)) {
+            return alert("Tile does not belong to current player.");
+        }
         const indexOfNewLocation = currentPlayer.divsArray.indexOf(clickedOnSquare);
         const indexOfcurrentTile = currentGame.board.indexOf(currentTile);
         currentGame.board[indexOfcurrentTile] = clickedOnSquare;
         currentPlayer.divsArray[indexOfNewLocation] = currentTile;
         renderBoard(currentGame.board);
-        currentPlayer.renderHandToScreen();
+        currentPlayer.renderHandToScreen(currentPlayer.divsArray);
         resetCurrentTile();
     }
     catch (error) {
         console.error(error);
     }
+}
+function resetMoves() {
+    currentPlayer.renderHandToScreen(currentGame.currentGameStatus.playerHand);
+    renderBoard(currentGame.currentGameStatus.board);
+    currentGame.board = [...currentGame.currentGameStatus.board];
+    currentPlayer.divsArray = [...currentGame.currentGameStatus.playerHand];
 }

@@ -44,10 +44,13 @@ function activatePlayer(index: number) {
     playersInGameArea.querySelectorAll(".player");
 
   currentPlayer.isActive = false;
+
   currentPlayer = currentGame.players[index];
   currentPlayer.isActive = true;
-  currentPlayer.renderHandToScreen();
+
+  currentPlayer.renderHandToScreen(currentPlayer.divsArray);
   currentPlayer.initializeStartHend();
+  currentGame.saveCurrentGameStatus();
 
   playersArray.forEach((player) => {
     player.classList.remove("active");
@@ -61,9 +64,15 @@ function activatePlayerArea() {
   if (!currentTile || !board) return;
 
   if (currentGame.board.includes(currentTile)) {
+    if (!tileBelongesToPlayer(currentTile)) {
+      return alert("Tile does not belong to current player.");
+    }
+
     //create empty div to replace tile
     const emptySquare = document.createElement("div");
     emptySquare.classList.add("square");
+    emptySquare.style.background =
+      "url('../../img/tileBack.png')no-repeat center / cover";
 
     // find the index on the tile in board array
     const index = currentGame.board.indexOf(currentTile);
@@ -72,10 +81,38 @@ function activatePlayerArea() {
     board.replaceChild(emptySquare, currentTile);
     currentGame.board[index] = emptySquare;
     toggleTileActive(emptySquare, currentGame.board);
+
     // add tile back to player's hand
     currentPlayer.divsArray.push(currentTile);
-    currentPlayer.renderHandToScreen();
+    currentPlayer.renderHandToScreen(currentPlayer.divsArray);
 
     resetCurrentTile();
   }
 }
+
+function sortHandByNumber() {
+  currentPlayer.divsArray.sort((a, b) => {
+    const x = a.dataset.value as string;
+    const y = b.dataset.value as string;
+    return parseInt(x) - parseInt(y);
+  });
+  currentPlayer.renderHandToScreen(currentPlayer.divsArray);
+}
+
+function sortHandByColor() {
+  //first sort by number
+  currentPlayer.divsArray.sort((a, b) => {
+    const x = a.dataset.value as string;
+    const y = b.dataset.value as string;
+    return parseInt(x) - parseInt(y);
+  });
+
+  currentPlayer.divsArray.sort((a, b) => {
+    const x = a.dataset.color as string;
+    const y = b.dataset.color as string;
+    return x.localeCompare(y);
+  });
+  currentPlayer.renderHandToScreen(currentPlayer.divsArray);
+}
+
+
