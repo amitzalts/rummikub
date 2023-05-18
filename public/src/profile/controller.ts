@@ -3,13 +3,11 @@ function handleGetUserDetails() {
     fetch("/api/v1/users/getUser")
       .then((res) => res.json())
       .then(({ cookieUser }) => {
+        renderPageHeader(cookieUser)
+        renderPersonalDetailsBar(cookieUser)
         if (cookieUser.userRole === "simple") { // simple user case
-          renderPageHeader(cookieUser)
-          renderPersonalDetailsBar(cookieUser)
           renderGameButtons()
         } else if (cookieUser.userRole === "admin") { // admin case
-          renderPageHeader(cookieUser)
-          renderPersonalDetailsBar(cookieUser)
           renderAllUsersWrapper()
         }
       })
@@ -216,30 +214,84 @@ function handleDeleteUserByAdmin(userId: any) {
 
 function handleSearchUsers() {
   try {
-    const userInput: Element | null = document.querySelector("#userSearchInput")
+    console.log("handleSearchUsers invoked")
+    const userInput: HTMLInputElement | null = document.querySelector("#userSearchInput")
     if (!userInput) throw new Error("userInput not found on DOM")
+
     const noResultsRoot: HTMLDivElement | null = document.querySelector("#noResultsRoot")
     if (!noResultsRoot) throw new Error("noResultsRoot not found on DOM")
 
-    userInput?.addEventListener("input", (search) => {
-      const _userInputValue = (search.target as HTMLInputElement).value
-      const userInputValue = _userInputValue.toLocaleLowerCase()
+      const userInputValue = userInput.value.toLocaleLowerCase()
+      
+      // const allDetails = document.querySelectorAll<HTMLElement>(".allUsersWrapper__users__user__details__detail")
 
-      const results = document.querySelectorAll<HTMLElement>(".allUsersWrapper__users__user");//
-      for (let i = 0; i < results.length; i++) {
-        if (results[i].innerText.toLowerCase().includes(userInputValue) && noResultsRoot) {
-          results[i].style.display = ""
+      const allUsers = document.querySelectorAll<HTMLElement>(".allUsersWrapper__users__user")
+      
+
+      for (let i = 0; i < allUsers.length; i++) {
+     
+        if (allUsers[i].innerText.toLowerCase().includes(userInputValue)) {
+          allUsers[i].style.display = ""
           noResultsRoot.style.display = "none"
         } else {
-          results[i].style.display = "none"
+          allUsers[i].style.display = "none"
+        }
+      }
+
+      const _allUsers = document.querySelectorAll<HTMLElement>(".allUsersWrapper__users")
+      for (let i = 0; i < _allUsers.length; i++) {
+        if (!_allUsers[i].innerText.toLowerCase().includes(userInputValue)) {
           noResultsRoot.style.display = ""
-          noResultsRoot.innerHTML = `Sorry, there isn't a user email that icludes <u><b>${userInputValue}</b></u> on our store...`
+          noResultsRoot.innerHTML = `Sorry, there isn't a user email that icludes <u><b>${userInputValue}</b></u> on our Data Base...`
           noResultsRoot.style.backgroundColor = "white"
         }
       }
-    })
+ 
+
+    console.log("handleSearchUsers end")
   } catch (error) {
     console.error(error)
 
   }
 }
+
+
+// function handleSearchUsers() {
+//   try {
+//     console.log("handleSearchUsers invoked")
+//     const userInput: HTMLInputElement | null = document.querySelector("#userSearchInput")
+//     if (!userInput) throw new Error("userInput not found on DOM")
+
+//     const noResultsRoot: HTMLDivElement | null = document.querySelector("#noResultsRoot")
+//     if (!noResultsRoot) throw new Error("noResultsRoot not found on DOM")
+//     console.log("userInput.value", userInput.value)
+
+//     userInput.addEventListener("input", (search) => {
+//       console.log("search")
+//       const _userInputValue = (search.target as HTMLInputElement).value
+//       const userInputValue = _userInputValue.toLocaleLowerCase()
+      
+//       console.log("search", search)
+
+//       const results = document.querySelectorAll<HTMLElement>(".allUsersWrapper__users__user")
+//       console.log("results", results)
+//       for (let i = 0; i < results.length; i++) {
+//         if (results[i].innerText.toLowerCase().includes(userInputValue) && noResultsRoot) {
+//           results[i].style.display = ""
+//           noResultsRoot.style.display = "none"
+//           console.log("handleSearchUsers if case")
+//         } else {
+//           results[i].style.display = "none"
+//           noResultsRoot.style.display = ""
+//           noResultsRoot.innerHTML = `Sorry, there isn't a user email that icludes <u><b>${userInputValue}</b></u> on our store...`
+//           noResultsRoot.style.backgroundColor = "white"
+//         }
+//       }
+//     })
+
+//     console.log("handleSearchUsers end")
+//   } catch (error) {
+//     console.error(error)
+
+//   }
+// }

@@ -79,10 +79,10 @@ function collapsePersonalDetailsWrapper() {
 }
 function renderAllUsersWrapper() {
     try {
-        const AllUsersWrapperRoot = document.querySelector("#AllUsersWrapperRoot");
-        if (!AllUsersWrapperRoot)
-            throw new Error("AllUsersWrapperRoot not found on DOM");
-        AllUsersWrapperRoot.innerHTML = `
+        const allUsersWrapperRoot = document.querySelector("#allUsersWrapperRoot");
+        if (!allUsersWrapperRoot)
+            throw new Error("allUsersWrapperRoot not found on DOM");
+        allUsersWrapperRoot.innerHTML = `
     <div class="allUsersWrapper">
       <h1>users</h1>
       <div class="allUsersWrapper__filterBar">
@@ -115,19 +115,19 @@ function renderAllSimpleUsers(users) {
                 <i onclick="handleSaveEditUserDetailsByAdmin('${user._id}')" class="fa-solid fa-floppy-disk"></i>
             </div>
             <p>first name: 
-              <span id="editableUserDataRoot-firstName-${user._id}"> ${user.firstName}</span>
+              <span id="editableUserDataRoot-firstName-${user._id}" class="allUsersWrapper__users__user__details__detail"> ${user.firstName}</span>
             </p>
             <p>last name:
-              <span id="editableUserDataRoot-lastName-${user._id}"> ${user.lastName}</span>
+              <span id="editableUserDataRoot-lastName-${user._id}" class="allUsersWrapper__users__user__details__detail"> ${user.lastName}</span>
             </p>
             <p>user name:
-              <span id="editableUserDataRoot-userName-${user._id}"> ${user.userName}</span>
+              <span id="editableUserDataRoot-userName-${user._id}" class="allUsersWrapper__users__user__details__detail"> ${user.userName}</span>
             </p>
             <p>gender:
-              <span id="editableUserDataRoot-gender-${user._id}"> ${user.gender}</span>
+              <span id="editableUserDataRoot-gender-${user._id}" class="allUsersWrapper__users__user__details__detail"> ${user.gender}</span>
             </p>
             <p>email:
-              <span id="editableUserDataRoot-email-${user._id}"> ${user.email}</span>
+              <span id="editableUserDataRoot-email-${user._id}" class="allUsersWrapper__users__user__details__detail"> ${user.email}</span>
             </p>
             <button onclick="handleDeleteUserByAdmin('${user._id}')" >DELETE USER</button>
           </div>
