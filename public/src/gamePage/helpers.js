@@ -14,5 +14,3 @@ function tileBelongesToPlayer(div) {
     }
     return true;
 }
-function IsGroup(set) {
-}

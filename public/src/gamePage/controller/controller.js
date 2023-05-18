@@ -93,13 +93,3 @@ function sortHandByColor() {
     });
     currentPlayer.renderHandToScreen(currentPlayer.divsArray);
 }
-function resetMoves() {
-    currentPlayer.renderHandToScreen(currentGame.currentGameStatus.playerHand);
-    renderBoard(currentGame.currentGameStatus.board);
-    currentGame.board = [...currentGame.currentGameStatus.board];
-    currentPlayer.divsArray = [...currentGame.currentGameStatus.playerHand];
-}
-function hasDuplicates(array) {
-    const newArr = array.map((obj) => Object.values(obj).join(""));
-    return [...new Set(newArr)].length !== newArr.length;
-}

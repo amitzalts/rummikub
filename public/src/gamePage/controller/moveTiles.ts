@@ -22,7 +22,7 @@ function moveTile(clickedOnSquare: HTMLDivElement) {
   // moving tile on board from one square to another
   else {
     const indexOfcurrentTile = currentGame.board.indexOf(currentTile);
-    
+
     const indexOfNewLocation = currentGame.board.indexOf(clickedOnSquare);
 
     currentGame.board[indexOfcurrentTile] = clickedOnSquare;
@@ -92,4 +92,11 @@ function switchTileFromBoardToHand(clickedOnSquare: HTMLDivElement) {
   } catch (error) {
     console.error(error);
   }
+}
+
+function resetMoves() {
+  currentPlayer.renderHandToScreen(currentGame.currentGameStatus.playerHand);
+  renderBoard(currentGame.currentGameStatus.board);
+  currentGame.board = [...currentGame.currentGameStatus.board];
+  currentPlayer.divsArray = [...currentGame.currentGameStatus.playerHand];
 }

@@ -70,3 +70,9 @@ function switchTileFromBoardToHand(clickedOnSquare) {
         console.error(error);
     }
 }
+function resetMoves() {
+    currentPlayer.renderHandToScreen(currentGame.currentGameStatus.playerHand);
+    renderBoard(currentGame.currentGameStatus.board);
+    currentGame.board = [...currentGame.currentGameStatus.board];
+    currentPlayer.divsArray = [...currentGame.currentGameStatus.playerHand];
+}

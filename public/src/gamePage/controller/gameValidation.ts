@@ -14,15 +14,15 @@ function validateBoard() {
 
       //
       if (square.innerHTML == "" && set.length > 0) {
-        const setObjArr = set.map((div) => {
-          return {
-            number: parseInt(div.innerHTML),
-            color: div.dataset.color,
-          };
+        
+        const tileArr: Tile[] = set.map((div) => {
+          const color = div.dataset.color as string;
+          const number = parseInt(div.innerHTML) as number;
+          return new Tile(color, number);
         });
 
-        console.log(setObjArr);
-        console.log(hasDuplicates(setObjArr));
+        console.log(tileArr);
+        console.log("set has duplicates: " + hasDuplicates(tileArr));
 
         //check set length
         if (set.length < 3) {
@@ -31,31 +31,22 @@ function validateBoard() {
           validBoard = false;
         }
 
-        // check if the set is of the same color
-        if (
-          !set
-            .map((div) => div.dataset.color)
-            .reduce((a, b) => (a === b ? a : undefined))
-        ) {
-          alert("Colors don't match in set.");
-          validBoard = false;
+        // check if the set is not the same color
+        if (!isSameColor(tileArr)) {
+          // alert("Colors don't match in set.");
+          console.log("is valid group: " + IsValidGroup(tileArr));
+          if (!IsValidGroup(tileArr)) validBoard = false;
         }
 
         // check if the set is going up by one number by each tile
         else {
-          let lastValue = setObjArr[0].number;
-          set.forEach((div) => {
-            let nextValue = parseInt(div.innerHTML);
-            if (nextValue != lastValue) {
-              set = [];
-              alert("Not valid board.");
-              validBoard = false;
-            }
-            lastValue++;
-          });
+          if (!isValidRun(tileArr)) {
+            alert("Not valid board.");
+            validBoard = false;
+          }
         }
 
-        currentGame.sets.push(set);
+        if (validBoard) currentGame.sets.push(set);
         set = [];
       }
     });
@@ -70,4 +61,31 @@ function checkIfPlayerMadeAMove() {
   if (compareArrays(currentPlayer.divsArray, currentPlayer.startingTurnDivs)) {
     currentPlayer.getRandomTile(currentGame.deck);
   }
+}
+
+function hasDuplicates(array: Tile[]) {
+  const newArr = array.map((tile) => tile.color + tile.value);
+  // return newArr;
+  return [...new Set(newArr)].length !== newArr.length;
+}
+
+function IsValidGroup(tileArr: Tile[]) {
+  if (tileArr.length > 4) {
+    return false;
+  }
+
+  const numberArr = tileArr.map((tile) => tile.value + tile.color);
+  const setArr = [...new Set(numberArr)];
+
+  return setArr.length === numberArr.length;
+}
+
+function isValidRun(tileArr: Tile[]) {
+  return tileArr
+    .map((tile) => tile.value)
+    .reduce((a, b) => (a + 1 === b ? b : NaN));
+}
+
+function isSameColor(tileArr: Tile[]) {
+  return tileArr.map((tile) => tile.color).reduce((a, b) => (a === b ? a : ""));
 }
