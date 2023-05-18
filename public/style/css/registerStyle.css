@@ -29,10 +29,10 @@ form {
     border: 1px solid rgba(0, 0, 0, 0.113); }
     form select option {
       border: 3px solid black;
-      font-size: .7rem; }
+      font-size: 0.7rem; }
   form input {
     background-color: #eee;
     border: 1px solid rgba(0, 0, 0, 0.058);
-    padding: .3rem;
+    padding: 0.3rem;
     width: 100%;
     outline: none; }

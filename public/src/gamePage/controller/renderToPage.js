@@ -1,10 +1,12 @@
 "use strict";
-function createEmptyBoard(array) {
+function createEmptyBoard(array, numOfSquares) {
     if (!board)
         throw new Error("Board div not found.");
-    for (let i = 1; i <= 160; i++) {
+    for (let i = 1; i <= numOfSquares; i++) {
         const squareDiv = document.createElement("div");
         squareDiv.classList.add("square");
+        squareDiv.style.background =
+            "url('../../img/tileBack.png')no-repeat center / contain";
         array.push(squareDiv);
         toggleTileActive(squareDiv, array);
     }

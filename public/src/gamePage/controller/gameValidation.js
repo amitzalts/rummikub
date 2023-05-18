@@ -2,32 +2,45 @@
 function validateBoard() {
     try {
         let validBoard = true;
-        const newBoard = [...currentGame.board];
+        const boardCopy = [...currentGame.board];
         let set = [];
         currentGame.sets = [];
-        newBoard.forEach((square) => {
+        boardCopy.forEach((square) => {
+            if (!validBoard)
+                return;
             if (square.innerHTML != "")
-                set.push(parseInt(square.innerHTML));
+                set.push(square);
             //
             if (square.innerHTML == "" && set.length > 0) {
-                let lastValue = set[0] - 1;
+                const tileArr = set.map((div) => {
+                    const color = div.dataset.color;
+                    const number = parseInt(div.innerHTML);
+                    return new Tile(color, number);
+                });
+                console.log(tileArr);
+                console.log("set has duplicates: " + hasDuplicates(tileArr));
+                //check set length
                 if (set.length < 3) {
                     set = [];
                     alert("set too short. minimun 3 tiles needed");
                     validBoard = false;
                 }
-                else {
-                    set.forEach((x) => {
-                        let nextValue = x;
-                        if (nextValue - 1 != lastValue) {
-                            set = [];
-                            alert("Not valid board.");
-                            validBoard = false;
-                        }
-                        lastValue++;
-                    });
+                // check if the set is not the same color
+                if (!isSameColor(tileArr)) {
+                    // alert("Colors don't match in set.");
+                    console.log("is valid group: " + IsValidGroup(tileArr));
+                    if (!IsValidGroup(tileArr))
+                        validBoard = false;
                 }
-                currentGame.sets.push(set);
+                // check if the set is going up by one number by each tile
+                else {
+                    if (!isValidRun(tileArr)) {
+                        alert("Not valid board.");
+                        validBoard = false;
+                    }
+                }
+                if (validBoard)
+                    currentGame.sets.push(set);
                 set = [];
             }
         });
@@ -41,4 +54,25 @@ function checkIfPlayerMadeAMove() {
     if (compareArrays(currentPlayer.divsArray, currentPlayer.startingTurnDivs)) {
         currentPlayer.getRandomTile(currentGame.deck);
     }
+}
+function hasDuplicates(array) {
+    const newArr = array.map((tile) => tile.color + tile.value);
+    // return newArr;
+    return [...new Set(newArr)].length !== newArr.length;
+}
+function IsValidGroup(tileArr) {
+    if (tileArr.length > 4) {
+        return false;
+    }
+    const numberArr = tileArr.map((tile) => tile.value + tile.color);
+    const setArr = [...new Set(numberArr)];
+    return setArr.length === numberArr.length;
+}
+function isValidRun(tileArr) {
+    return tileArr
+        .map((tile) => tile.value)
+        .reduce((a, b) => (a + 1 === b ? b : NaN));
+}
+function isSameColor(tileArr) {
+    return tileArr.map((tile) => tile.color).reduce((a, b) => (a === b ? a : ""));
 }

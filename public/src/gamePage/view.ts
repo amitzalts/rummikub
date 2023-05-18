@@ -1,5 +1,8 @@
 const board: HTMLDivElement | null = document.querySelector(".board");
 
+const playerNamesForm: HTMLFormElement | null =
+  document.querySelector("#playerNamesForm");
+
 // page areas
 const activePlayerArea = document.querySelector(
   ".activePlayerArea"
@@ -19,6 +22,10 @@ const sortByNumbersBtn = document.querySelector(
 ) as HTMLButtonElement;
 
 const endTurnBtn = document.querySelector("#endTurnBtn") as HTMLButtonElement;
+
+const resetTurnBtn = document.querySelector(
+  "#resetTurnBtn"
+) as HTMLButtonElement;
 
 // current entities
 let currentPlayer: Player;

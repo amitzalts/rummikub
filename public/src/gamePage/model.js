@@ -1,9 +1,8 @@
 "use strict";
 class Player {
-    constructor(name, hand = []) {
+    constructor(name, divsArray = []) {
         this.name = name;
-        this.hand = hand;
-        this.divsArray = [];
+        this.divsArray = divsArray;
         this.isActive = false;
         this.startingTurnDivs = [];
         this.id = Math.random().toString(36).slice(-9);
@@ -12,57 +11,22 @@ class Player {
         this.startingTurnDivs = [...this.divsArray];
     }
     getNewHand(deck) {
-        for (let i = 1; i < 15; i++) {
+        for (let i = 1; i < 20; i++) {
             this.getRandomTile(deck);
         }
     }
     getRandomTile(deck) {
         const getTile = deck.deal();
-        const key = Object.keys(getTile)[0];
-        const value = Object.values(getTile)[0];
-        this.hand.push(getTile);
-        const tileDiv = document.createElement("div");
-        tileDiv.classList.add("square");
-        toggleTileActive(tileDiv, this.divsArray);
-        switch (key) {
-            case "red":
-                tileDiv.classList.add("tile");
-                tileDiv.dataset.color = "red";
-                // tileDiv.style.backgroundColor = "red"
-                tileDiv.innerHTML = value.toString();
-                break;
-            case "blue":
-                tileDiv.classList.add("tile");
-                tileDiv.dataset.color = "blue";
-                tileDiv.innerHTML = value.toString();
-                break;
-            case "yellow":
-                tileDiv.classList.add("tile");
-                tileDiv.dataset.color = "yellow";
-                tileDiv.innerHTML = value.toString();
-                break;
-            case "green":
-                tileDiv.classList.add("tile");
-                tileDiv.dataset.color = "green";
-                tileDiv.innerHTML = value.toString();
-                break;
-            case "jocker":
-                tileDiv.classList.add("tile");
-                tileDiv.dataset.color = "jocker";
-                tileDiv.innerHTML = '<i class="fa-regular fa-face-smile"></i>';
-                break;
-            default:
-                console.error("Switch statement didn't work well.");
-        }
-        this.divsArray.push(tileDiv);
-        this.renderHandToScreen();
+        toggleTileActive(getTile.div, this.divsArray);
+        this.divsArray.push(getTile.div);
+        this.renderHandToScreen(this.divsArray);
     }
-    renderHandToScreen() {
+    renderHandToScreen(tileArr) {
         activePlayerArea.innerHTML = "";
-        if (this.divsArray.length > 30) {
+        if (tileArr.length > 30) {
             activePlayerArea.style.gridTemplateColumns = "repeat(20, 1fr)";
         }
-        this.divsArray.forEach((div) => activePlayerArea.append(div));
+        tileArr.forEach((div) => activePlayerArea.append(div));
     }
 }
 class Deck {
@@ -75,17 +39,18 @@ class Deck {
         return tile;
     }
     createDeck() {
-        const colors = ["green", "red", "blue", "yellow"];
-        const halfDeck = [];
-        colors.forEach((color) => {
-            for (let i = 1; i <= 13; i++) {
-                const tile = { [color]: i };
-                halfDeck.push(tile);
-            }
-        });
-        const jocker = { jocker: "<i class='fa-regular fa-face-smile'></i>" };
-        halfDeck.push(jocker);
-        const deck = [...halfDeck, ...halfDeck];
+        const colors = ["black", "red", "blue", "yellow"];
+        const deck = [];
+        for (let j = 1; j < 3; j++) {
+            const jocker = new Tile("jocker", 0);
+            colors.forEach((color) => {
+                for (let i = 1; i <= 13; i++) {
+                    const tile = new Tile(color, i);
+                    deck.push(tile);
+                }
+            });
+            deck.push(jocker);
+        }
         return deck;
     }
     resetDeck() {
@@ -96,18 +61,75 @@ class Game {
     constructor(players) {
         this.players = players;
         this.board = [];
+        this.currentGameStatus = { board: [], playerHand: [] };
         this.sets = [];
         this.deck = new Deck();
         this.players.forEach((player) => player.getNewHand(this.deck));
     }
     startGame() {
-        createEmptyBoard(this.board);
+        createEmptyBoard(this.board, 160);
         currentPlayer =
             this.players[Math.floor(Math.random() * this.players.length)];
         renderPlayers(currentGame.players);
         activatePlayer(currentGame.players.indexOf(currentPlayer));
     }
-    getBoardFromUser() {
-        //or Game route???
+    saveCurrentGameStatus() {
+        this.currentGameStatus = {
+            board: [...this.board],
+            playerHand: [...currentPlayer.divsArray],
+        };
+    }
+}
+class Tile {
+    constructor(color, value, id = Math.random().toString(36).slice(-9)) {
+        this.color = color;
+        this.value = value;
+        this.id = id;
+        this.div = this.buildTileDiv(this.color, this.value);
+    }
+    buildTileDiv(color, value) {
+        const tileDiv = document.createElement("div");
+        tileDiv.classList.add("square");
+        // toggleTileActive(tileDiv, currentPlayer.divsArray);
+        switch (color) {
+            case "red":
+                tileDiv.classList.add("tile");
+                tileDiv.dataset.color = "red";
+                tileDiv.dataset.value = `${value}`;
+                tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / contain`;
+                tileDiv.innerHTML = value.toString();
+                break;
+            case "blue":
+                tileDiv.classList.add("tile");
+                tileDiv.dataset.color = "blue";
+                tileDiv.dataset.value = `${value}`;
+                tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / contain`;
+                tileDiv.innerHTML = value.toString();
+                break;
+            case "yellow":
+                tileDiv.classList.add("tile");
+                tileDiv.dataset.color = "yellow";
+                tileDiv.dataset.value = `${value}`;
+                tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / contain`;
+                tileDiv.innerHTML = value.toString();
+                break;
+            case "black":
+                tileDiv.classList.add("tile");
+                tileDiv.dataset.color = "black";
+                tileDiv.dataset.value = `${value}`;
+                tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / contain`;
+                tileDiv.innerHTML = value.toString();
+                break;
+            case "jocker":
+                tileDiv.classList.add("tile");
+                tileDiv.dataset.color = "jocker";
+                // tileDiv.innerHTML = '<i class="fa-regular fa-face-smile"></i>';
+                tileDiv.style.background = `url('../../img/pngwing.com.png')no-repeat center / contain`;
+                break;
+            default:
+                console.error("Switch statement didn't work well.");
+        }
+        tileDiv.id = this.id;
+        return tileDiv;
     }
 }
