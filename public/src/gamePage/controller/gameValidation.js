@@ -57,16 +57,18 @@ function checkIfPlayerMadeAMove() {
 }
 function hasDuplicates(array) {
     const newArr = array.map((tile) => tile.color + tile.value);
-    // return newArr;
     return [...new Set(newArr)].length !== newArr.length;
 }
 function IsValidGroup(tileArr) {
     if (tileArr.length > 4) {
         return false;
     }
-    const numberArr = tileArr.map((tile) => tile.value + tile.color);
-    const setArr = [...new Set(numberArr)];
-    return setArr.length === numberArr.length;
+    const stringArr = tileArr.map((tile) => tile.value + tile.color);
+    const setArr = [...new Set(stringArr)];
+    if (!tileArr.map((tile) => tile.value).reduce((a, b) => (a === b ? a : NaN))) {
+        return false;
+    }
+    return setArr.length === stringArr.length;
 }
 function isValidRun(tileArr) {
     return tileArr

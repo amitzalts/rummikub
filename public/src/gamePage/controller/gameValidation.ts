@@ -14,7 +14,6 @@ function validateBoard() {
 
       //
       if (square.innerHTML == "" && set.length > 0) {
-        
         const tileArr: Tile[] = set.map((div) => {
           const color = div.dataset.color as string;
           const number = parseInt(div.innerHTML) as number;
@@ -65,7 +64,6 @@ function checkIfPlayerMadeAMove() {
 
 function hasDuplicates(array: Tile[]) {
   const newArr = array.map((tile) => tile.color + tile.value);
-  // return newArr;
   return [...new Set(newArr)].length !== newArr.length;
 }
 
@@ -74,10 +72,16 @@ function IsValidGroup(tileArr: Tile[]) {
     return false;
   }
 
-  const numberArr = tileArr.map((tile) => tile.value + tile.color);
-  const setArr = [...new Set(numberArr)];
+  const stringArr = tileArr.map((tile) => tile.value + tile.color);
+  const setArr = [...new Set(stringArr)];
 
-  return setArr.length === numberArr.length;
+  if (
+    !tileArr.map((tile) => tile.value).reduce((a, b) => (a === b ? a : NaN))
+  ) {
+    return false;
+  }
+
+  return setArr.length === stringArr.length;
 }
 
 function isValidRun(tileArr: Tile[]) {

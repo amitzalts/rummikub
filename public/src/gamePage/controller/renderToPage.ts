@@ -1,7 +1,7 @@
-function createEmptyBoard(array: Array<HTMLDivElement>, numOfSquares: number) {
+function createEmptyBoard(array: Array<HTMLDivElement>) {
   if (!board) throw new Error("Board div not found.");
 
-  for (let i = 1; i <= numOfSquares; i++) {
+  for (let i = 1; i <= 160; i++) {
     const squareDiv: HTMLDivElement = document.createElement("div");
     squareDiv.classList.add("square");
     squareDiv.style.background =

@@ -88,7 +88,7 @@ class Game {
   }
 
   startGame() {
-    createEmptyBoard(this.board, 160);
+    createEmptyBoard(this.board);
 
     currentPlayer =
       this.players[Math.floor(Math.random() * this.players.length)];
