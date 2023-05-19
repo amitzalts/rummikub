@@ -93,3 +93,46 @@ function sortHandByColor() {
     });
     currentPlayer.renderHandToScreen(currentPlayer.divsArray);
 }
+function validSetWithJocker(tileArr) {
+    let isValid = true;
+    if (isSameColor(tileArr.filter((tile) => tile.color !== "jocker"))) {
+        console.log("1");
+        if (!isValidRunWithJocker(tileArr))
+            isValid = false;
+    }
+    else {
+        console.log("2");
+        if (!isValidGroupWithJocker(tileArr))
+            isValid = false;
+    }
+    return isValid;
+}
+function isValidRunWithJocker(tileArr) {
+    let jockerValue = 0;
+    return tileArr
+        .map((tile) => tile.value)
+        .reduce((a, b) => {
+        if (b === 0) {
+            jockerValue = a + 1;
+            return jockerValue;
+        }
+        if (a === 0) {
+            return b;
+        }
+        return a + 1 === b ? b : NaN;
+    });
+}
+function isValidGroupWithJocker(tileArr) {
+    if (tileArr.length > 4) {
+        return false;
+    }
+    if (!tileArr
+        .filter((tile) => tile.color !== "jocker")
+        .map((tile) => tile.value)
+        .reduce((a, b) => (a === b ? a : NaN))) {
+        return false;
+    }
+    const stringArr = tileArr.map((tile) => tile.value + tile.color);
+    const setArr = [...new Set(stringArr)];
+    return setArr.length === stringArr.length;
+}

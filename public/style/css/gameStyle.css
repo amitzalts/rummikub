@@ -69,6 +69,12 @@ body {
   grid-template-rows: repeat(2, 1fr);
   gap: 1rem;
   padding: 0.7rem; }
+  .action button {
+    display: flex;
+    align-items: center;
+    justify-content: space-around; }
+    .action button img {
+      width: 20%; }
 
 .board {
   grid-area: 1 / 2 / 5 / 6;
@@ -83,14 +89,12 @@ body {
   display: flex;
   justify-content: center;
   padding-top: 20%;
-  color: transparent;
+  background-color: #f9e3d1;
   border-radius: 2px;
   cursor: pointer;
   font-weight: bold;
   -webkit-user-select: none;
-  /* Safari */
   -ms-user-select: none;
-  /* IE 10 and IE 11 */
   user-select: none; }
 
 .square.active {
@@ -118,8 +122,16 @@ body {
     outline: none; }
 
 .square[data-color="jocker"] {
-  background-color: #f9e3d1;
-  color: purple;
-  width: 80%;
-  height: 80%;
-  margin: auto; }
+  color: purple; }
+
+.square[data-color="black"] {
+  color: black; }
+
+.square[data-color="yellow"] {
+  color: darkorange; }
+
+.square[data-color="blue"] {
+  color: blue; }
+
+.square[data-color="red"] {
+  color: darkred; }

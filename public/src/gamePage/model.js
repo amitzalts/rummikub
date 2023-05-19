@@ -67,7 +67,7 @@ class Game {
         this.players.forEach((player) => player.getNewHand(this.deck));
     }
     startGame() {
-        createEmptyBoard(this.board, 160);
+        createEmptyBoard(this.board);
         currentPlayer =
             this.players[Math.floor(Math.random() * this.players.length)];
         renderPlayers(currentGame.players);
@@ -90,41 +90,37 @@ class Tile {
     buildTileDiv(color, value) {
         const tileDiv = document.createElement("div");
         tileDiv.classList.add("square");
-        // toggleTileActive(tileDiv, currentPlayer.divsArray);
         switch (color) {
             case "red":
                 tileDiv.classList.add("tile");
                 tileDiv.dataset.color = "red";
                 tileDiv.dataset.value = `${value}`;
-                tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / contain`;
+                // tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / contain`;
                 tileDiv.innerHTML = value.toString();
                 break;
             case "blue":
                 tileDiv.classList.add("tile");
                 tileDiv.dataset.color = "blue";
                 tileDiv.dataset.value = `${value}`;
-                tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / contain`;
                 tileDiv.innerHTML = value.toString();
                 break;
             case "yellow":
                 tileDiv.classList.add("tile");
                 tileDiv.dataset.color = "yellow";
                 tileDiv.dataset.value = `${value}`;
-                tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / contain`;
                 tileDiv.innerHTML = value.toString();
                 break;
             case "black":
                 tileDiv.classList.add("tile");
                 tileDiv.dataset.color = "black";
                 tileDiv.dataset.value = `${value}`;
-                tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / contain`;
                 tileDiv.innerHTML = value.toString();
                 break;
             case "jocker":
                 tileDiv.classList.add("tile");
                 tileDiv.dataset.color = "jocker";
-                // tileDiv.innerHTML = '<i class="fa-regular fa-face-smile"></i>';
-                tileDiv.style.background = `url('../../img/pngwing.com.png')no-repeat center / contain`;
+                tileDiv.innerHTML = `<i class="fa-regular fa-face-smile"></i>`;
+                tileDiv.dataset.value = `0`;
                 break;
             default:
                 console.error("Switch statement didn't work well.");
