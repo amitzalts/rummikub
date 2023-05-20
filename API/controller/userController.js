@@ -152,6 +152,7 @@ const userLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function
             maxAge: 60 * 60 * 1000,
             httpOnly: true,
         });
+        console.log("login");
         res.redirect("/profile");
     }
     catch (error) {

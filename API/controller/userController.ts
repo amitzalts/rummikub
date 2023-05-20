@@ -175,6 +175,8 @@ export const userLogin = async (
       httpOnly: true,
     });
 
+    console.log("login")
+
     res.redirect("/profile");
   } catch (error: any) {
     console.error(error);

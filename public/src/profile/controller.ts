@@ -214,16 +214,15 @@ function handleSearchUsers() {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ noResultsRoot }),
+      body: JSON.stringify({ userInputValue }),
     })
       .then((res) => res.json())
       .then(({ users }) => {
         if (users.length !== 0){
           renderAllSimpleUsers(users)
-          console.log(users)
+          noResultsRoot.innerHTML = ""
         } else{
           noResultsRoot.innerHTML = `<span> Sorry, <b>${userInputValue}</b> was not found on data base </span>`
-          noResultsRoot.style.backgroundColor ="red"
         }
       })
   } catch (error) {
