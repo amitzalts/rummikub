@@ -30,6 +30,8 @@ function moveToNextPlayer() {
 
   checkIfPlayerMadeAMove();
 
+  alert("Pass the screen to next player.")
+
   const numOfPlayers = currentGame.players.length;
 
   const indexCurrentPlayer = currentGame.players.indexOf(currentPlayer);

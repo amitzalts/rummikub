@@ -96,11 +96,15 @@ body {
 .board {
   grid-area: 1 / 2 / 5 / 6;
   display: grid;
-  grid-template-columns: repeat(20, 1fr);
-  grid-template-rows: repeat(8, 1fr);
+  grid-template-columns: repeat(15, 1fr);
+  grid-template-rows: repeat(7, 1fr);
   grid-column-gap: 5px;
   grid-row-gap: 5px;
   padding: 5px;
+  // border: 1px solid white;
+  width: 65%;
+  height: 80%;
+  margin: auto;
 }
 
 .square {
@@ -115,6 +119,7 @@ body {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  font-size: 1.1rem;
 }
 .square.active {
   transform: scale(0.7);
@@ -146,10 +151,8 @@ body {
 }
 
 .square[data-color="jocker"] {
-  // width: 60%;
-  // height: 60%;
-  // margin: auto;
   color: purple;
+  font-size: 1.3rem;
 }
 .square[data-color="black"] {
   color: black;

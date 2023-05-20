@@ -32,7 +32,6 @@ function validateBoard() {
           validBoard = false;
         }
 
-        console.log(tileArr);
         if (tileArr.find((tile) => tile.color === "jocker")) {
           if (!validSetWithJocker(tileArr)) {
             validBoard = false;

@@ -25,7 +25,6 @@ function validateBoard() {
                     alert("set too short. minimun 3 tiles needed");
                     validBoard = false;
                 }
-                console.log(tileArr);
                 if (tileArr.find((tile) => tile.color === "jocker")) {
                     if (!validSetWithJocker(tileArr)) {
                         validBoard = false;

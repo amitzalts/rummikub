@@ -31,7 +31,6 @@ function handlePlayerForm(e) {
     const playerArr = [playerOne, playerTwo, playerThree, playerFour]
         .filter((player) => player != "")
         .map((player) => new Player(player));
-    console.log(playerArr);
     currentGame = new Game(playerArr);
     currentGame.startGame();
     playerNamesForm.style.display = "none";

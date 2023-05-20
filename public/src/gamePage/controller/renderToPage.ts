@@ -1,7 +1,7 @@
 function createEmptyBoard(array: Array<HTMLDivElement>) {
   if (!board) throw new Error("Board div not found.");
 
-  for (let i = 1; i <= 160; i++) {
+  for (let i = 1; i <= 105; i++) {
     const squareDiv: HTMLDivElement = document.createElement("div");
     squareDiv.classList.add("square");
     // squareDiv.innerHTML = `<i class="fa-regular fa-circle-down"></i>`;
@@ -28,4 +28,54 @@ function renderPlayers(playersArray: Player[]) {
     .join("");
 
   playersInGameArea.innerHTML = html;
+}
+
+function expandBoard() {
+  if (
+    currentGame.board.filter((div) => div.innerHTML !== "").length > 50 &&
+    currentGame.board.length === 105
+  ) {
+    alert("Resizing board.");
+    for (let i = 1; i <= 55; i++) {
+      const squareDiv: HTMLDivElement = document.createElement("div");
+      squareDiv.classList.add("square");
+      if (i < 22) {
+        currentGame.board.push(squareDiv);
+      } else {
+        currentGame.board.unshift(squareDiv);
+      }
+
+      toggleTileActive(squareDiv, currentGame.board);
+    }
+    if (!board) return;
+    board.style.width = "97%";
+    board.style.height = "97%";
+    board.style.gridTemplateColumns = "repeat(20, 1fr)";
+    board.style.gridTemplateRows = "repeat(8, 1fr)";
+    renderBoard(currentGame.board);
+  }
+
+  if (
+    currentGame.board.filter((div) => div.innerHTML !== "").length > 80 &&
+    currentGame.board.length === 160
+  ) {
+    alert("Resizing board.");
+    for (let i = 1; i <= 47; i++) {
+      const squareDiv: HTMLDivElement = document.createElement("div");
+      squareDiv.classList.add("square");
+      if (i < 20) {
+        currentGame.board.push(squareDiv);
+      } else {
+        currentGame.board.unshift(squareDiv);
+      }
+
+      toggleTileActive(squareDiv, currentGame.board);
+    }
+    if (!board) return;
+    board.style.width = "97%";
+    board.style.height = "97%";
+    board.style.gridTemplateColumns = "repeat(23, 1fr)";
+    board.style.gridTemplateRows = "repeat(9, 1fr)";
+    renderBoard(currentGame.board);
+  }
 }

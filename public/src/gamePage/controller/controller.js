@@ -24,6 +24,7 @@ function moveToNextPlayer() {
     if (!validateBoard())
         return;
     checkIfPlayerMadeAMove();
+    alert("Pass the screen to next player.");
     const numOfPlayers = currentGame.players.length;
     const indexCurrentPlayer = currentGame.players.indexOf(currentPlayer);
     // if current player is last player on array of players
