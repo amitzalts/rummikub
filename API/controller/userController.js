@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUserByAdmin = exports.updateUser = exports.deleteUser = exports.passwordRecovery = exports.userLogout = exports.userLogin = exports.getUser = exports.createUser = exports.getAllSimpleUsers = exports.getAllUsers = void 0;
+exports.searchUser = exports.updateUserByAdmin = exports.updateUser = exports.deleteUser = exports.passwordRecovery = exports.userLogout = exports.userLogin = exports.getUser = exports.createUser = exports.getAllSimpleUsers = exports.getAllUsers = void 0;
 const userModel_1 = __importDefault(require("../model/userModel"));
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const secret = process.env.JWT_SECRET;
@@ -23,6 +23,7 @@ const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
     catch (error) {
         console.error(error);
+        res.status(500).send({ error: error.message });
     }
 });
 exports.getAllUsers = getAllUsers;
@@ -33,6 +34,7 @@ const getAllSimpleUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, 
     }
     catch (error) {
         console.error(error);
+        res.status(500).send({ error: error.message });
     }
 });
 exports.getAllSimpleUsers = getAllSimpleUsers;
@@ -264,24 +266,25 @@ function updatedUser(userId, firstName, lastName, gender, userName, email, res) 
         }
         catch (error) {
             console.error(error);
+            res.status(500).send({ error: error.message });
         }
     });
 }
 //////////////////////////
 const updateUserByAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { userId, firstName, lastName, gender, userName, email } = req.body;
+        const { userId, firstName, lastName, gender, userName, email, password } = req.body;
         const takenEmailUser = yield userModel_1.default.findOne({ email });
         if (takenEmailUser) {
             if (takenEmailUser.email !== email) {
                 res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` });
             }
             else if (takenEmailUser.email === email) {
-                updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, res);
+                updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, password, res);
             }
         }
         else {
-            updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, res);
+            updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, password, res);
         }
     }
     catch (error) {
@@ -290,7 +293,7 @@ const updateUserByAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.updateUserByAdmin = updateUserByAdmin;
-function updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, res) {
+function updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, password, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const updatedUser = yield userModel_1.default.findByIdAndUpdate({ _id: userId }, {
@@ -299,13 +302,34 @@ function updatedUserByAdmin(userId, firstName, lastName, gender, userName, email
                 gender,
                 userName,
                 email,
+                password,
             });
             const user = yield userModel_1.default.findById(userId);
-            // const users = await User.find({ userRole: "simple" })
             res.status(201).json({ ok: true, user });
         }
         catch (error) {
             console.error(error);
+            res.status(500).send({ error: error.message });
         }
     });
 }
+const searchUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userInputValue } = req.body;
+        const users = yield userModel_1.default.find({ userRole: "simple",
+            $or: [
+                { 'firstName': userInputValue },
+                { 'lastName': userInputValue },
+                { 'userName': userInputValue },
+                { 'gender': userInputValue },
+                { 'email': userInputValue },
+            ]
+        });
+        res.status(200).json({ ok: true, users });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+});
+exports.searchUser = searchUser;

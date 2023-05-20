@@ -11,8 +11,9 @@ export const getAllUsers = async (
   try {
     const users = await User.find({})
     res.status(200).json({ users })
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error)
+    res.status(500).send({ error: error.message })
   }
 }
 
@@ -25,8 +26,9 @@ export const getAllSimpleUsers = async (
   try {
     const users = await User.find({ userRole: "simple" })
     res.status(200).json({ users })
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error)
+    res.status(500).send({ error: error.message })
   }
 }
 
@@ -314,8 +316,9 @@ async function updatedUser(userId:any, firstName:any, lastName:any, gender:any, 
     })
 
     res.status(201).json({ ok: true, user })
-  } catch (error) {
+  } catch (error: any) {
     console.error(error)
+    res.status(500).send({ error: error.message })
   }
 }
 
@@ -329,7 +332,7 @@ export const updateUserByAdmin = async (
   next: NextFunction
 ) => {
   try {
-    const { userId, firstName, lastName, gender, userName, email } = req.body;
+    const { userId, firstName, lastName, gender, userName, email, password } = req.body;
 
     const takenEmailUser = await User.findOne({ email })
    
@@ -337,18 +340,18 @@ export const updateUserByAdmin = async (
       if (takenEmailUser.email !== email) {
         res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` })
       }else if(takenEmailUser.email === email){
-        updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, res)
+        updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, password, res)
       }
     } else {
-      updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, res)
+      updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, password, res)
     }
   } catch (error: any) {
-    console.error(error);
+    console.error(error)
     res.status(500).send({ error: error.message })
   }
 }
 
-async function updatedUserByAdmin(userId:any, firstName:any, lastName:any, gender:any, userName:any, email:any, res: Response,){
+async function updatedUserByAdmin(userId:any, firstName:any, lastName:any, gender:any, userName:any, email:any, password:any, res: Response,){
   try {
     const updatedUser = await User.findByIdAndUpdate(
       { _id: userId },
@@ -358,15 +361,42 @@ async function updatedUserByAdmin(userId:any, firstName:any, lastName:any, gende
         gender,
         userName,
         email,
+        password,
       }
-    );
+    )
 
-    const user = await User.findById(userId);
-
-    // const users = await User.find({ userRole: "simple" })
+    const user = await User.findById(userId)
 
     res.status(201).json({ ok: true, user})
-  } catch (error) {
+  } catch (error: any) {
     console.error(error)
+    res.status(500).send({ error: error.message })
+  }
+}
+
+
+export const searchUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userInputValue } = req.body
+
+    const users = await User.find(
+      { userRole: "simple",
+       $or:[
+         {'firstName':userInputValue},
+         {'lastName':userInputValue},
+         {'userName':userInputValue},
+         {'gender':userInputValue},
+         {'email':userInputValue},
+         ]  
+      })
+    res.status(200).json({ ok: true, users })
+    
+  } catch (error:any) {
+    console.error(error)
+    res.status(500).send({ error: error.message })
   }
 }
