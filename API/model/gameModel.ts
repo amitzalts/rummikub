@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { TileInterface, TileSchema } from "./tileModel";
 import { PlayerInterface, PlayerSchema } from "./playerModel";
+import { UserSchema } from "./userModel";
 
 //a game is relevant only during a game
 
@@ -13,19 +14,22 @@ export interface GameInterface {
 
 export const GameSchema: Schema = new Schema(
   {
+    user: {
+      type: UserSchema,
+      required: true,
+    },
     players: {
-      players: [PlayerSchema],
+      type: [{ type: Schema.Types.ObjectId, ref: "Player" }],
       required: true,
     },
     board: {
-      type: [TileSchema],
+      type: [String],
       required: true,
     },
     deck: {
       type: [TileSchema],
       required: true,
     },
-    // notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
   },
   {
     versionKey: false,

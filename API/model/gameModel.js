@@ -26,21 +26,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameSchema = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const tileModel_1 = require("./tileModel");
-const playerModel_1 = require("./playerModel");
+const userModel_1 = require("./userModel");
 exports.GameSchema = new mongoose_1.Schema({
+    user: {
+        type: userModel_1.UserSchema,
+        required: true,
+    },
     players: {
-        players: [playerModel_1.PlayerSchema],
+        type: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "Player" }],
         required: true,
     },
     board: {
-        type: [tileModel_1.TileSchema],
+        type: [String],
         required: true,
     },
     deck: {
         type: [tileModel_1.TileSchema],
         required: true,
     },
-    // notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
 }, {
     versionKey: false,
 });

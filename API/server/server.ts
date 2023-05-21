@@ -6,6 +6,8 @@ import cookieParser from "cookie-parser";
 import { config } from "../config/config";
 import { userRouter } from "../routes/userRoutes";
 
+import { playerRouter } from "../routes/playerRoutes";
+
 StartServer();
 
 async function StartServer() {
@@ -24,6 +26,7 @@ async function StartServer() {
 
   //routes
   app.use("/api/v1/users", userRouter);
+  app.use("/api/v1/players", playerRouter);
 
   app.get("/signIn", (req: Request, res: Response, next: NextFunction) => {
     res.sendFile(path.join(__dirname, "../../public", "login.html"));

@@ -25,24 +25,23 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlayerSchema = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const tileModel_1 = require("./tileModel");
 exports.PlayerSchema = new mongoose_1.Schema({
     name: {
         type: String,
         required: true,
     },
     hand: {
-        type: [tileModel_1.TileSchema],
+        type: [{}],
         required: true,
     },
     active: {
         type: Boolean,
-        required: true,
+        // required: true,
     },
-    points: {
-        type: String,
-        required: false,
-    },
+    // points: {
+    //   type: String,
+    //   required: false,
+    // },
     // notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
 }, {
     versionKey: false,

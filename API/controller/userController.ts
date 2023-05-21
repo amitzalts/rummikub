@@ -157,6 +157,7 @@ export const userLogin = async (
     if (!user) throw new Error("User not found on get user function")
 
     if (!secret) throw new Error("Missing jwt secret")
+    
     const token = jwt.encode({
       userId: user._id,
       firstName: user.firstName,
