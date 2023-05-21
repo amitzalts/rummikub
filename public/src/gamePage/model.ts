@@ -1,7 +1,7 @@
 class Player {
   public isActive: boolean = false;
   public startingTurnDivs: Array<HTMLDivElement> = [];
-  public tiles: Tile[] = [];
+  public hand: Tile[] = [];
   constructor(
     public name: string,
     public divsArray: Array<HTMLDivElement> = [],
@@ -18,13 +18,18 @@ class Player {
     }
   }
 
+  activateHand() {
+    this.divsArray = this.hand.map((tile) => tile.div);
+    this.divsArray.forEach((div) => toggleTileActive(div, this.divsArray));
+  }
+
   getRandomTile(deck: Deck) {
     const getTile = deck.deal();
 
     toggleTileActive(getTile.div, this.divsArray);
 
     this.divsArray.push(getTile.div);
-    this.tiles.push(getTile);
+    this.hand.push(getTile);
     this.renderHandToScreen(this.divsArray);
   }
 
@@ -79,18 +84,18 @@ type GameStatus = {
   playerHand: Array<HTMLDivElement>;
 };
 class Game {
-  public board: Array<HTMLDivElement> = [];
+  // public board: Array<HTMLDivElement> = [];
   public currentGameStatus: GameStatus = { board: [], playerHand: [] };
   public deck: Deck;
   public sets: Array<HTMLDivElement>[] = [];
-  constructor(public players: Player[]) {
+  constructor(public players: Player[], public board: Board) {
     this.deck = new Deck();
     this.players.forEach((player) => player.getNewHand(this.deck));
   }
 
   startGame() {
-    createEmptyBoard(this.board);
-
+    // createEmptyBoard(this.board);
+    renderBoard(this.board.divArr);
     currentPlayer =
       this.players[Math.floor(Math.random() * this.players.length)];
 
@@ -101,7 +106,7 @@ class Game {
 
   saveCurrentGameStatus() {
     this.currentGameStatus = {
-      board: [...this.board],
+      board: [...this.board.divArr],
       playerHand: [...currentPlayer.divsArray],
     };
   }
@@ -158,6 +163,12 @@ class Tile {
         tileDiv.innerHTML = `<i class="fa-regular fa-face-smile"></i>`;
         tileDiv.dataset.value = `0`;
         break;
+      case "empty":
+        // tileDiv.classList.add("tile");
+        tileDiv.dataset.color = "empty";
+        tileDiv.dataset.value = `${value}`;
+        tileDiv.style.background = `url('../../img/tileBack.png')no-repeat center / contain`;
+        break;
 
       default:
         console.error("Switch statement didn't work well.");
@@ -165,5 +176,28 @@ class Tile {
 
     // tileDiv.id = this.id;
     return tileDiv;
+  }
+}
+
+class Board {
+  public tileArr: Tile[];
+  public divArr: Array<HTMLDivElement> = [];
+  constructor() {
+    this.tileArr = this.buildEmptyBoard();
+    this.updateDivArr();
+  }
+
+  buildEmptyBoard() {
+    const arr = [];
+    for (let i = 1; i <= 160; i++) {
+      const newTile = new Tile("empty", -1);
+      arr.push(newTile);
+    }
+    return arr;
+  }
+
+  updateDivArr() {
+    this.divArr = this.tileArr.map((tile) => tile.div);
+    this.divArr.forEach((div) => toggleTileActive(div, this.divArr));
   }
 }

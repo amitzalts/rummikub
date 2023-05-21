@@ -2,7 +2,7 @@ function validateBoard() {
   try {
     let validBoard = true;
 
-    const boardCopy = [...currentGame.board];
+    const boardCopy = [...currentGame.board.divArr];
 
     let set: Array<HTMLDivElement> = [];
 

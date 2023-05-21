@@ -26,7 +26,8 @@ const playerOne = new Player("vladi");
 const playerTwo = new Player("shlomi");
 const playerThree = new Player("amit");
 const playerFour = new Player("bob");
-currentGame = new Game([playerOne, playerTwo, playerThree, playerFour]);
+const newBoard = new Board();
+currentGame = new Game([playerOne, playerTwo, playerThree, playerFour], newBoard);
 currentGame.startGame();
 activePlayerArea.addEventListener("click", activatePlayerArea);
 function handlePlayerForm(e) {
@@ -40,7 +41,8 @@ function handlePlayerForm(e) {
     const playerArr = [playerOne, playerTwo, playerThree, playerFour]
         .filter((player) => player != "")
         .map((player) => new Player(player));
-    currentGame = new Game(playerArr);
+    const newBoard = new Board();
+    currentGame = new Game(playerArr, newBoard);
     // createGameToDB(playerArr);
     currentGame.startGame();
     playerNamesForm.style.display = "none";
@@ -52,7 +54,7 @@ function createGameToDB(playerArr) {
             // save players to DB
             playerArr.forEach((player) => __awaiter(this, void 0, void 0, function* () {
                 const name = player.name;
-                const hand = player.tiles;
+                const hand = player.hand;
                 const _id = player.id;
                 yield fetch(`api/v1/players`, {
                     method: "POST",

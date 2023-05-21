@@ -22,7 +22,12 @@ const playerThree = new Player("amit");
 
 const playerFour = new Player("bob");
 
-currentGame = new Game([playerOne, playerTwo, playerThree, playerFour]);
+const newBoard = new Board();
+
+currentGame = new Game(
+  [playerOne, playerTwo, playerThree, playerFour],
+  newBoard
+);
 
 currentGame.startGame();
 
@@ -42,7 +47,9 @@ function handlePlayerForm(e: Event) {
     .filter((player) => player != "")
     .map((player) => new Player(player));
 
-  currentGame = new Game(playerArr);
+  const newBoard = new Board();
+
+  currentGame = new Game(playerArr, newBoard);
   // createGameToDB(playerArr);
   currentGame.startGame();
 
@@ -56,7 +63,7 @@ async function createGameToDB(playerArr: Player[]) {
     // save players to DB
     playerArr.forEach(async (player) => {
       const name = player.name;
-      const hand = player.tiles;
+      const hand = player.hand;
       const _id = player.id;
 
       await fetch(`api/v1/players`, {

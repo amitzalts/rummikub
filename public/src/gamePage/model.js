@@ -6,7 +6,7 @@ class Player {
         this.id = id;
         this.isActive = false;
         this.startingTurnDivs = [];
-        this.tiles = [];
+        this.hand = [];
     }
     initializeStartHend() {
         this.startingTurnDivs = [...this.divsArray];
@@ -16,11 +16,15 @@ class Player {
             this.getRandomTile(deck);
         }
     }
+    activateHand() {
+        this.divsArray = this.hand.map((tile) => tile.div);
+        this.divsArray.forEach((div) => toggleTileActive(div, this.divsArray));
+    }
     getRandomTile(deck) {
         const getTile = deck.deal();
         toggleTileActive(getTile.div, this.divsArray);
         this.divsArray.push(getTile.div);
-        this.tiles.push(getTile);
+        this.hand.push(getTile);
         this.renderHandToScreen(this.divsArray);
     }
     renderHandToScreen(tileArr) {
@@ -61,16 +65,18 @@ class Deck {
     }
 }
 class Game {
-    constructor(players) {
+    constructor(players, board) {
         this.players = players;
-        this.board = [];
+        this.board = board;
+        // public board: Array<HTMLDivElement> = [];
         this.currentGameStatus = { board: [], playerHand: [] };
         this.sets = [];
         this.deck = new Deck();
         this.players.forEach((player) => player.getNewHand(this.deck));
     }
     startGame() {
-        createEmptyBoard(this.board);
+        // createEmptyBoard(this.board);
+        renderBoard(this.board.divArr);
         currentPlayer =
             this.players[Math.floor(Math.random() * this.players.length)];
         renderPlayers(currentGame.players);
@@ -78,7 +84,7 @@ class Game {
     }
     saveCurrentGameStatus() {
         this.currentGameStatus = {
-            board: [...this.board],
+            board: [...this.board.divArr],
             playerHand: [...currentPlayer.divsArray],
         };
     }
@@ -125,10 +131,35 @@ class Tile {
                 tileDiv.innerHTML = `<i class="fa-regular fa-face-smile"></i>`;
                 tileDiv.dataset.value = `0`;
                 break;
+            case "empty":
+                // tileDiv.classList.add("tile");
+                tileDiv.dataset.color = "empty";
+                tileDiv.dataset.value = `${value}`;
+                tileDiv.style.background = `url('../../img/tileBack.png')no-repeat center / contain`;
+                break;
             default:
                 console.error("Switch statement didn't work well.");
         }
         // tileDiv.id = this.id;
         return tileDiv;
+    }
+}
+class Board {
+    constructor() {
+        this.divArr = [];
+        this.tileArr = this.buildEmptyBoard();
+        this.updateDivArr();
+    }
+    buildEmptyBoard() {
+        const arr = [];
+        for (let i = 1; i <= 160; i++) {
+            const newTile = new Tile("empty", -1);
+            arr.push(newTile);
+        }
+        return arr;
+    }
+    updateDivArr() {
+        this.divArr = this.tileArr.map((tile) => tile.div);
+        this.divArr.forEach((div) => toggleTileActive(div, this.divArr));
     }
 }

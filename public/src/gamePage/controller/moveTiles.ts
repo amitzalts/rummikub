@@ -6,7 +6,7 @@ function moveTile(clickedOnSquare: HTMLDivElement) {
   // if currentTile in player's hand and clicked div is on board
   if (
     currentPlayer.divsArray.includes(currentTile) &&
-    currentGame.board.includes(clickedOnSquare)
+    currentGame.board.divArr.includes(clickedOnSquare)
   ) {
     moveFromPlayerHandToBoard(clickedOnSquare);
   }
@@ -14,21 +14,21 @@ function moveTile(clickedOnSquare: HTMLDivElement) {
   // currentTile is on board and clicked tile is in player's hand
   else if (
     currentPlayer.divsArray.includes(clickedOnSquare) &&
-    currentGame.board.includes(currentTile)
+    currentGame.board.divArr.includes(currentTile)
   ) {
     switchTileFromBoardToHand(clickedOnSquare);
   }
 
   // moving tile on board from one square to another
   else {
-    const indexOfcurrentTile = currentGame.board.indexOf(currentTile);
+    const indexOfcurrentTile = currentGame.board.divArr.indexOf(currentTile);
 
-    const indexOfNewLocation = currentGame.board.indexOf(clickedOnSquare);
+    const indexOfNewLocation = currentGame.board.divArr.indexOf(clickedOnSquare);
 
-    currentGame.board[indexOfcurrentTile] = clickedOnSquare;
-    currentGame.board[indexOfNewLocation] = currentTile;
+    currentGame.board.divArr[indexOfcurrentTile] = clickedOnSquare;
+    currentGame.board.divArr[indexOfNewLocation] = currentTile;
 
-    renderBoard(currentGame.board);
+    renderBoard(currentGame.board.divArr);
     resetCurrentTile();
   }
 
@@ -44,13 +44,13 @@ function moveFromPlayerHandToBoard(clickedOnSquare: HTMLDivElement) {
       return alert("Tile does not belong to current player.");
     }
 
-    const indexOfNewLocation = currentGame.board.indexOf(clickedOnSquare);
+    const indexOfNewLocation = currentGame.board.divArr.indexOf(clickedOnSquare);
     const indexOfcurrentTile = currentPlayer.divsArray.indexOf(currentTile);
 
-    currentGame.board[indexOfNewLocation] = currentTile;
+    currentGame.board.divArr[indexOfNewLocation] = currentTile;
     currentPlayer.divsArray[indexOfcurrentTile] = clickedOnSquare;
 
-    renderBoard(currentGame.board);
+    renderBoard(currentGame.board.divArr);
     currentPlayer.renderHandToScreen(currentPlayer.divsArray);
 
     resetCurrentTile();
@@ -58,15 +58,15 @@ function moveFromPlayerHandToBoard(clickedOnSquare: HTMLDivElement) {
 
   // if clicked on square is an empty square
   else {
-    const indexOfNewLocation = currentGame.board.indexOf(clickedOnSquare);
+    const indexOfNewLocation = currentGame.board.divArr.indexOf(clickedOnSquare);
 
-    currentGame.board[indexOfNewLocation] = currentTile;
+    currentGame.board.divArr[indexOfNewLocation] = currentTile;
 
     const index = currentPlayer.divsArray.indexOf(currentTile);
 
     currentPlayer.divsArray.splice(index, 1);
 
-    renderBoard(currentGame.board);
+    renderBoard(currentGame.board.divArr);
     currentPlayer.renderHandToScreen(currentPlayer.divsArray);
 
     resetCurrentTile();
@@ -82,12 +82,12 @@ function switchTileFromBoardToHand(clickedOnSquare: HTMLDivElement) {
     }
 
     const indexOfNewLocation = currentPlayer.divsArray.indexOf(clickedOnSquare);
-    const indexOfcurrentTile = currentGame.board.indexOf(currentTile);
+    const indexOfcurrentTile = currentGame.board.divArr.indexOf(currentTile);
 
-    currentGame.board[indexOfcurrentTile] = clickedOnSquare;
+    currentGame.board.divArr[indexOfcurrentTile] = clickedOnSquare;
     currentPlayer.divsArray[indexOfNewLocation] = currentTile;
 
-    renderBoard(currentGame.board);
+    renderBoard(currentGame.board.divArr);
     currentPlayer.renderHandToScreen(currentPlayer.divsArray);
 
     resetCurrentTile();
@@ -99,6 +99,6 @@ function switchTileFromBoardToHand(clickedOnSquare: HTMLDivElement) {
 function resetMoves() {
   currentPlayer.renderHandToScreen(currentGame.currentGameStatus.playerHand);
   renderBoard(currentGame.currentGameStatus.board);
-  currentGame.board = [...currentGame.currentGameStatus.board];
+  currentGame.board.divArr = [...currentGame.currentGameStatus.board];
   currentPlayer.divsArray = [...currentGame.currentGameStatus.playerHand];
 }

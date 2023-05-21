@@ -51,7 +51,7 @@ function activatePlayer(index) {
 function activatePlayerArea() {
     if (!currentTile || !board)
         return;
-    if (currentGame.board.includes(currentTile)) {
+    if (currentGame.board.divArr.includes(currentTile)) {
         if (!tileBelongesToPlayer(currentTile)) {
             return alert("Tile does not belong to current player.");
         }
@@ -61,11 +61,11 @@ function activatePlayerArea() {
         emptySquare.style.background =
             "url('../../img/tileBack.png')no-repeat center / cover";
         // find the index on the tile in board array
-        const index = currentGame.board.indexOf(currentTile);
+        const index = currentGame.board.divArr.indexOf(currentTile);
         // replace empty div with current tile at board and board array
         board.replaceChild(emptySquare, currentTile);
-        currentGame.board[index] = emptySquare;
-        toggleTileActive(emptySquare, currentGame.board);
+        currentGame.board.divArr[index] = emptySquare;
+        toggleTileActive(emptySquare, currentGame.board.divArr);
         // add tile back to player's hand
         currentPlayer.divsArray.push(currentTile);
         currentPlayer.renderHandToScreen(currentPlayer.divsArray);
