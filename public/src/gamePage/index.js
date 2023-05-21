@@ -22,13 +22,17 @@ endTurnBtn.addEventListener("click", moveToNextPlayer);
 sortByNumbersBtn.addEventListener("click", sortHandByNumber);
 sortByColorBtn.addEventListener("click", sortHandByColor);
 resetTurnBtn.addEventListener("click", resetMoves);
-const playerOne = new Player("vladi");
-const playerTwo = new Player("shlomi");
-const playerThree = new Player("amit");
-const playerFour = new Player("bob");
-const newBoard = new Board();
-currentGame = new Game([playerOne, playerTwo, playerThree, playerFour], newBoard);
-currentGame.startGame();
+// const playerOne = new Player("vladi");
+// const playerTwo = new Player("shlomi");
+// const playerThree = new Player("amit");
+// const playerFour = new Player("bob");
+// const newBoard = new Board();
+// newBoard.buildEmptyBoard();
+// currentGame = new Game(
+//   [playerOne, playerTwo, playerThree, playerFour],
+//   newBoard
+// );
+// currentGame.startGame();
 activePlayerArea.addEventListener("click", activatePlayerArea);
 function handlePlayerForm(e) {
     e.preventDefault();
@@ -42,30 +46,40 @@ function handlePlayerForm(e) {
         .filter((player) => player != "")
         .map((player) => new Player(player));
     const newBoard = new Board();
+    newBoard.buildEmptyBoard();
     currentGame = new Game(playerArr, newBoard);
-    // createGameToDB(playerArr);
+    createGameToDB(playerArr, newBoard);
     currentGame.startGame();
     playerNamesForm.style.display = "none";
 }
-function createGameToDB(playerArr) {
+function createGameToDB(playerArr, board) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             console.log("saving to DB...");
             // save players to DB
-            playerArr.forEach((player) => __awaiter(this, void 0, void 0, function* () {
-                const name = player.name;
-                const hand = player.hand;
-                const _id = player.id;
-                yield fetch(`api/v1/players`, {
-                    method: "POST",
-                    headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ name, hand, _id }),
-                }).catch((error) => console.error(error));
-            }));
+            // playerArr.forEach(async (player) => {
+            //   const name = player.name;
+            //   const hand = player.hand;
+            //   const _id = player.id;
+            // await fetch(`api/v1/players`, {
+            //   method: "POST",
+            //   headers: {
+            //     Accept: "application/json",
+            //     "Content-Type": "application/json",
+            //   },
+            //   body: JSON.stringify({ name, hand, _id }),
+            // }).catch((error) => console.error(error));
+            // });
             //save board to DB
+            // const tileArr = board.tileArr.map(tile. => )
+            yield fetch("api/v1/boards", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ tileArr: board.tileArr }),
+            }).catch((error) => console.error(error));
             //save deck to DB
             // save Game to DB with all of the above...
         }

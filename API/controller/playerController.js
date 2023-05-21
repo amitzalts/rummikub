@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePlayerByAdmin = exports.updatePlayer = exports.deleteAllPlayers = exports.getAllPlayersInGame = exports.createPlayer = exports.getAllPlayers = void 0;
+exports.updatePlayer = exports.deleteAllPlayers = exports.getAllPlayersInGame = exports.createPlayer = exports.getAllPlayers = void 0;
 const playerModel_1 = __importDefault(require("../model/playerModel"));
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const gameModel_1 = __importDefault(require("../model/gameModel"));
@@ -72,17 +72,6 @@ const deleteAllPlayers = (req, res, next) => __awaiter(void 0, void 0, void 0, f
 exports.deleteAllPlayers = deleteAllPlayers;
 const updatePlayer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { playerId, firstName, lastName, gender, playerName, email } = req.body;
-        const takenEmailPlayer = yield playerModel_1.default.findOne({ email });
-        // if (takenEmailPlayer){
-        //   if (takenEmailPlayer.email !== email) {
-        //     res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` })
-        //   }else if(takenEmailPlayer.email === email){
-        //     updatedPlayer(playerId, firstName, lastName, gender, playerName, email, res)
-        //   }
-        // } else {
-        //   updatedPlayer(playerId, firstName, lastName, gender, playerName, email, res)
-        // }
     }
     catch (error) {
         console.error(error);
@@ -90,77 +79,3 @@ const updatePlayer = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.updatePlayer = updatePlayer;
-function updatedPlayer(playerId, firstName, lastName, gender, playerName, email, res) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const updatedPlayer = yield playerModel_1.default.findByIdAndUpdate({ _id: playerId }, {
-                firstName,
-                lastName,
-                gender,
-                playerName,
-                email,
-            });
-            const player = yield playerModel_1.default.findById(playerId);
-            if (!secret)
-                throw new Error("Missing jwt secret");
-            const token = jwt_simple_1.default.encode({
-                playerId: playerId,
-                firstName: firstName,
-                lastName: lastName,
-                gender: gender,
-                playerName: playerName,
-                email: email,
-                playerRole: "simple",
-                role: "public",
-            }, secret);
-            res.cookie("player", token, {
-                maxAge: 24 * 60 * 60 * 1000,
-                httpOnly: true,
-            });
-            res.status(201).json({ ok: true, player });
-        }
-        catch (error) {
-            console.error(error);
-        }
-    });
-}
-//////////////////////////
-const updatePlayerByAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { playerId, firstName, lastName, gender, playerName, email } = req.body;
-        const takenEmailPlayer = yield playerModel_1.default.findOne({ email });
-        // if (takenEmailPlayer){
-        //   if (takenEmailPlayer.email !== email) {
-        //     res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` })
-        //   }else if(takenEmailPlayer.email === email){
-        //     updatedPlayerByAdmin(playerId, firstName, lastName, gender, playerName, email, res)
-        //   }
-        // } else {
-        //   updatedPlayerByAdmin(playerId, firstName, lastName, gender, playerName, email, res)
-        // }
-    }
-    catch (error) {
-        console.error(error);
-        res.status(500).send({ error: error.message });
-    }
-});
-exports.updatePlayerByAdmin = updatePlayerByAdmin;
-function updatedPlayerByAdmin(playerId, firstName, lastName, gender, playerName, email, res) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const updatedPlayer = yield playerModel_1.default.findByIdAndUpdate({ _id: playerId }, {
-                firstName,
-                lastName,
-                gender,
-                playerName,
-                email,
-            });
-            const player = yield playerModel_1.default.findById(playerId);
-            // const players = await Player.find({ playerRole: "simple" })
-            res.status(201).json({ ok: true, player });
-        }
-        catch (error) {
-            console.error(error);
-        }
-    });
-}

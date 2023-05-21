@@ -132,7 +132,6 @@ class Tile {
         tileDiv.classList.add("tile");
         tileDiv.dataset.color = "red";
         tileDiv.dataset.value = `${value}`;
-        // tileDiv.style.background = `url('../../img/tileSvg/${color}-${value}.svg')no-repeat center / contain`;
         tileDiv.innerHTML = value.toString();
         break;
 
@@ -167,7 +166,7 @@ class Tile {
         // tileDiv.classList.add("tile");
         tileDiv.dataset.color = "empty";
         tileDiv.dataset.value = `${value}`;
-        tileDiv.style.background = `url('../../img/tileBack.png')no-repeat center / contain`;
+        tileDiv.style.background = `url('../../img/tileBack.png')no-repeat center / cover`;
         break;
 
       default:
@@ -180,24 +179,30 @@ class Tile {
 }
 
 class Board {
-  public tileArr: Tile[];
   public divArr: Array<HTMLDivElement> = [];
-  constructor() {
-    this.tileArr = this.buildEmptyBoard();
-    this.updateDivArr();
-  }
+  constructor(
+    public tileArr: Tile[] = [],
+    public id: string = crypto.randomUUID()
+  ) {}
 
   buildEmptyBoard() {
-    const arr = [];
     for (let i = 1; i <= 160; i++) {
       const newTile = new Tile("empty", -1);
-      arr.push(newTile);
+      this.tileArr.push(newTile);
     }
-    return arr;
+    this.updateDivArr();
   }
 
   updateDivArr() {
     this.divArr = this.tileArr.map((tile) => tile.div);
     this.divArr.forEach((div) => toggleTileActive(div, this.divArr));
+  }
+
+  convertDivArrToTileArr() {
+    this.tileArr = this.divArr.map((div) => {
+      const color = div.dataset.color as string;
+      const value = div.dataset.value as string;
+      return new Tile(color, parseInt(value));
+    });
   }
 }

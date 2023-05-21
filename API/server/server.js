@@ -19,6 +19,7 @@ const path_1 = __importDefault(require("path"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const config_1 = require("../config/config");
 const userRoutes_1 = require("../routes/userRoutes");
+const boardRoutes_1 = require("../routes/boardRoutes");
 const playerRoutes_1 = require("../routes/playerRoutes");
 StartServer();
 function StartServer() {
@@ -38,6 +39,7 @@ function StartServer() {
         //routes
         app.use("/api/v1/users", userRoutes_1.userRouter);
         app.use("/api/v1/players", playerRoutes_1.playerRouter);
+        app.use("/api/v1/boards", boardRoutes_1.boardRouter);
         app.get("/signIn", (req, res, next) => {
             res.sendFile(path_1.default.join(__dirname, "../../public", "login.html"));
         });

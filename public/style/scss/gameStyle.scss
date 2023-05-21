@@ -150,6 +150,11 @@ body {
   color: purple;
   font-size: 1.3rem;
 }
+
+// .square[data-color="empty"] {
+//   color: rgba(128, 128, 128, 0.2);
+//   content: "<i class="fa-solid fa-face-smile-beam"></i>";
+// }
 .square[data-color="black"] {
   color: black;
 }

@@ -23,28 +23,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GameSchema = void 0;
+exports.BoardSchema = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const tileModel_1 = require("./tileModel");
-const userModel_1 = require("./userModel");
-exports.GameSchema = new mongoose_1.Schema({
-    user: {
-        type: userModel_1.UserSchema,
-        required: true,
-    },
-    players: {
-        type: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "Player" }],
-        required: true,
-    },
-    board: {
-        type: { type: mongoose_1.Schema.Types.ObjectId, ref: "Board" },
-        required: true,
-    },
-    deck: {
-        type: [tileModel_1.TileSchema],
+exports.BoardSchema = new mongoose_1.Schema({
+    tileArr: {
+        type: [{}],
         required: true,
     },
 }, {
     versionKey: false,
 });
-exports.default = mongoose_1.default.model("Game", exports.GameSchema);
+exports.default = mongoose_1.default.model("Board", exports.BoardSchema);
