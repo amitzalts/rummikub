@@ -38,6 +38,9 @@ exports.PlayerSchema = new mongoose_1.Schema({
         type: Boolean,
         // required: true,
     },
+    _id: {
+        type: String,
+    },
     // points: {
     //   type: String,
     //   required: false,

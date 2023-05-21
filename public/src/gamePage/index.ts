@@ -43,8 +43,37 @@ function handlePlayerForm(e: Event) {
     .map((player) => new Player(player));
 
   currentGame = new Game(playerArr);
-
+  // createGameToDB(playerArr);
   currentGame.startGame();
 
   playerNamesForm.style.display = "none";
+}
+
+async function createGameToDB(playerArr: Player[]) {
+  try {
+    console.log("saving to DB...");
+
+    // save players to DB
+    playerArr.forEach(async (player) => {
+      const name = player.name;
+      const hand = player.tiles;
+      const _id = player.id;
+
+      await fetch(`api/v1/players`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, hand, _id }),
+      }).catch((error) => console.error(error));
+    });
+    //save board to DB
+
+    //save deck to DB
+
+    // save Game to DB with all of the above...
+  } catch (error) {
+    console.error(error);
+  }
 }

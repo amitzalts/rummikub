@@ -1,13 +1,12 @@
 class Player {
-  public id: string;
   public isActive: boolean = false;
   public startingTurnDivs: Array<HTMLDivElement> = [];
+  public tiles: Tile[] = [];
   constructor(
     public name: string,
-    public divsArray: Array<HTMLDivElement> = []
-  ) {
-    this.id = Math.random().toString(36).slice(-9);
-  }
+    public divsArray: Array<HTMLDivElement> = [],
+    public id: string = crypto.randomUUID()
+  ) {}
 
   initializeStartHend() {
     this.startingTurnDivs = [...this.divsArray];
@@ -25,6 +24,7 @@ class Player {
     toggleTileActive(getTile.div, this.divsArray);
 
     this.divsArray.push(getTile.div);
+    this.tiles.push(getTile);
     this.renderHandToScreen(this.divsArray);
   }
 
@@ -41,7 +41,8 @@ class Player {
 
 class Deck {
   public deck: Tile[];
-  constructor() {
+
+  constructor(public id: string = crypto.randomUUID()) {
     this.deck = this.createDeck();
   }
 
@@ -111,8 +112,7 @@ class Tile {
 
   constructor(
     public color: string,
-    public value: number,
-    public id: string = Math.random().toString(36).slice(-9)
+    public value: number // public id: string = Math.random().toString(36).slice(-9)
   ) {
     this.div = this.buildTileDiv(this.color, this.value);
   }
@@ -163,7 +163,7 @@ class Tile {
         console.error("Switch statement didn't work well.");
     }
 
-    tileDiv.id = this.id;
+    // tileDiv.id = this.id;
     return tileDiv;
   }
 }

@@ -25,6 +25,9 @@ export const PlayerSchema: Schema = new Schema(
       type: Boolean,
       // required: true,
     },
+    _id: {
+      type: String,
+    },
     // points: {
     //   type: String,
     //   required: false,

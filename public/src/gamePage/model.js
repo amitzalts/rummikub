@@ -1,11 +1,12 @@
 "use strict";
 class Player {
-    constructor(name, divsArray = []) {
+    constructor(name, divsArray = [], id = crypto.randomUUID()) {
         this.name = name;
         this.divsArray = divsArray;
+        this.id = id;
         this.isActive = false;
         this.startingTurnDivs = [];
-        this.id = Math.random().toString(36).slice(-9);
+        this.tiles = [];
     }
     initializeStartHend() {
         this.startingTurnDivs = [...this.divsArray];
@@ -19,6 +20,7 @@ class Player {
         const getTile = deck.deal();
         toggleTileActive(getTile.div, this.divsArray);
         this.divsArray.push(getTile.div);
+        this.tiles.push(getTile);
         this.renderHandToScreen(this.divsArray);
     }
     renderHandToScreen(tileArr) {
@@ -30,7 +32,8 @@ class Player {
     }
 }
 class Deck {
-    constructor() {
+    constructor(id = crypto.randomUUID()) {
+        this.id = id;
         this.deck = this.createDeck();
     }
     deal() {
@@ -81,10 +84,10 @@ class Game {
     }
 }
 class Tile {
-    constructor(color, value, id = Math.random().toString(36).slice(-9)) {
+    constructor(color, value // public id: string = Math.random().toString(36).slice(-9)
+    ) {
         this.color = color;
         this.value = value;
-        this.id = id;
         this.div = this.buildTileDiv(this.color, this.value);
     }
     buildTileDiv(color, value) {
@@ -125,7 +128,7 @@ class Tile {
             default:
                 console.error("Switch statement didn't work well.");
         }
-        tileDiv.id = this.id;
+        // tileDiv.id = this.id;
         return tileDiv;
     }
 }

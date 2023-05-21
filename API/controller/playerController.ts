@@ -23,9 +23,9 @@ export const createPlayer = async (
   next: NextFunction
 ) => {
   try {
-    const { name, hand } = req.body;
+    const { name, hand, _id } = req.body;
 
-    const player = await Player.create({ name, hand });
+    const player = await Player.create({ name, hand, _id });
 
     res.status(200).json({ player });
   } catch (error: any) {
@@ -60,15 +60,13 @@ export const getAllPlayersInGame = async (
   }
 };
 
-
 export const deleteAllPlayers = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-
-    const deletedPlayers = await Player.deleteMany({})
+    const deletedPlayers = await Player.deleteMany({});
 
     res.status(200).send({ deletedPlayers });
   } catch (error: any) {
