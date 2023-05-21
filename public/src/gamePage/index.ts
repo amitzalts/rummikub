@@ -51,7 +51,10 @@ function handlePlayerForm(e: Event) {
   const newBoard = new Board();
   newBoard.buildEmptyBoard();
 
-  currentGame = new Game(playerArr, newBoard);
+  const deck = new Deck();
+
+  currentGame = new Game(playerArr, newBoard, deck);
+  
   createGameToDB(playerArr, newBoard);
   currentGame.startGame();
 

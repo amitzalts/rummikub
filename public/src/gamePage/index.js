@@ -47,7 +47,8 @@ function handlePlayerForm(e) {
         .map((player) => new Player(player));
     const newBoard = new Board();
     newBoard.buildEmptyBoard();
-    currentGame = new Game(playerArr, newBoard);
+    const deck = new Deck();
+    currentGame = new Game(playerArr, newBoard, deck);
     createGameToDB(playerArr, newBoard);
     currentGame.startGame();
     playerNamesForm.style.display = "none";
