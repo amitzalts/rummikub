@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getBoardInGame = exports.deleteAllBoards = exports.createBoard = exports.getAllBoards = void 0;
+exports.getBoardInGame = exports.deleteAllBoards = exports.updateBoard = exports.createBoard = exports.getAllBoards = void 0;
 const boardModel_1 = __importDefault(require("../model/boardModel"));
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const gameModel_1 = __importDefault(require("../model/gameModel"));
@@ -29,8 +29,8 @@ const getAllBoards = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
 exports.getAllBoards = getAllBoards;
 const createBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { tileArr } = req.body;
-        const board = yield boardModel_1.default.create({ tileArr });
+        const { tileArr, _id } = req.body;
+        const board = yield boardModel_1.default.create({ tileArr, _id });
         res.send({ ok: true, board });
     }
     catch (error) {
@@ -39,6 +39,20 @@ const createBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.createBoard = createBoard;
+const updateBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { boardId, tileArr } = req.body;
+        yield boardModel_1.default.findByIdAndUpdate(boardId, { tileArr });
+        const board = yield boardModel_1.default.findById(boardId);
+        console.log(board);
+        res.status(200).json({ board });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+});
+exports.updateBoard = updateBoard;
 const deleteAllBoards = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const deletedBoards = yield boardModel_1.default.deleteMany({});

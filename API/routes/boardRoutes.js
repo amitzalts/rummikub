@@ -9,4 +9,5 @@ const boardRouter = express_1.default.Router();
 exports.boardRouter = boardRouter;
 const boardController_1 = require("../controller/boardController");
 boardRouter.route("/").post(boardController_1.createBoard);
+boardRouter.route("/updateBoard").patch(boardController_1.updateBoard);
 boardRouter.route("/deleteBoards").delete(boardController_1.deleteAllBoards);

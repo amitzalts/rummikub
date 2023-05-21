@@ -30,6 +30,10 @@ exports.BoardSchema = new mongoose_1.Schema({
         type: [{}],
         required: true,
     },
+    _id: {
+        type: String,
+        required: true,
+    },
 }, {
     versionKey: false,
 });

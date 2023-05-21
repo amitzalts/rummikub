@@ -7,7 +7,6 @@ import {
   getAllPlayersInGame,
   deleteAllPlayers,
   updatePlayer,
-  updatePlayerByAdmin,
 } from "../controller/playerController";
 
 playerRouter.route("/").get(getAllPlayers).post(createPlayer)
@@ -18,7 +17,6 @@ playerRouter.route("/deletePlayers").delete(deleteAllPlayers);
 
 playerRouter.route("/updatePlayer").patch(updatePlayer);
 
-playerRouter.route("/updatePlayerByAdmin").patch(updatePlayerByAdmin);
 
 
 export { playerRouter };

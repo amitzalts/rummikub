@@ -205,4 +205,17 @@ class Board {
       return new Tile(color, parseInt(value));
     });
   }
+
+  async updateBoardInDB() {
+    console.log("Updating board...");
+    this.convertDivArrToTileArr();
+    await fetch("api/v1/boards/updateBoard", {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ tileArr: this.tileArr, boardId: this.id }),
+    }).catch((error) => console.error(error));
+  }
 }

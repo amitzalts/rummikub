@@ -21,7 +21,6 @@ export const TileSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    // notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
   },
   {
     versionKey: false,

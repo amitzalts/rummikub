@@ -28,7 +28,10 @@ function toggleTileActive(
 function moveToNextPlayer() {
   if (!validateBoard()) return;
 
+  currentGame.board.updateBoardInDB();
+  
   checkIfPlayerMadeAMove();
+
 
   alert("Pass the screen to next player.");
 

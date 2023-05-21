@@ -24,7 +24,7 @@ export const GameSchema: Schema = new Schema(
       required: true,
     },
     board: {
-      type: { type: Schema.Types.ObjectId, ref: "Board" },
+      type: Schema.Types.ObjectId, ref: "Board",
       required: true,
     },
     deck: {

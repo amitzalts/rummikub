@@ -79,15 +79,15 @@ async function createGameToDB(playerArr: Player[], board: Board) {
     // });
 
     //save board to DB
-    // const tileArr = board.tileArr.map(tile. => )
-    await fetch("api/v1/boards", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ tileArr: board.tileArr }),
-    }).catch((error) => console.error(error));
+
+    // await fetch("api/v1/boards", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ _id: board.id, tileArr: board.tileArr }),
+    // }).catch((error) => console.error(error));
 
     //save deck to DB
 

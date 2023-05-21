@@ -23,14 +23,33 @@ export const createBoard = async (
   next: NextFunction
 ) => {
   try {
-    const { tileArr } = req.body;
+    const { tileArr, _id } = req.body;
 
-    const board = await Board.create({ tileArr });
+    const board = await Board.create({ tileArr, _id });
 
     res.send({ ok: true, board });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: "error.message" });
+  }
+};
+
+export const updateBoard = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { boardId, tileArr } = req.body;
+
+    await Board.findByIdAndUpdate(boardId, { tileArr });
+
+    const board = await Board.findById(boardId);
+    console.log(board);
+    res.status(200).json({ board });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
   }
 };
 

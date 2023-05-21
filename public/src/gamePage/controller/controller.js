@@ -23,6 +23,7 @@ function toggleTileActive(clickedDiv, divArray) {
 function moveToNextPlayer() {
     if (!validateBoard())
         return;
+    currentGame.board.updateBoardInDB();
     checkIfPlayerMadeAMove();
     alert("Pass the screen to next player.");
     const numOfPlayers = currentGame.players.length;

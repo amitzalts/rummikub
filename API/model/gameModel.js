@@ -37,7 +37,7 @@ exports.GameSchema = new mongoose_1.Schema({
         required: true,
     },
     board: {
-        type: { type: mongoose_1.Schema.Types.ObjectId, ref: "Board" },
+        type: mongoose_1.Schema.Types.ObjectId, ref: "Board",
         required: true,
     },
     deck: {

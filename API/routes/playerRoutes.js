@@ -12,4 +12,3 @@ playerRouter.route("/").get(playerController_1.getAllPlayers).post(playerControl
 playerRouter.route("/getGamePlayers").get(playerController_1.getAllPlayersInGame);
 playerRouter.route("/deletePlayers").delete(playerController_1.deleteAllPlayers);
 playerRouter.route("/updatePlayer").patch(playerController_1.updatePlayer);
-playerRouter.route("/updatePlayerByAdmin").patch(playerController_1.updatePlayerByAdmin);
