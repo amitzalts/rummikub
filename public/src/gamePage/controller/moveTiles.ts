@@ -23,7 +23,8 @@ function moveTile(clickedOnSquare: HTMLDivElement) {
   else {
     const indexOfcurrentTile = currentGame.board.divArr.indexOf(currentTile);
 
-    const indexOfNewLocation = currentGame.board.divArr.indexOf(clickedOnSquare);
+    const indexOfNewLocation =
+      currentGame.board.divArr.indexOf(clickedOnSquare);
 
     currentGame.board.divArr[indexOfcurrentTile] = clickedOnSquare;
     currentGame.board.divArr[indexOfNewLocation] = currentTile;
@@ -44,11 +45,15 @@ function moveFromPlayerHandToBoard(clickedOnSquare: HTMLDivElement) {
       return alert("Tile does not belong to current player.");
     }
 
-    const indexOfNewLocation = currentGame.board.divArr.indexOf(clickedOnSquare);
+    const indexOfNewLocation =
+      currentGame.board.divArr.indexOf(clickedOnSquare);
     const indexOfcurrentTile = currentPlayer.divsArray.indexOf(currentTile);
 
     currentGame.board.divArr[indexOfNewLocation] = currentTile;
     currentPlayer.divsArray[indexOfcurrentTile] = clickedOnSquare;
+
+    currentPlayer.addTileToHand(clickedOnSquare);
+    currentPlayer.removeTileFromHand(currentTile.id);
 
     renderBoard(currentGame.board.divArr);
     currentPlayer.renderHandToScreen(currentPlayer.divsArray);
@@ -58,13 +63,15 @@ function moveFromPlayerHandToBoard(clickedOnSquare: HTMLDivElement) {
 
   // if clicked on square is an empty square
   else {
-    const indexOfNewLocation = currentGame.board.divArr.indexOf(clickedOnSquare);
+    const indexOfNewLocation =
+      currentGame.board.divArr.indexOf(clickedOnSquare);
 
     currentGame.board.divArr[indexOfNewLocation] = currentTile;
 
     const index = currentPlayer.divsArray.indexOf(currentTile);
 
     currentPlayer.divsArray.splice(index, 1);
+    currentPlayer.removeTileFromHand(currentTile.id);
 
     renderBoard(currentGame.board.divArr);
     currentPlayer.renderHandToScreen(currentPlayer.divsArray);
@@ -80,12 +87,14 @@ function switchTileFromBoardToHand(clickedOnSquare: HTMLDivElement) {
     if (!tileBelongesToPlayer(currentTile)) {
       return alert("Tile does not belong to current player.");
     }
-
     const indexOfNewLocation = currentPlayer.divsArray.indexOf(clickedOnSquare);
     const indexOfcurrentTile = currentGame.board.divArr.indexOf(currentTile);
 
     currentGame.board.divArr[indexOfcurrentTile] = clickedOnSquare;
     currentPlayer.divsArray[indexOfNewLocation] = currentTile;
+
+    currentPlayer.addTileToHand(currentTile);
+    currentPlayer.removeTileFromHand(clickedOnSquare.id);
 
     renderBoard(currentGame.board.divArr);
     currentPlayer.renderHandToScreen(currentPlayer.divsArray);

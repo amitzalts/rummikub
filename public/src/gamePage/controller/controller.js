@@ -71,6 +71,7 @@ function activatePlayerArea() {
         toggleTileActive(emptySquare, currentGame.board.divArr);
         // add tile back to player's hand
         currentPlayer.divsArray.push(currentTile);
+        currentPlayer.addTileToHand(currentTile);
         currentPlayer.renderHandToScreen(currentPlayer.divsArray);
         resetCurrentTile();
     }
