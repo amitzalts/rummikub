@@ -33,6 +33,7 @@ class Deck {
     this.deck = [...this.createDeck()];
   }
 }
+
 type GameStatus = {
   board: Array<HTMLDivElement>;
   playerHand: Array<HTMLDivElement>;

@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { TileInterface, TileSchema } from "./tileModel";
+import { TileInterface, DeckSchema, DeckInterface } from "./deckModel";
 import { PlayerInterface, PlayerSchema } from "./playerModel";
 import { UserSchema } from "./userModel";
 import { BoardSchema } from "./boardModel";
@@ -28,7 +28,7 @@ export const GameSchema: Schema = new Schema(
       required: true,
     },
     deck: {
-      type: [TileSchema],
+      type: Schema.Types.ObjectId, ref: "Deck",
       required: true,
     },
   },

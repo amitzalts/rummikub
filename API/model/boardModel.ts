@@ -1,12 +1,8 @@
 import mongoose, { Schema } from "mongoose";
+import { TileInterface } from "./deckModel";
 
 export interface BoardInterface {
-  _id: string;
-}
-
-export interface TileInterface {
-  color: string;
-  value: number;
+  board: TileInterface[];
   _id: string;
 }
 

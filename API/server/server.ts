@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import { config } from "../config/config";
 import { userRouter } from "../routes/userRoutes";
 import { boardRouter } from "../routes/boardRoutes";
+import { deckRouter } from "../routes/deckRouter";
 
 import { playerRouter } from "../routes/playerRoutes";
 
@@ -29,6 +30,7 @@ async function StartServer() {
   app.use("/api/v1/users", userRouter);
   app.use("/api/v1/players", playerRouter);
   app.use("/api/v1/boards", boardRouter);
+  app.use("/api/v1/decks", deckRouter);
 
   app.get("/signIn", (req: Request, res: Response, next: NextFunction) => {
     res.sendFile(path.join(__dirname, "../../public", "login.html"));

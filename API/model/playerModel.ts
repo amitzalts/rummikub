@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { TileInterface, TileSchema } from "./tileModel";
+import { TileInterface } from "./deckModel";
 
 //a player is relevant only during a game
 

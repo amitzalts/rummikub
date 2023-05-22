@@ -47,13 +47,13 @@ function handlePlayerForm(e) {
         .map((player) => new Player(player));
     const newBoard = new Board();
     newBoard.buildEmptyBoard();
-    const deck = new Deck();
-    currentGame = new Game(playerArr, newBoard, deck);
-    createGameToDB(playerArr, newBoard);
+    const newDeck = new Deck();
+    currentGame = new Game(playerArr, newBoard, newDeck);
+    createGameToDB(playerArr, newBoard, newDeck);
     currentGame.startGame();
     playerNamesForm.style.display = "none";
 }
-function createGameToDB(playerArr, board) {
+function createGameToDB(playerArr, board, deck) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             console.log("saving to DB...");
@@ -81,6 +81,14 @@ function createGameToDB(playerArr, board) {
             //   body: JSON.stringify({ _id: board.id, tileArr: board.tileArr }),
             // }).catch((error) => console.error(error));
             //save deck to DB
+            // await fetch("api/v1/decks", {
+            //   method: "POST",
+            //   headers: {
+            //     Accept: "application/json",
+            //     "Content-Type": "application/json",
+            //   },
+            //   body: JSON.stringify({ _id: deck.id, deck: deck.deck }),
+            // }).catch((error) => console.error(error));
             // save Game to DB with all of the above...
         }
         catch (error) {
