@@ -1,5 +1,3 @@
-import { log } from "console"
-
 function handleGetUserDetails() {
   try {
     fetch("/api/v1/users/getUser")

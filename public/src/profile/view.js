@@ -104,7 +104,8 @@ function renderAllSimpleUsers(users) {
         const allUsersRoot = document.querySelector("#allUsersRoot");
         if (!allUsersRoot)
             throw new Error("allUsersRoot not found on DOM");
-        const html = users.map((user) => {
+        const html = users
+            .map((user) => {
             return `
         <div class="allUsersWrapper__users__user">
           <h2>
@@ -138,7 +139,8 @@ function renderAllSimpleUsers(users) {
           </div>
         </div>
       `;
-        }).join(" ");
+        })
+            .join(" ");
         allUsersRoot.innerHTML = html;
     }
     catch (error) {
