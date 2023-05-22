@@ -2,7 +2,7 @@ function validateBoard() {
   try {
     let validBoard = true;
 
-    const boardCopy = [...currentGame.board];
+    const boardCopy = [...currentGame.board.divArr];
 
     let set: Array<HTMLDivElement> = [];
 
@@ -32,7 +32,6 @@ function validateBoard() {
           validBoard = false;
         }
 
-        console.log(tileArr);
         if (tileArr.find((tile) => tile.color === "jocker")) {
           if (!validSetWithJocker(tileArr)) {
             validBoard = false;

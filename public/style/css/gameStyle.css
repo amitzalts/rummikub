@@ -95,7 +95,8 @@ body {
   font-weight: bold;
   -webkit-user-select: none;
   -ms-user-select: none;
-  user-select: none; }
+  user-select: none;
+  font-size: 1.1rem; }
 
 .square.active {
   transform: scale(0.7); }
@@ -122,7 +123,8 @@ body {
     outline: none; }
 
 .square[data-color="jocker"] {
-  color: purple; }
+  color: purple;
+  font-size: 1.3rem; }
 
 .square[data-color="black"] {
   color: black; }

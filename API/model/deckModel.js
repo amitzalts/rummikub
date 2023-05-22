@@ -23,30 +23,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PlayerSchema = void 0;
+exports.DeckSchema = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-exports.PlayerSchema = new mongoose_1.Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    hand: {
+exports.DeckSchema = new mongoose_1.Schema({
+    deck: {
         type: [{}],
         required: true,
     },
-    active: {
-        type: Boolean,
-        // required: true,
-    },
     _id: {
         type: String,
+        required: true,
     },
-    // points: {
-    //   type: String,
-    //   required: false,
-    // },
-    // notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
 }, {
     versionKey: false,
 });
-exports.default = mongoose_1.default.model("Player", exports.PlayerSchema);
+exports.default = mongoose_1.default.model("Deck", exports.DeckSchema);

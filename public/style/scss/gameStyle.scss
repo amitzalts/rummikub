@@ -115,6 +115,7 @@ body {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  font-size: 1.1rem;
 }
 .square.active {
   transform: scale(0.7);
@@ -146,11 +147,14 @@ body {
 }
 
 .square[data-color="jocker"] {
-  // width: 60%;
-  // height: 60%;
-  // margin: auto;
   color: purple;
+  font-size: 1.3rem;
 }
+
+// .square[data-color="empty"] {
+//   color: rgba(128, 128, 128, 0.2);
+//   content: "<i class="fa-solid fa-face-smile-beam"></i>";
+// }
 .square[data-color="black"] {
   color: black;
 }

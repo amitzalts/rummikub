@@ -23,7 +23,9 @@ function toggleTileActive(clickedDiv, divArray) {
 function moveToNextPlayer() {
     if (!validateBoard())
         return;
+    currentGame.updateGameInDB();
     checkIfPlayerMadeAMove();
+    alert("Pass the screen to next player.");
     const numOfPlayers = currentGame.players.length;
     const indexCurrentPlayer = currentGame.players.indexOf(currentPlayer);
     // if current player is last player on array of players
@@ -50,7 +52,7 @@ function activatePlayer(index) {
 function activatePlayerArea() {
     if (!currentTile || !board)
         return;
-    if (currentGame.board.includes(currentTile)) {
+    if (currentGame.board.divArr.includes(currentTile)) {
         if (!tileBelongesToPlayer(currentTile)) {
             return alert("Tile does not belong to current player.");
         }
@@ -60,11 +62,11 @@ function activatePlayerArea() {
         emptySquare.style.background =
             "url('../../img/tileBack.png')no-repeat center / cover";
         // find the index on the tile in board array
-        const index = currentGame.board.indexOf(currentTile);
+        const index = currentGame.board.divArr.indexOf(currentTile);
         // replace empty div with current tile at board and board array
         board.replaceChild(emptySquare, currentTile);
-        currentGame.board[index] = emptySquare;
-        toggleTileActive(emptySquare, currentGame.board);
+        currentGame.board.divArr[index] = emptySquare;
+        toggleTileActive(emptySquare, currentGame.board.divArr);
         // add tile back to player's hand
         currentPlayer.divsArray.push(currentTile);
         currentPlayer.renderHandToScreen(currentPlayer.divsArray);
@@ -96,12 +98,10 @@ function sortHandByColor() {
 function validSetWithJocker(tileArr) {
     let isValid = true;
     if (isSameColor(tileArr.filter((tile) => tile.color !== "jocker"))) {
-        console.log("1");
         if (!isValidRunWithJocker(tileArr))
             isValid = false;
     }
     else {
-        console.log("2");
         if (!isValidGroupWithJocker(tileArr))
             isValid = false;
     }

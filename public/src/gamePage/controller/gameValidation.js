@@ -2,7 +2,7 @@
 function validateBoard() {
     try {
         let validBoard = true;
-        const boardCopy = [...currentGame.board];
+        const boardCopy = [...currentGame.board.divArr];
         let set = [];
         currentGame.sets = [];
         boardCopy.forEach((square) => {
@@ -25,7 +25,6 @@ function validateBoard() {
                     alert("set too short. minimun 3 tiles needed");
                     validBoard = false;
                 }
-                console.log(tileArr);
                 if (tileArr.find((tile) => tile.color === "jocker")) {
                     if (!validSetWithJocker(tileArr)) {
                         validBoard = false;
