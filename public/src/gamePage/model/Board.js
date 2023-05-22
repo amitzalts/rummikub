@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class Board {
-    constructor(tileArr = [], id = crypto.randomUUID()) {
+    constructor(tileArr = [], id = genRanHex()) {
         this.tileArr = tileArr;
         this.id = id;
         this.divArr = [];

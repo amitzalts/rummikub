@@ -108,7 +108,6 @@ async function createGameToDB(playerArr: Player[], board: Board, deck: Deck) {
     const playerIdArr = playerArr.map((player) => player.id);
     const user = await getUser();
 
-    console.log(user);
     await fetch(`${gameAPI}`, {
       method: "POST",
       headers: {
@@ -118,8 +117,8 @@ async function createGameToDB(playerArr: Player[], board: Board, deck: Deck) {
       body: JSON.stringify({
         userId: user.userId,
         players: playerIdArr,
-        board: board.id,
-        deck: deck.id,
+        boardId: board.id,
+        deckId: deck.id,
       }),
     }).catch((error) => console.error(error));
   } catch (error) {

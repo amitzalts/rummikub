@@ -6,7 +6,7 @@ class Player {
   constructor(
     public name: string,
     public divsArray: Array<HTMLDivElement> = [],
-    public id: string = crypto.randomUUID()
+    public id: string = genRanHex()
   ) {}
 
   initializeStartHend() {

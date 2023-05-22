@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class Deck {
-    constructor(id = crypto.randomUUID()) {
+    constructor(id = genRanHex()) {
         this.id = id;
         this.deck = this.createDeck();
     }

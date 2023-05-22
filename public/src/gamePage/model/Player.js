@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class Player {
-    constructor(name, divsArray = [], id = crypto.randomUUID()) {
+    constructor(name, divsArray = [], id = genRanHex()) {
         this.name = name;
         this.divsArray = divsArray;
         this.id = id;

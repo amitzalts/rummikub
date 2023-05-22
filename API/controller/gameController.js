@@ -28,12 +28,17 @@ const getAllGames = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 exports.getAllGames = getAllGames;
 const createGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { userId, players, board, deck } = req.body;
+        const { userId, players, boardId, deckId } = req.body;
         console.log(req.body);
         const user = yield userModel_1.default.findById(userId);
         if (!user)
             return "User not found";
-        const game = yield gameModel_1.default.create({ user, players: [players], board, deck });
+        const game = yield gameModel_1.default.create({
+            user,
+            players: [...players],
+            board: boardId,
+            deck: deckId,
+        });
         res.send({ ok: true, game });
     }
     catch (error) {

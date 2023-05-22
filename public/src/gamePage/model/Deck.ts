@@ -1,7 +1,7 @@
 class Deck {
   public deck: Tile[];
 
-  constructor(public id: string = crypto.randomUUID()) {
+  constructor(public id: string = genRanHex()) {
     this.deck = this.createDeck();
   }
 

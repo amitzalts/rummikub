@@ -1,9 +1,6 @@
 class Board {
   public divArr: Array<HTMLDivElement> = [];
-  constructor(
-    public tileArr: Tile[] = [],
-    public id: string = crypto.randomUUID()
-  ) {}
+  constructor(public tileArr: Tile[] = [], public id: string = genRanHex()) {}
 
   buildEmptyBoard() {
     for (let i = 1; i <= 160; i++) {

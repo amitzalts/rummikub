@@ -92,7 +92,6 @@ function createGameToDB(playerArr, board, deck) {
             // save Game to DB with all of the above...
             const playerIdArr = playerArr.map((player) => player.id);
             const user = yield getUser();
-            console.log(user);
             yield fetch(`${gameAPI}`, {
                 method: "POST",
                 headers: {
@@ -102,8 +101,8 @@ function createGameToDB(playerArr, board, deck) {
                 body: JSON.stringify({
                     userId: user.userId,
                     players: playerIdArr,
-                    board: board.id,
-                    deck: deck.id,
+                    boardId: board.id,
+                    deckId: deck.id,
                 }),
             }).catch((error) => console.error(error));
         }

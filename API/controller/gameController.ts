@@ -23,13 +23,18 @@ export const createGame = async (
   next: NextFunction
 ) => {
   try {
-    const { userId, players, board, deck } = req.body;
+    const { userId, players, boardId, deckId } = req.body;
     console.log(req.body);
 
     const user = await User.findById(userId);
     if (!user) return "User not found";
 
-    const game = await Game.create({ user, players: [players], board, deck });
+    const game = await Game.create({
+      user,
+      players: [...players],
+      board: boardId,
+      deck: deckId,
+    });
 
     res.send({ ok: true, game });
   } catch (error: any) {

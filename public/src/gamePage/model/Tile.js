@@ -1,6 +1,6 @@
 "use strict";
 class Tile {
-    constructor(color, value, id = crypto.randomUUID()) {
+    constructor(color, value, id = genRanHex()) {
         this.color = color;
         this.value = value;
         this.id = id;
