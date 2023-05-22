@@ -21,6 +21,7 @@ const config_1 = require("../config/config");
 const userRoutes_1 = require("../routes/userRoutes");
 const boardRoutes_1 = require("../routes/boardRoutes");
 const deckRouter_1 = require("../routes/deckRouter");
+const gameRoutes_1 = require("../routes/gameRoutes");
 const playerRoutes_1 = require("../routes/playerRoutes");
 StartServer();
 function StartServer() {
@@ -39,6 +40,7 @@ function StartServer() {
         app.use((0, cookie_parser_1.default)());
         //routes
         app.use("/api/v1/users", userRoutes_1.userRouter);
+        app.use("/api/v1/games", gameRoutes_1.gameRouter);
         app.use("/api/v1/players", playerRoutes_1.playerRouter);
         app.use("/api/v1/boards", boardRoutes_1.boardRouter);
         app.use("/api/v1/decks", deckRouter_1.deckRouter);

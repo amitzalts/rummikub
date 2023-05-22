@@ -7,6 +7,7 @@ import { config } from "../config/config";
 import { userRouter } from "../routes/userRoutes";
 import { boardRouter } from "../routes/boardRoutes";
 import { deckRouter } from "../routes/deckRouter";
+import { gameRouter } from "../routes/gameRoutes";
 
 import { playerRouter } from "../routes/playerRoutes";
 
@@ -28,6 +29,7 @@ async function StartServer() {
 
   //routes
   app.use("/api/v1/users", userRouter);
+  app.use("/api/v1/games", gameRouter);
   app.use("/api/v1/players", playerRouter);
   app.use("/api/v1/boards", boardRouter);
   app.use("/api/v1/decks", deckRouter);

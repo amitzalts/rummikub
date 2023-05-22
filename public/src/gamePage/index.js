@@ -58,41 +58,66 @@ function createGameToDB(playerArr, board, deck) {
         try {
             console.log("saving to DB...");
             // save players to DB
-            // playerArr.forEach(async (player) => {
-            //   const name = player.name;
-            //   const hand = player.hand;
-            //   const _id = player.id;
-            // await fetch(`api/v1/players`, {
-            //   method: "POST",
-            //   headers: {
-            //     Accept: "application/json",
-            //     "Content-Type": "application/json",
-            //   },
-            //   body: JSON.stringify({ name, hand, _id }),
-            // }).catch((error) => console.error(error));
-            // });
+            playerArr.forEach((player) => __awaiter(this, void 0, void 0, function* () {
+                const name = player.name;
+                const hand = player.hand;
+                const _id = player.id;
+                yield fetch(`${playerAPI}`, {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ name, hand, _id }),
+                }).catch((error) => console.error(error));
+            }));
             //save board to DB
-            // await fetch("api/v1/boards", {
-            //   method: "POST",
-            //   headers: {
-            //     Accept: "application/json",
-            //     "Content-Type": "application/json",
-            //   },
-            //   body: JSON.stringify({ _id: board.id, tileArr: board.tileArr }),
-            // }).catch((error) => console.error(error));
+            yield fetch(`${boardAPI}`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ _id: board.id, tileArr: board.tileArr }),
+            }).catch((error) => console.error(error));
             //save deck to DB
-            // await fetch("api/v1/decks", {
-            //   method: "POST",
-            //   headers: {
-            //     Accept: "application/json",
-            //     "Content-Type": "application/json",
-            //   },
-            //   body: JSON.stringify({ _id: deck.id, deck: deck.deck }),
-            // }).catch((error) => console.error(error));
+            yield fetch(`${deckAPI}`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ _id: deck.id, deck: deck.deck }),
+            }).catch((error) => console.error(error));
             // save Game to DB with all of the above...
+            const playerIdArr = playerArr.map((player) => player.id);
+            const user = yield getUser();
+            console.log(user);
+            yield fetch(`${gameAPI}`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userId: user.userId,
+                    players: playerIdArr,
+                    board: board.id,
+                    deck: deck.id,
+                }),
+            }).catch((error) => console.error(error));
         }
         catch (error) {
             console.error(error);
         }
+    });
+}
+function getUser() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const getUser = yield fetch(`${userAPI}/getUser`)
+            .then((res) => res.json())
+            .then(({ cookieUser }) => cookieUser)
+            .catch((error) => console.error(error));
+        return getUser;
     });
 }

@@ -12,8 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createGame = exports.getAllGames = void 0;
+exports.updateGame = exports.deleteAllGames = exports.createGame = exports.getAllGames = void 0;
 const gameModel_1 = __importDefault(require("../model/gameModel"));
+const userModel_1 = __importDefault(require("../model/userModel"));
 const secret = process.env.JWT_SECRET;
 const getAllGames = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -27,10 +28,13 @@ const getAllGames = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 exports.getAllGames = getAllGames;
 const createGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { user } = req.cookies;
-        const { players, board, deck } = req.body;
+        const { userId, players, board, deck } = req.body;
+        console.log(req.body);
+        const user = yield userModel_1.default.findById(userId);
+        if (!user)
+            return "User not found";
         const game = yield gameModel_1.default.create({ user, players, board, deck });
-        res.send({ ok: true });
+        res.send({ ok: true, game });
     }
     catch (error) {
         console.error(error);
@@ -38,3 +42,27 @@ const createGame = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.createGame = createGame;
+const deleteAllGames = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const deletedGames = yield gameModel_1.default.deleteMany({});
+        res.status(200).send({ deletedGames });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+});
+exports.deleteAllGames = deleteAllGames;
+const updateGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { gameId, hand } = req.body;
+        yield gameModel_1.default.findByIdAndUpdate(gameId, { hand });
+        const findGame = yield gameModel_1.default.findById(gameId);
+        res.status(200).send({ findGame });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send({ error: error.message });
+    }
+});
+exports.updateGame = updateGame;

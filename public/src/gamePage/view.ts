@@ -32,6 +32,8 @@ let currentPlayer: Player;
 let currentGame: Game;
 let currentTile: HTMLDivElement | undefined;
 
-const deckAPI = "api/v1/decks"
-const boardAPI = "api/v1/boards"
-const playerAPI = "api/v1/players"
+const deckAPI = "api/v1/decks";
+const boardAPI = "api/v1/boards";
+const playerAPI = "api/v1/players";
+const gameAPI = "api/v1/games";
+const userAPI = "api/v1/users";
