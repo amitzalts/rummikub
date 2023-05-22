@@ -24,7 +24,6 @@ export const createGame = async (
 ) => {
   try {
     const { userId, players, boardId, deckId } = req.body;
-    console.log(req.body);
 
     const user = await User.findById(userId);
     if (!user) return "User not found";
