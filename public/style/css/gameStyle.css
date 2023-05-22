@@ -19,7 +19,7 @@ body {
   height: 100%;
   display: grid;
   grid-template-columns: 10vw repeat(4, 1fr);
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(4, 1fr) 20vh;
   background: #0012ff;
   background: radial-gradient(circle, #0012ff 15%, black 100%); }
 
@@ -70,9 +70,13 @@ body {
   gap: 1rem;
   padding: 0.7rem; }
   .action button {
+    height: 100%;
+    width: 100%;
+    margin: auto;
     display: flex;
     align-items: center;
-    justify-content: space-around; }
+    justify-content: space-around;
+    padding: 0.5rem; }
     .action button img {
       width: 20%; }
 

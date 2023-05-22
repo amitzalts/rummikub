@@ -22,18 +22,9 @@ endTurnBtn.addEventListener("click", moveToNextPlayer);
 sortByNumbersBtn.addEventListener("click", sortHandByNumber);
 sortByColorBtn.addEventListener("click", sortHandByColor);
 resetTurnBtn.addEventListener("click", resetMoves);
-// const playerOne = new Player("vladi");
-// const playerTwo = new Player("shlomi");
-// const playerThree = new Player("amit");
-// const playerFour = new Player("bob");
-// const newBoard = new Board();
-// newBoard.buildEmptyBoard();
-// currentGame = new Game(
-//   [playerOne, playerTwo, playerThree, playerFour],
-//   newBoard
-// );
-// currentGame.startGame();
 activePlayerArea.addEventListener("click", activatePlayerArea);
+//start game...
+startFakeGame();
 function handlePlayerForm(e) {
     e.preventDefault();
     if (!playerNamesForm)
@@ -119,4 +110,15 @@ function getUser() {
             .catch((error) => console.error(error));
         return getUser;
     });
+}
+function startFakeGame() {
+    const playerOne = new Player("vladi");
+    const playerTwo = new Player("shlomi");
+    const playerThree = new Player("amit");
+    const playerFour = new Player("bob");
+    const newBoard = new Board();
+    newBoard.buildEmptyBoard();
+    const newDeck = new Deck();
+    currentGame = new Game([playerOne, playerTwo, playerThree, playerFour], newBoard, newDeck);
+    currentGame.startGame();
 }
