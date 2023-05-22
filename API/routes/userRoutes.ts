@@ -11,25 +11,28 @@ import {
   updateUser,
   getAllSimpleUsers,
   updateUserByAdmin,
+  searchUser,
 } from "../controller/userController";
 
 userRouter.route("/").get(getAllUsers).post(createUser)
 
-userRouter.route("/getAllSimpleUsers").get(getAllSimpleUsers);
+userRouter.route("/getAllSimpleUsers").get(getAllSimpleUsers)
 
-userRouter.route("/getAllUsers").get(getAllUsers);
+userRouter.route("/searchUser").post(searchUser)
 
-userRouter.route("/getUser").get(getUser);
+userRouter.route("/getAllUsers").get(getAllUsers)
 
-userRouter.route("/deleteUser").delete(deleteUser);
+userRouter.route("/getUser").get(getUser)
 
-userRouter.route("/updateUser").patch(updateUser);
+userRouter.route("/deleteUser").delete(deleteUser)
 
-userRouter.route("/updateUserByAdmin").patch(updateUserByAdmin);
+userRouter.route("/updateUser").patch(updateUser)
 
-userRouter.route("/userLogin").post(userLogin);
+userRouter.route("/updateUserByAdmin").patch(updateUserByAdmin)
 
-userRouter.route("/userLogout").get(userLogout);
+userRouter.route("/userLogin").post(userLogin)
+
+userRouter.route("/userLogout").get(userLogout)
 
 // userRouter.route("/userPassword").post(passwordRecovery);
 

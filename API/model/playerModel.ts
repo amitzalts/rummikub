@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { TileInterface, TileSchema } from "./tileModel";
+import { TileInterface } from "./deckModel";
 
 //a player is relevant only during a game
 
@@ -18,17 +18,20 @@ export const PlayerSchema: Schema = new Schema(
       required: true,
     },
     hand: {
-      type: [TileSchema],
+      type: [{}],
       required: true,
     },
     active: {
       type: Boolean,
-      required: true,
+      // required: true,
     },
-    points: {
+    _id: {
       type: String,
-      required: false,
     },
+    // points: {
+    //   type: String,
+    //   required: false,
+    // },
     // notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
   },
   {

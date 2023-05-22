@@ -3,6 +3,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: Verdana, "Segoe UI", Tahoma, Geneva, sans-serif;
+
 }
 img,
 embed,
@@ -52,6 +53,7 @@ body {
   color: rgba(6, 39, 39, 0.808);
   font-size: 3rem;
   &:hover {
+    cursor: pointer;
     text-shadow: 0 0 5px white;
   }
 }
@@ -86,6 +88,7 @@ body {
     border-radius: 0.5rem;
     padding: 0.5rem;
     &:hover{
+      cursor: pointer;
       box-shadow: none;
       background-color: beige;
       transition: 0.2s ease-out;
@@ -124,6 +127,7 @@ body {
       font-size: 26px;
       color: rgba(6, 39, 39, 0.808);
       &:hover{
+        cursor: pointer;
         scale: 1.15;
       }
       &:active{
@@ -182,19 +186,28 @@ body {
     margin: auto;
   }
   &__filterBar{
-    width: 25rem;
+    width: 24.8rem;
     height: 2rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    border: 0.1rem solid black;
+    background-color: grey;
     &__searchBar{
       width: 24.8rem;
       height: 2rem;
-      border: 0.1rem solid black;
       padding-left: 0.5rem;
+    }
+    i{
+      font-size: 18px;
+            margin:0.4rem;
+            &:hover{
+              color: rgb(237, 228, 228);
+              cursor: pointer;
+            }
     }
   }
   &__users{
-    width: 25rem;
+    width: 24.9rem;
     height: 30rem;
     overflow-y: scroll;
     font-size: 1rem;
@@ -209,7 +222,7 @@ body {
     &__user{
       width: 23rem;
       height: auto;
-      border: 0.1rem solid black;
+      border-bottom: 0.1rem solid black;
       padding: 0.4rem 0.4rem;
       line-height: 1rem;
       vertical-align: middle;
@@ -218,6 +231,8 @@ body {
       h2{
         width: 22rem;
         height: 2rem;
+        font-size: 24px;
+        line-height: 24px;
         display: flex;
         justify-content: space-between;
         margin:0;
@@ -243,12 +258,12 @@ body {
           font-size: 16px;
           margin-bottom: 0.5rem;
           &:hover{
+            cursor: pointer;
             box-shadow: none;
             background-color: black;
             transition: 0.2s ease-out;
             color: red;
           }
-        
         }
         &__buttons{
           width: 22rem;
@@ -261,6 +276,7 @@ body {
             font-size: 26px;
             margin:0.4rem;
             &:hover{
+              cursor: pointer;
               scale: 1.1;
             }
           }
@@ -276,3 +292,12 @@ body {
   }
 }
 
+
+
+#noResultsRoot{
+  background-color: red;
+  border: 0.1rem solid black;
+  width: 24.8rem;
+  height: auto;
+  align-self: center;
+}

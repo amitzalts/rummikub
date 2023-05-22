@@ -13,7 +13,11 @@
     <link rel="stylesheet" href="./style/css/button.css" />
     <script src="./src/gamePage/view.js" defer></script>
     <script src="./src/gamePage/helpers.js" defer></script>
-    <script src="./src/gamePage/model.js" defer></script>
+    <script src="./src/gamePage/model/Tile.js" defer></script>
+    <script src="./src/gamePage/model/Deck.js" defer></script>
+    <script src="./src/gamePage/model/Player.js" defer></script>
+    <script src="./src/gamePage/model/Board.js" defer></script>
+    <script src="./src/gamePage/model/Game.js" defer></script>
     <script src="./src/gamePage/controller/renderToPage.js" defer></script>
     <script src="./src/gamePage/controller/moveTiles.js" defer></script>
     <script src="./src/gamePage/controller/gameValidation.js" defer></script>
@@ -35,10 +39,14 @@
       <div class="activePlayerArea"></div>
       <div class="action">
         <button class="buttonStyleTwo" id="sortByColorBtn">
-          sort by color
+          <img src="./img/tileSvg/blue-7.svg" alt="" />
+          <img src="./img/tileSvg/blue-8.svg" alt="" />
+          <img src="./img/tileSvg/blue-9.svg" alt="" />
         </button>
         <button class="buttonStyleTwo" id="sortByNumbersBtn">
-          sort by numbers
+          <img src="./img/tileSvg/black-7.svg" alt="" />
+          <img src="./img/tileSvg/blue-7.svg" alt="" />
+          <img src="./img/tileSvg/red-7.svg" alt="" />
         </button>
         <button class="buttonStyleTwo" id="endTurnBtn">end turn</button>
         <button class="buttonStyleTwo" id="resetTurnBtn">reset turn</button>

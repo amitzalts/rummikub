@@ -23,7 +23,9 @@ function toggleTileActive(clickedDiv, divArray) {
 function moveToNextPlayer() {
     if (!validateBoard())
         return;
+    currentGame.updateGameInDB();
     checkIfPlayerMadeAMove();
+    alert("Pass the screen to next player.");
     const numOfPlayers = currentGame.players.length;
     const indexCurrentPlayer = currentGame.players.indexOf(currentPlayer);
     // if current player is last player on array of players
@@ -50,7 +52,7 @@ function activatePlayer(index) {
 function activatePlayerArea() {
     if (!currentTile || !board)
         return;
-    if (currentGame.board.includes(currentTile)) {
+    if (currentGame.board.divArr.includes(currentTile)) {
         if (!tileBelongesToPlayer(currentTile)) {
             return alert("Tile does not belong to current player.");
         }
@@ -60,11 +62,11 @@ function activatePlayerArea() {
         emptySquare.style.background =
             "url('../../img/tileBack.png')no-repeat center / cover";
         // find the index on the tile in board array
-        const index = currentGame.board.indexOf(currentTile);
+        const index = currentGame.board.divArr.indexOf(currentTile);
         // replace empty div with current tile at board and board array
         board.replaceChild(emptySquare, currentTile);
-        currentGame.board[index] = emptySquare;
-        toggleTileActive(emptySquare, currentGame.board);
+        currentGame.board.divArr[index] = emptySquare;
+        toggleTileActive(emptySquare, currentGame.board.divArr);
         // add tile back to player's hand
         currentPlayer.divsArray.push(currentTile);
         currentPlayer.renderHandToScreen(currentPlayer.divsArray);
@@ -92,4 +94,45 @@ function sortHandByColor() {
         return x.localeCompare(y);
     });
     currentPlayer.renderHandToScreen(currentPlayer.divsArray);
+}
+function validSetWithJocker(tileArr) {
+    let isValid = true;
+    if (isSameColor(tileArr.filter((tile) => tile.color !== "jocker"))) {
+        if (!isValidRunWithJocker(tileArr))
+            isValid = false;
+    }
+    else {
+        if (!isValidGroupWithJocker(tileArr))
+            isValid = false;
+    }
+    return isValid;
+}
+function isValidRunWithJocker(tileArr) {
+    let jockerValue = 0;
+    return tileArr
+        .map((tile) => tile.value)
+        .reduce((a, b) => {
+        if (b === 0) {
+            jockerValue = a + 1;
+            return jockerValue;
+        }
+        if (a === 0) {
+            return b;
+        }
+        return a + 1 === b ? b : NaN;
+    });
+}
+function isValidGroupWithJocker(tileArr) {
+    if (tileArr.length > 4) {
+        return false;
+    }
+    if (!tileArr
+        .filter((tile) => tile.color !== "jocker")
+        .map((tile) => tile.value)
+        .reduce((a, b) => (a === b ? a : NaN))) {
+        return false;
+    }
+    const stringArr = tileArr.map((tile) => tile.value + tile.color);
+    const setArr = [...new Set(stringArr)];
+    return setArr.length === stringArr.length;
 }

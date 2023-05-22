@@ -2,7 +2,7 @@ function validateBoard() {
   try {
     let validBoard = true;
 
-    const boardCopy = [...currentGame.board];
+    const boardCopy = [...currentGame.board.divArr];
 
     let set: Array<HTMLDivElement> = [];
 
@@ -12,17 +12,18 @@ function validateBoard() {
       if (!validBoard) return;
       if (square.innerHTML != "") set.push(square);
 
-      //
-      if (square.innerHTML == "" && set.length > 0) {
-        
+      const squareIndex = boardCopy.indexOf(square) + 1;
+
+      // check if reached end of set of end of row -> than run validation on set
+      if (
+        (square.innerHTML == "" && set.length > 0) ||
+        (set.length > 0 && squareIndex % 20 == 0)
+      ) {
         const tileArr: Tile[] = set.map((div) => {
           const color = div.dataset.color as string;
-          const number = parseInt(div.innerHTML) as number;
-          return new Tile(color, number);
+          const number = div.dataset.value as string;
+          return new Tile(color, parseInt(number));
         });
-
-        console.log(tileArr);
-        console.log("set has duplicates: " + hasDuplicates(tileArr));
 
         //check set length
         if (set.length < 3) {
@@ -31,11 +32,18 @@ function validateBoard() {
           validBoard = false;
         }
 
+        if (tileArr.find((tile) => tile.color === "jocker")) {
+          if (!validSetWithJocker(tileArr)) {
+            validBoard = false;
+          }
+        }
+
         // check if the set is not the same color
-        if (!isSameColor(tileArr)) {
-          // alert("Colors don't match in set.");
-          console.log("is valid group: " + IsValidGroup(tileArr));
-          if (!IsValidGroup(tileArr)) validBoard = false;
+        else if (!isSameColor(tileArr)) {
+          if (!isValidGroup(tileArr)) {
+            alert("Not valid board.");
+            validBoard = false;
+          }
         }
 
         // check if the set is going up by one number by each tile
@@ -65,19 +73,24 @@ function checkIfPlayerMadeAMove() {
 
 function hasDuplicates(array: Tile[]) {
   const newArr = array.map((tile) => tile.color + tile.value);
-  // return newArr;
   return [...new Set(newArr)].length !== newArr.length;
 }
 
-function IsValidGroup(tileArr: Tile[]) {
+function isValidGroup(tileArr: Tile[]) {
   if (tileArr.length > 4) {
     return false;
   }
 
-  const numberArr = tileArr.map((tile) => tile.value + tile.color);
-  const setArr = [...new Set(numberArr)];
+  const stringArr = tileArr.map((tile) => tile.value + tile.color);
+  const setArr = [...new Set(stringArr)];
 
-  return setArr.length === numberArr.length;
+  if (
+    !tileArr.map((tile) => tile.value).reduce((a, b) => (a === b ? a : NaN))
+  ) {
+    return false;
+  }
+
+  return setArr.length === stringArr.length;
 }
 
 function isValidRun(tileArr: Tile[]) {
