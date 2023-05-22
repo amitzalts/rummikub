@@ -16,7 +16,7 @@ export interface GameInterface {
 export const GameSchema: Schema = new Schema(
   {
     user: {
-      type: UserSchema,
+      type: Schema.Types.ObjectId, ref: "User",
       required: true,
     },
     players: {

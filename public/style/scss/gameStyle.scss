@@ -110,7 +110,6 @@ body {
   display: flex;
   justify-content: center;
   padding-top: 20%;
-  // color: transparent;
   background-color: #f9e3d1;
   border-radius: 2px;
   cursor: pointer;
@@ -136,6 +135,13 @@ body {
   gap: 5px;
   z-index: 10;
   // display: none;
+  a {
+    text-decoration: none;
+    color: white;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+  }
   h1 {
     color: whitesmoke;
   }
