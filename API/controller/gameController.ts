@@ -29,7 +29,7 @@ export const createGame = async (
     if (!user) return "User not found";
 
     const game = await Game.create({
-      user,
+      user: userId,
       players: [...players],
       board: boardId,
       deck: deckId,

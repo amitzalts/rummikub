@@ -33,7 +33,7 @@ const createGame = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         if (!user)
             return "User not found";
         const game = yield gameModel_1.default.create({
-            user,
+            user: userId,
             players: [...players],
             board: boardId,
             deck: deckId,
