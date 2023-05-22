@@ -34,9 +34,8 @@ class Board {
     }
     updateBoardInDB() {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("Updating board...");
             this.convertDivArrToTileArr();
-            yield fetch("api/v1/boards/updateBoard", {
+            yield fetch(`${boardAPI}/updateBoard`, {
                 method: "PATCH",
                 headers: {
                     Accept: "application/json",

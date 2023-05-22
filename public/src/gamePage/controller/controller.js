@@ -23,7 +23,7 @@ function toggleTileActive(clickedDiv, divArray) {
 function moveToNextPlayer() {
     if (!validateBoard())
         return;
-    currentGame.board.updateBoardInDB();
+    currentGame.updateGameInDB();
     checkIfPlayerMadeAMove();
     alert("Pass the screen to next player.");
     const numOfPlayers = currentGame.players.length;
@@ -98,12 +98,10 @@ function sortHandByColor() {
 function validSetWithJocker(tileArr) {
     let isValid = true;
     if (isSameColor(tileArr.filter((tile) => tile.color !== "jocker"))) {
-        console.log("1");
         if (!isValidRunWithJocker(tileArr))
             isValid = false;
     }
     else {
-        console.log("2");
         if (!isValidGroupWithJocker(tileArr))
             isValid = false;
     }

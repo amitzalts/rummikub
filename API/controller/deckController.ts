@@ -40,13 +40,13 @@ export const updateDeck = async (
   next: NextFunction
 ) => {
   try {
-    const { deckId, tileArr } = req.body;
+    const { deckId, deck } = req.body;
 
-    await Deck.findByIdAndUpdate(deckId, { tileArr });
+    await Deck.findByIdAndUpdate(deckId, { deck });
 
-    const deck = await Deck.findById(deckId);
-    console.log(deck);
-    res.status(200).json({ deck });
+    const findDeck = await Deck.findById(deckId);
+
+    res.status(200).json({ findDeck });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

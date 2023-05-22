@@ -28,10 +28,9 @@ function toggleTileActive(
 function moveToNextPlayer() {
   if (!validateBoard()) return;
 
-  currentGame.board.updateBoardInDB();
-  
-  checkIfPlayerMadeAMove();
+  currentGame.updateGameInDB();
 
+  checkIfPlayerMadeAMove();
 
   alert("Pass the screen to next player.");
 
@@ -124,10 +123,8 @@ function validSetWithJocker(tileArr: Tile[]) {
   let isValid = true;
 
   if (isSameColor(tileArr.filter((tile) => tile.color !== "jocker"))) {
-    console.log("1");
     if (!isValidRunWithJocker(tileArr)) isValid = false;
   } else {
-    console.log("2");
     if (!isValidGroupWithJocker(tileArr)) isValid = false;
   }
   return isValid;

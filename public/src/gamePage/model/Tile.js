@@ -1,9 +1,9 @@
 "use strict";
 class Tile {
-    constructor(color, value // public id: string = Math.random().toString(36).slice(-9)
-    ) {
+    constructor(color, value, id = crypto.randomUUID()) {
         this.color = color;
         this.value = value;
+        this.id = id;
         this.div = this.buildTileDiv(this.color, this.value);
     }
     buildTileDiv(color, value) {
@@ -49,7 +49,7 @@ class Tile {
             default:
                 console.error("Switch statement didn't work well.");
         }
-        // tileDiv.id = this.id;
+        tileDiv.id = this.id;
         return tileDiv;
     }
 }

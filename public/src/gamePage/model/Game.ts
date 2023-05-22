@@ -27,4 +27,10 @@ class Game {
       playerHand: [...currentPlayer.divsArray],
     };
   }
+
+  async updateGameInDB() {
+    this.players.forEach((player) => player.updatePlayerInDB());
+    this.board.updateBoardInDB();
+    this.deck.updateDeckInDB();
+  }
 }

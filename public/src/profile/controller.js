@@ -71,7 +71,6 @@ function handleSaveEditUserDetails() {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                console.log(data);
                 if (data.errorMessage) {
                     alert(data.errorMessage);
                 }
@@ -178,7 +177,6 @@ function handleSaveEditUserDetailsByAdmin(userId) {
         })
             .then((res) => res.json())
             .then((data) => {
-            console.log(data);
             if (data.errorMessage) {
                 alert(data.errorMessage);
             }

@@ -4,7 +4,8 @@ class Tile {
   
     constructor(
       public color: string,
-      public value: number // public id: string = Math.random().toString(36).slice(-9)
+      public value: number ,
+      public id: string = crypto.randomUUID()
     ) {
       this.div = this.buildTileDiv(this.color, this.value);
     }
@@ -60,7 +61,7 @@ class Tile {
           console.error("Switch statement didn't work well.");
       }
   
-      // tileDiv.id = this.id;
+      tileDiv.id = this.id;
       return tileDiv;
     }
   }

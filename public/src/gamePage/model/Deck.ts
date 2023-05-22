@@ -32,6 +32,17 @@ class Deck {
   resetDeck() {
     this.deck = [...this.createDeck()];
   }
+
+  async updateDeckInDB() {
+    await fetch(`${deckAPI}/updateDeck`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ deck: this.deck, deckId: this.id }),
+    }).catch((error) => console.error(error));
+  }
 }
 
 type GameStatus = {

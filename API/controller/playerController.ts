@@ -81,10 +81,15 @@ export const updatePlayer = async (
   next: NextFunction
 ) => {
   try {
+    const { playerId, hand } = req.body;
+
+    await Player.findByIdAndUpdate(playerId, { hand });
+
+    const findPlayer = await Player.findById(playerId);
+
+    res.status(200).send({ findPlayer });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });
   }
 };
-
-

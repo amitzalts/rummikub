@@ -31,3 +31,7 @@ const resetTurnBtn = document.querySelector(
 let currentPlayer: Player;
 let currentGame: Game;
 let currentTile: HTMLDivElement | undefined;
+
+const deckAPI = "api/v1/decks"
+const boardAPI = "api/v1/boards"
+const playerAPI = "api/v1/players"

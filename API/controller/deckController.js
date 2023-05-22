@@ -41,11 +41,10 @@ const createDeck = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 exports.createDeck = createDeck;
 const updateDeck = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { deckId, tileArr } = req.body;
-        yield deckModel_1.default.findByIdAndUpdate(deckId, { tileArr });
-        const deck = yield deckModel_1.default.findById(deckId);
-        console.log(deck);
-        res.status(200).json({ deck });
+        const { deckId, deck } = req.body;
+        yield deckModel_1.default.findByIdAndUpdate(deckId, { deck });
+        const findDeck = yield deckModel_1.default.findById(deckId);
+        res.status(200).json({ findDeck });
     }
     catch (error) {
         console.error(error);

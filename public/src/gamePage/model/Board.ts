@@ -27,9 +27,8 @@ class Board {
   }
 
   async updateBoardInDB() {
-    console.log("Updating board...");
     this.convertDivArrToTileArr();
-    await fetch("api/v1/boards/updateBoard", {
+    await fetch(`${boardAPI}/updateBoard`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
