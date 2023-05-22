@@ -45,6 +45,7 @@ body {
   color: rgba(6, 39, 39, 0.808);
   font-size: 3rem; }
   .profileLogo:hover {
+    cursor: pointer;
     text-shadow: 0 0 5px white; }
 
 .middleImage {
@@ -75,6 +76,7 @@ body {
     border-radius: 0.5rem;
     padding: 0.5rem; }
     .gameButtons button:hover {
+      cursor: pointer;
       box-shadow: none;
       background-color: beige;
       transition: 0.2s ease-out; }
@@ -108,6 +110,7 @@ body {
       font-size: 26px;
       color: rgba(6, 39, 39, 0.808); }
       .personalDetailsWrapper__buttons i:hover {
+        cursor: pointer;
         scale: 1.15; }
       .personalDetailsWrapper__buttons i:active {
         color: blue; }
@@ -154,17 +157,24 @@ body {
   .allUsersWrapper h1 {
     margin: auto; }
   .allUsersWrapper__filterBar {
-    width: 25rem;
+    width: 24.8rem;
     height: 2rem;
     display: flex;
-    flex-direction: column; }
+    flex-direction: row;
+    border: 0.1rem solid black;
+    background-color: grey; }
     .allUsersWrapper__filterBar__searchBar {
       width: 24.8rem;
       height: 2rem;
-      border: 0.1rem solid black;
       padding-left: 0.5rem; }
+    .allUsersWrapper__filterBar i {
+      font-size: 18px;
+      margin: 0.4rem; }
+      .allUsersWrapper__filterBar i:hover {
+        color: #ede4e4;
+        cursor: pointer; }
   .allUsersWrapper__users {
-    width: 25rem;
+    width: 24.9rem;
     height: 30rem;
     overflow-y: scroll;
     font-size: 1rem;
@@ -179,7 +189,7 @@ body {
     .allUsersWrapper__users__user {
       width: 23rem;
       height: auto;
-      border: 0.1rem solid black;
+      border-bottom: 0.1rem solid black;
       padding: 0.4rem 0.4rem;
       line-height: 1rem;
       vertical-align: middle;
@@ -188,6 +198,8 @@ body {
       .allUsersWrapper__users__user h2 {
         width: 22rem;
         height: 2rem;
+        font-size: 24px;
+        line-height: 24px;
         display: flex;
         justify-content: space-between;
         margin: 0; }
@@ -212,6 +224,7 @@ body {
           font-size: 16px;
           margin-bottom: 0.5rem; }
           .allUsersWrapper__users__user__details button:hover {
+            cursor: pointer;
             box-shadow: none;
             background-color: black;
             transition: 0.2s ease-out;
@@ -227,8 +240,16 @@ body {
             font-size: 26px;
             margin: 0.4rem; }
             .allUsersWrapper__users__user__details__buttons i:hover {
+              cursor: pointer;
               scale: 1.1; }
         .allUsersWrapper__users__user__details p {
           font-weight: 900; }
         .allUsersWrapper__users__user__details span {
           font-weight: 200; }
+
+#noResultsRoot {
+  background-color: red;
+  border: 0.1rem solid black;
+  width: 24.8rem;
+  height: auto;
+  align-self: center; }

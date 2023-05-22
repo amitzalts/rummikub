@@ -91,7 +91,8 @@ function renderAllUsersWrapper() {
     <div class="allUsersWrapper">
       <h1>users</h1>
       <div class="allUsersWrapper__filterBar">
-        <input id="userSearchInput" class="allUsersWrapper__filterBar__searchBar" placeholder="search" onkeyup="handleSearchUsers()">
+        <input id="userSearchInput" class="allUsersWrapper__filterBar__searchBar" placeholder="search">
+        <i onclick="handleSearchUsers()" class="fa-solid fa-magnifying-glass"></i>
       </div>
       <div id="noResultsRoot"></div>
       <div class="allUsersWrapper__users" id="allUsersRoot"></div>
@@ -106,16 +107,17 @@ function renderAllUsersWrapper() {
 }
 
 
-function renderAllSimpleUsers(users:any){
+function renderAllSimpleUsers(users: any) {
   try {
-    
+
     const allUsersRoot: HTMLDivElement | null = document.querySelector("#allUsersRoot")
     if (!allUsersRoot) throw new Error("allUsersRoot not found on DOM")
 
-    const html:string  = users.map((user:any)=>{
+    const html: string = users.map((user: any) => {
       return `
         <div class="allUsersWrapper__users__user">
-          <h2 id="emailInHeaderRoot-${user._id}">${user.email}
+          <h2>
+            <span id="emailInHeaderRoot-${user._id}">${user.email}</span>
             <i id="collapsibleArrow-${user._id}" onclick="collapseUserDetails('${user._id}')" class="fa-solid fa-angle-up"></i>
           </h2>
           <div id="userDetailsRoot-${user._id}" class="allUsersWrapper__users__user__details" style="max-height:0px;">
@@ -138,6 +140,9 @@ function renderAllSimpleUsers(users:any){
             <p>email:
               <span id="editableUserDataRoot-email-${user._id}" class="allUsersWrapper__users__user__details__detail"> ${user.email}</span>
             </p>
+            <p>password:
+              <span id="editableUserDataRoot-password-${user._id}" class="allUsersWrapper__users__user__details__detail"> ${user.password}</span>
+            </p>
             <button onclick="handleDeleteUserByAdmin('${user._id}')" >DELETE USER</button>
           </div>
         </div>
@@ -151,21 +156,62 @@ function renderAllSimpleUsers(users:any){
   }
 }
 
-function collapseUserDetails(userId:string) {
+function catchEditbaleUserDetailsRoots(userId: string): HTMLDivElement[] | undefined {
+  try {
+    const editableFirstNameRoot: HTMLDivElement | null = document.querySelector(`#editableUserDataRoot-firstName-${userId}`)
+    if (!editableFirstNameRoot) throw new Error("editableFirstNameRoot not found on DOM")
+    const editableLastNameRoot: HTMLDivElement | null = document.querySelector(`#editableUserDataRoot-lastName-${userId}`)
+    if (!editableLastNameRoot) throw new Error("editableLastNameRoot not found on DOM")
+    const editableUserNameRoot: HTMLDivElement | null = document.querySelector(`#editableUserDataRoot-userName-${userId}`)
+    if (!editableUserNameRoot) throw new Error("editableUserNameRoot not found on DOM")
+    const editableGenderRoot: HTMLDivElement | null = document.querySelector(`#editableUserDataRoot-gender-${userId}`)
+    if (!editableGenderRoot) throw new Error("editableGenderRoot not found on DOM")
+    const editableEmailRoot: HTMLDivElement | null = document.querySelector(`#editableUserDataRoot-email-${userId}`)
+    if (!editableEmailRoot) throw new Error("editableEmailRoot not found on DOM")
+    const editablePasswordRoot: HTMLDivElement | null = document.querySelector(`#editableUserDataRoot-password-${userId}`)
+    if (!editablePasswordRoot) throw new Error("editablePasswordRoot not found on DOM")
+
+    const editableUserDataRootArray: HTMLDivElement[] = []
+
+    editableUserDataRootArray.push(
+      editableFirstNameRoot,
+      editableLastNameRoot,
+      editableUserNameRoot,
+      editableGenderRoot,
+      editableEmailRoot,
+      editablePasswordRoot)
+
+    return editableUserDataRootArray
+  } catch (error) {
+    console.error(error)
+    return undefined
+  }
+}
+
+
+function collapseUserDetails(userId: string) {
   try {
     const collapsible: HTMLDivElement | null = document.querySelector(`#userDetailsRoot-${userId}`)
     if (!collapsible) throw new Error("userDetailsRoot not found on DOM")
 
-    const collapsibleArrow: HTMLDivElement | null = document.querySelector(`#collapsibleArrow-${userId}`)
-    if (!collapsibleArrow) throw new Error("collapsibleArrow not found on DOM")
+    const editableUserDataRootArray = catchEditbaleUserDetailsRoots(userId)
+    if (!editableUserDataRootArray) throw new Error("editableUserDataRootArray not found")
 
-    if (collapsible.style.maxHeight === "0px") {
-      collapsible.style.maxHeight = "13rem"
-      collapsibleArrow.style.transform = "scaleY(-1)"
-    } else {
-      collapsible.style.maxHeight = "0px"
-      collapsibleArrow.style.transform = "scaleY(1)"
-    }
+      if (editableUserDataRootArray[1].contentEditable === "true") {
+        alert("notice you didn't save the user's details")
+      }
+      else {
+        const collapsibleArrow: HTMLDivElement | null = document.querySelector(`#collapsibleArrow-${userId}`)
+        if (!collapsibleArrow) throw new Error("collapsibleArrow not found on DOM")
+
+        if (collapsible.style.maxHeight === "0px") {
+          collapsible.style.maxHeight = "14rem"
+          collapsibleArrow.style.transform = "scaleY(-1)"
+        } else {
+          collapsible.style.maxHeight = "0px"
+          collapsibleArrow.style.transform = "scaleY(1)"
+        }
+      }    
   } catch (error) {
     console.error(error)
   }
