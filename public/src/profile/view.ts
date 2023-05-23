@@ -12,71 +12,70 @@ function renderPageHeader(user: any) {
 
 function renderPersonalDetailsBar(user: any) {
   try {
-    const personalDetailsRoot: HTMLDivElement | null = document.querySelector(
-      "#personalDetailsRoot"
-    );
-    if (!personalDetailsRoot)
-      throw new Error("personalDetailsRoot not found on DOM");
+    const personalDetailsRoot: HTMLDivElement | null = document.querySelector("#personalDetailsRoot");
+    if (!personalDetailsRoot) throw new Error("personalDetailsRoot not found on DOM");
 
     personalDetailsRoot.innerHTML = `
-      <div id="personalDetailsWrapperRoot" class="personalDetailsWrapper" style="max-height:0px;">
-          <div class="personalDetailsWrapper__buttons">
-              <i onclick="handleEditUserDetails()" class="fa-solid fa-pen-to-square personalDetailsWrapper__buttons__button"></i>
-              <i onclick="handleSaveEditUserDetails()" class="fa-solid fa-floppy-disk personalDetailsWrapper__buttons__button"></i>
-          </div>
-          <div  class="personalDetailsWrapper__detailsBox">
-            <div class="personalDetailsWrapper__detailsBox__detail">first name:
-              <div id="firstNameRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.firstName}</div>
-            </div>
-            <div class="personalDetailsWrapper__detailsBox__detail">last name:
-              <div id="lastNameRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.lastName}</div>
-            </div>  
-            <div class="personalDetailsWrapper__detailsBox__detail">gender: 
-              <div id="genderRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.gender}</div>
-            </div>
-            <div class="personalDetailsWrapper__detailsBox__detail">user name: 
-            <div id="userNameRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.userName}</div>
-              </div>
-            <div class="personalDetailsWrapper__detailsBox__detail">e-mail:
-              <div id="emailRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.email}</div>
-            </div>
-          </div>  
+    <div id="personalDetailsWrapperRoot" class="personalDetailsWrapper" style="visibility: hidden;">
+      <div class="personalDetailsWrapper__buttons">
+          <i onclick="handleEditUserDetails()" class="fa-solid fa-pen-to-square personalDetailsWrapper__buttons__button"></i>
+          <i onclick="handleSaveEditUserDetails()" class="fa-solid fa-floppy-disk personalDetailsWrapper__buttons__button"></i>
       </div>
+      <div  class="personalDetailsWrapper__detailsBox">
+        <div class="personalDetailsWrapper__detailsBox__detail">
+          <span>first name:</span>
+          <div id="firstNameRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.firstName}</div>
+        </div>
+        <div class="personalDetailsWrapper__detailsBox__detail">
+          <span>last name:</span>
+          <div id="lastNameRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.lastName}</div>
+        </div>  
+        <div class="personalDetailsWrapper__detailsBox__detail">
+          <span>gender:</span> 
+          <div id="genderRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.gender}</div>
+        </div>
+        <div class="personalDetailsWrapper__detailsBox__detail">
+          <span>user name:</span> 
+          <div id="userNameRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.userName}</div>
+        </div>
+        <div class="personalDetailsWrapper__detailsBox__detail">
+          <span>e-mail:</span>
+          <div id="emailRoot" class="personalDetailsWrapper__detailsBox__detail__property"> ${user.email}</div>
+        </div>
+      </div>
+    </div>  
     `;
   } catch (error) {
     console.error(error);
   }
 }
 
-function renderGameButtons() {
-  try {
-    const GameButtonsRoot: HTMLDivElement | null =
-      document.querySelector("#GameButtonsRoot");
-    if (!GameButtonsRoot) throw new Error("GameButtonsRoot not found on DOM");
+// function renderGameButtons() {
+//   try {
+//     const GameButtonsRoot: HTMLDivElement | null =
+//       document.querySelector("#GameButtonsRoot");
+//     if (!GameButtonsRoot) throw new Error("GameButtonsRoot not found on DOM");
 
-    GameButtonsRoot.innerHTML = `
-    <div class="gameButtons">
-      <button>join game</button>
-      <button>create game</button>
-    </div>
-    `;
-  } catch (error) {
-    console.error(error);
-  }
-}
+//     GameButtonsRoot.innerHTML = `
+//     <div class="gameButtons">
+//       <button>join game</button>
+//       <button>create game</button>
+//     </div>
+//     `;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
 
 function collapsePersonalDetailsWrapper() {
   try {
-    const wrapper: HTMLDivElement | null = document.querySelector(
-      "#personalDetailsWrapperRoot"
-    );
-    if (!wrapper)
-      throw new Error("personalDetailsWrapperRoot not found on DOM");
+    const wrapper: HTMLDivElement | null = document.querySelector("#personalDetailsWrapperRoot");
+    if (!wrapper) throw new Error("personalDetailsWrapperRoot not found on DOM");
 
-    if (wrapper.style.maxHeight === "0px") {
-      wrapper.style.maxHeight = wrapper.scrollHeight + "rem";
+    if (wrapper.style.visibility === "hidden") {
+      wrapper.style.visibility = "visible"
     } else {
-      wrapper.style.maxHeight = "0px";
+      wrapper.style.visibility = "hidden"
     }
   } catch (error) {
     console.error(error);
@@ -232,7 +231,7 @@ function collapseUserDetails(userId: string) {
         throw new Error("collapsibleArrow not found on DOM");
 
       if (collapsible.style.maxHeight === "0px") {
-        collapsible.style.maxHeight = "14rem";
+        collapsible.style.maxHeight = "35vh";
         collapsibleArrow.style.transform = "scaleY(-1)";
       } else {
         collapsible.style.maxHeight = "0px";

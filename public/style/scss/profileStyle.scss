@@ -3,7 +3,6 @@
   margin: 0;
   box-sizing: border-box;
   font-family: Verdana, "Segoe UI", Tahoma, Geneva, sans-serif;
-
 }
 img,
 embed,
@@ -15,292 +14,309 @@ video {
 body {
   height: 100vh;
   width: 100vw;
-  background: url("https://wallpapercave.com/wp/wp1966217.jpg")
-    no-repeat center / cover;
+  background: url("https://wallpapercave.com/wp/wp1966217.jpg") no-repeat center / cover;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 
+
 .container{
   height: 90vh;
   width: 90vw;
   position: relative;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
   h1{
-    margin-bottom: 4rem;
+    margin-bottom: 4vh;
+    text-align: center;
   }
-}
 
-.logoutButton{
-  font-size: 12px;
-  color: white;
-  position: relative;
-  top:-8rem;
-  right: 27rem;
-  &:hover{
-    text-decoration: underline;
-    cursor: pointer;
-  }
-}
-
-.profileLogo {
-  position: relative;
-  bottom: 19vh;
-  left: 77vh;
-  color: rgba(6, 39, 39, 0.808);
-  font-size: 3rem;
-  &:hover {
-    cursor: pointer;
-    text-shadow: 0 0 5px white;
-  }
-}
-
-.gameButtons{
-  height: 9vh;
-  width: 22vw;
-  position: relative;
-  top: -12vh;
-  right: -2vh;
-  display: flex;
-  justify-content: space-between;
-  button{
-  font-size: 0.8rem;
-  height: 6vh;
-  width: 4vw;
-  background-color: gold;
-  box-shadow: 0px 0px 20px;
-  font-weight: 900;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  &:hover{
-    cursor: pointer;
-    box-shadow: none;
-    background-color: beige;
-    transition: 0.2s ease-out;
-  }
-  &:active{
-    background-color: seagreen;
-    box-shadow: none;
-  }
-}
-}
-
-.middleImage{
-  height: 70vh;
-  width: 70vh;
-  position: relative;
-  top: -10vh;
-  left: 1vh;
-  background: url("https://www.johnadams.co.uk/wp-content/uploads/2021/01/Rummikub-Black-lifestyle.jpg")
-    no-repeat center / cover;
-  border: 0.5rem solid rgb(0, 0, 0);
-  margin:auto;  
-}
-
-
-
-
-.personalDetailsWrapper{
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-  width: 19vw;
-  height: 50vh;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  bottom: 17vh;
-  left: 75vh;
-  background: rgba(255, 255, 255, 0.28);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  align-items: center;
-  &__buttons{
-    width: 14rem;
-    height: 2rem;
+  .logoutButton{
+    height: 2.5vh;
+    width: 3.5vw;
+    font-size: 12px;
+    color: white;
     position: relative;
-    top: 0.5rem;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-    i{
-      font-size: 26px;
-      color: rgba(6, 39, 39, 0.808);
-      &:hover{
-        cursor: pointer;
-        scale: 1.15;
-      }
-      &:active{
-        color: blue;
-      }
+    top: -8vh;
+    right: -2vh;
+    &:hover{
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+  
+  .profileLogo {
+    height: 8vh;
+    width: 4vw;
+    position: relative;
+    bottom: 11vh;
+    left: 160vh;
+    margin: 1px;
+    color: rgba(6, 39, 39, 0.808);
+    font-size: 3rem;
+    &:hover {
+      cursor: pointer;
+      text-shadow: 0 0 5px white;
     }
   }
 
-  &__detailsBox{
-    width: 14rem;
-    height: 19rem;
+  .personalDetailsWrapper{
+    width: 17vw;
+    height: 43vh;
+    visibility: hidden;
     display: flex;
     flex-direction: column;
+    position: relative;
+    bottom: 11vh;
+    left: 145vh;
+    background: rgba(255, 255, 255, 0.28);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     align-items: center;
-    &__detail{
-      width: 14rem;
-      height: 4rem;
-      background: rgba(255, 255, 255, 0.51);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(0px);
+    &__buttons{
+      width: 14vw;
+      height: 5vh;
+      position: relative;
+      top: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      i{
+        font-size: 26px;
+        color: rgba(6, 39, 39, 0.808);
+        &:hover{
+          cursor: pointer;
+          scale: 1.15;
+        }
+        &:active{
+          color: blue;
+        }
+      }
+    }
+    &__detailsBox{
+      width: 14vw;
+      height: 34vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-weight: 700;
-      div{
-        width: 13rem;
-        height: 2rem;
+      &__detail{
+        width: 14vw;
+        height: 7vh;
+        background: rgba(255, 255, 255, 0.51);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(0px);
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: rgba(255, 255, 255, 0.15);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(0px);
-        border: 1px solid rgba(14, 14, 14, 0.3);
-        line-height: 2rem;
-        font-weight: 100;
+        font-weight: 700;
+        div{
+          width: 13vw;
+          height: 5vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background: rgba(255, 255, 255, 0.15);
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+          backdrop-filter: blur(0px);
+          border: 1px solid rgba(14, 14, 14, 0.3);
+          line-height: 2rem;
+          font-weight: 100;
+        }
       }
     }
   }
-}
-
-////////////////////////ADMIN/////////////////////
-
-.allUsersWrapper{
-  width: 25rem;
-  height: 35rem;
-  border: 0.1rem solid black;
-  position: relative;
-  bottom: 3rem;
-  right: 34rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  text-align: center;
-  h1{
-    margin: auto;
-  }
-  &__filterBar{
-    width: 24.8rem;
-    height: 2rem;
+  
+  .gameButtons{
+    height: 6vh;
+    width: 28vw;
+    position: relative;
+    top: -50vh;
+    right: -59vh;
     display: flex;
-    flex-direction: row;
-    border: 0.1rem solid black;
-    background-color: grey;
-    &__searchBar{
-      width: 24.8rem;
-      height: 2rem;
-      padding-left: 0.5rem;
+    justify-content: space-between;
+    button{
+    font-size: 0.8rem;
+    height: 6vh;
+    width: 4vw;
+    background-color: gold;
+    box-shadow: 0px 0px 20px;
+    font-weight: 900;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    &:hover{
+      cursor: pointer;
+      box-shadow: none;
+      background-color: beige;
+      transition: 0.2s ease-out;
     }
-    i{
-      font-size: 18px;
-            margin:0.4rem;
-            &:hover{
-              color: rgb(237, 228, 228);
-              cursor: pointer;
-            }
+    &:active{
+      background-color: seagreen;
+      box-shadow: none;
     }
   }
-  &__users{
-    width: 24.9rem;
-    height: 30rem;
-    overflow-y: scroll;
-    font-size: 1rem;
-    border: 0.1rem solid black;
+  }
+  
+  .middleImage{  
+    height: 57vh;
+    width: 30vw;
+    position: relative;
+    bottom: 48vh;
+    left: 58vh;
+    background-image: url("https://www.johnadams.co.uk/wp-content/uploads/2021/01/Rummikub-Black-lifestyle.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 0.5rem solid rgb(0, 0, 0);
+  }
+  
+  ////////////////////////ADMIN/////////////////////
+  
+  .allUsersWrapper{
+    width: 25vw;
+    height: 57vh;
+    position: relative;
+    bottom: 105vh;
+    left: 4vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.51);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(0px);
-    &__user{
-      width: 23rem;
-      height: auto;
-      border-bottom: 0.1rem solid black;
-      padding: 0.4rem 0.4rem;
-      line-height: 1rem;
-      vertical-align: middle;
+    justify-content: space-evenly;
+    text-align: center;
+    h1{
+      margin: auto;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    &__filterBar{
+      width: 24.8vw;
+      height: 4vh;
+      display: flex;
+      flex-direction: row;
+      border: 0.1rem solid black;
+      background-color: grey;
+      &__searchBar{
+        width: 24.8vw;
+        height: 4vh;
+        padding-left: 0.5rem;
+      }
+      i{
+        font-size: 18px;
+              margin:0.4rem;
+              &:hover{
+                color: rgb(237, 228, 228);
+                cursor: pointer;
+              }
+      }
+    }
+    &__users{
+      width: 24.9vw;
+      height: 45vh;
+      overflow-y: scroll;
+      font-size: 1rem;
+      border: 0.1rem solid black;
       display: flex;
       flex-direction: column;
-      h2{
-        width: 22rem;
-        height: 2rem;
-        font-size: 24px;
-        line-height: 24px;
-        display: flex;
-        justify-content: space-between;
-        margin:0;
+      justify-content: flex-start;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.51);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(0px);
+      &::-webkit-scrollbar {
+        width: 14px;
       }
-      &__details{
-        width: 22rem;
-        height: auto;
+      
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color:  transparent;   
+        border-radius: 20px;    
+        border: 3px solid black;
+      }
+      &__user{
+        width: 23vw;
+        height: 40vh;
+        border-bottom: 0.1rem solid black;
+        padding: 0.4rem 0.4rem;
+        line-height: 2rem;
+        vertical-align: middle;
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
-        font-size: 1rem;
-        text-align: left;
-        line-height: 1.5rem;
-        overflow: hidden;
-        transition: max-height 0.2s ease-out;
-        button{
-          margin:0.5rem;
-          background-color: red;
-          box-shadow: 0px 0px 15px;
-          font-weight: 900;
-          border-radius: 0.5rem;
-          padding: 0.5rem;
-          font-size: 16px;
-          margin-bottom: 0.5rem;
-          &:hover{
-            cursor: pointer;
-            box-shadow: none;
-            background-color: black;
-            transition: 0.2s ease-out;
-            color: red;
-          }
-        }
-        &__buttons{
-          width: 22rem;
-          height: 1rem;
+        h2{
+          width: 22vw;
+          height: 3vh;
+          font-size: 20px;
+          font-weight: 500;
+          line-height: 24px;
           display: flex;
           justify-content: space-between;
-          margin-bottom: 1rem;
-          margin-top: 1rem;
+          margin:0;
           i{
-            font-size: 26px;
-            margin:0.4rem;
             &:hover{
               cursor: pointer;
-              scale: 1.1;
+              text-shadow: 0 0 5px white;
             }
           }
         }
-        p{
-          font-weight: 900;
-        }
-        span{
-          font-weight: 200;
+        &__details{
+          width: 22vw;
+          height: 34vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          font-size: 1rem;
+          text-align: left;
+          line-height: 1.5rem;
+          overflow: hidden;
+          transition: max-height 0.2s ease-out;
+          button{
+            margin:0.5rem;
+            background-color: red;
+            box-shadow: 0px 0px 15px;
+            font-weight: 900;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            font-size: 16px;
+            margin-bottom: 0.5rem;
+            &:hover{
+              cursor: pointer;
+              box-shadow: none;
+              background-color: black;
+              transition: 0.2s ease-out;
+              color: red;
+            }
+          }
+          &__buttons{
+            width: 22vw;
+            height: 5vh;
+            display: flex;
+            justify-content: space-between;
+            i{
+              font-size: 26px;
+              margin:0.4rem;
+              &:hover{
+                cursor: pointer;
+                scale: 1.1;
+              }
+            }
+          }
+          p{
+            font-weight: 900;
+          }
+          span{
+            font-weight: 200;
+          }
         }
       }
     }
   }
+  
+  
+  
+  #noResultsRoot{
+    background-color: red;
+    border: 0.1rem solid black;
+    width: 24.5vw;
+    height: auto;
+    align-self: center;
+  }
 }
 
-
-
-#noResultsRoot{
-  background-color: red;
-  border: 0.1rem solid black;
-  width: 24.8rem;
-  height: auto;
-  align-self: center;
-}
