@@ -12,12 +12,12 @@ const playNowBtn = document.querySelector("#playNowBtn");
 const gameTypeWindow = document.querySelector(".gameTypeWindow");
 if (playNowBtn) {
     playNowBtn.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
-        const user = yield fetch("api/v1/users/getUser")
+        const user = yield fetch("http://localhost:3000/api/v1/users/getUser")
             .then((res) => res.json())
             .then(({ cookieUser }) => cookieUser)
             .catch((error) => console.error(error));
         if (!user) {
-            location.href = "/signIn";
+            location.href = "http://localhost:3000/signIn";
         }
         else {
             if (gameTypeWindow) {

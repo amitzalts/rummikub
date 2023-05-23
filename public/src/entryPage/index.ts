@@ -6,13 +6,12 @@ const gameTypeWindow: HTMLDivElement | null =
 
 if (playNowBtn) {
   playNowBtn.addEventListener("click", async () => {
-    const user = await fetch("api/v1/users/getUser")
+    const user = await fetch("http://localhost:3000/api/v1/users/getUser")
       .then((res) => res.json())
       .then(({ cookieUser }) => cookieUser)
       .catch((error) => console.error(error));
-
     if (!user) {
-      location.href = "/signIn";
+      location.href = "http://localhost:3000/signIn";
     } else {
       if (gameTypeWindow) {
         gameTypeWindow.style.display = "flex";
