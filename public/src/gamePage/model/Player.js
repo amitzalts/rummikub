@@ -9,13 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class Player {
-    constructor(name, divsArray = [], id = genRanHex()) {
+    constructor(name, divsArray = [], id = genRanHex(), hand = []) {
         this.name = name;
         this.divsArray = divsArray;
         this.id = id;
+        this.hand = hand;
         this.isActive = false;
         this.startingTurnDivs = [];
-        this.hand = [];
     }
     initializeStartHend() {
         this.startingTurnDivs = [...this.divsArray];
@@ -62,7 +62,11 @@ class Player {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ hand: this.hand, playerId: this.id }),
+                body: JSON.stringify({
+                    hand: this.hand,
+                    playerId: this.id,
+                    active: this.isActive,
+                }),
             }).catch((error) => console.error(error));
         });
     }

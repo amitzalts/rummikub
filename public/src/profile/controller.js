@@ -261,10 +261,18 @@ function activateSavedGamesBtn() {
             // middleImage.append(gamesDiv);
             middleImage.innerHTML = names.join("");
             const divGames = middleImage.querySelectorAll(".game");
-            divGames.forEach((game) => game.addEventListener("click", () => {
+            divGames.forEach((game) => game.addEventListener("click", () => __awaiter(this, void 0, void 0, function* () {
                 const findGame = gamesFromDB.find((obj) => obj._id === game.id);
-                console.log(findGame);
-            }));
+                yield fetch("api/v1/games/saveGameCookie", {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ gameId: findGame._id }),
+                }).catch((error) => console.error(error));
+                location.href = "/game";
+            })));
         });
     });
 }

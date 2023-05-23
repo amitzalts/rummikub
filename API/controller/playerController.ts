@@ -23,9 +23,9 @@ export const createPlayer = async (
   next: NextFunction
 ) => {
   try {
-    const { name, hand, _id } = req.body;
+    const { name, hand, _id, active } = req.body;
 
-    const player = await Player.create({ name, hand, _id });
+    const player = await Player.create({ name, hand, _id, active });
 
     res.status(200).json({ player });
   } catch (error: any) {

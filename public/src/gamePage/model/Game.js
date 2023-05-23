@@ -16,15 +16,17 @@ class Game {
         // public board: Array<HTMLDivElement> = [];
         this.currentGameStatus = { board: [], playerHand: [] };
         this.sets = [];
-        this.players.forEach((player) => player.getNewHand(this.deck));
+        // this.players.forEach((player) => player.getNewHand(this.deck));
     }
     startGame() {
         // createEmptyBoard(this.board);
         renderBoard(this.board.divArr);
-        currentPlayer =
-            this.players[Math.floor(Math.random() * this.players.length)];
-        renderPlayers(currentGame.players);
-        activatePlayer(currentGame.players.indexOf(currentPlayer));
+        const findActivePlayer = this.players.find((player) => player.isActive === true);
+        if (!findActivePlayer)
+            return;
+        currentPlayer = findActivePlayer;
+        renderPlayers(this.players);
+        activatePlayer(this.players.indexOf(findActivePlayer));
     }
     saveCurrentGameStatus() {
         this.currentGameStatus = {

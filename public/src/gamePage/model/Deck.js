@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class Deck {
-    constructor(id = genRanHex()) {
+    constructor(deck = [], id = genRanHex()) {
+        this.deck = deck;
         this.id = id;
-        this.deck = this.createDeck();
     }
     deal() {
         const randomDeckIndex = Math.floor(Math.random() * this.deck.length);
@@ -31,10 +31,7 @@ class Deck {
             });
             deck.push(jocker);
         }
-        return deck;
-    }
-    resetDeck() {
-        this.deck = [...this.createDeck()];
+        this.deck = deck;
     }
     updateDeckInDB() {
         return __awaiter(this, void 0, void 0, function* () {

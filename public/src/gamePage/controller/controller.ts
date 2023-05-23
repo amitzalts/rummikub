@@ -1,3 +1,42 @@
+async function checkIfGameStarted() {
+  const game = await fetch("api/v1/games/getGame")
+    .then((res) => res.json())
+    .then(({ game }) => game)
+    .catch((error) => console.error(error));
+
+  if (!game) return console.info("No game found. Please start new game.");
+
+  if (!playerNamesForm) return;
+
+  playerNamesForm.style.display = "none";
+
+  console.log(game);
+
+  const convertedPlayersArr: Player[] = game.players.map((player: PlayerDB) => {
+    const hand = player.hand.map(
+      (tile: TileDB) => new Tile(tile.color, tile.value, tile.id)
+    );
+    return new Player(player.name, [], player._id, hand);
+  });
+
+  convertedPlayersArr.forEach((player) => player.activateHand());
+
+  const convertedBoardArr: Tile[] = game.board.tileArr.map(
+    (tile: TileDB) => new Tile(tile.color, tile.value, tile.id)
+  );
+
+  const convertedDeckArr: Tile[] = game.deck.deck.map(
+    (tile: TileDB) => new Tile(tile.color, tile.value, tile.id)
+  );
+
+  const deck = new Deck(convertedDeckArr);
+  const board = new Board(convertedBoardArr);
+
+  const recoveredGame: Game = new Game(convertedPlayersArr, board, deck);
+  recoveredGame.startGame();
+  console.log(recoveredGame);
+}
+
 function toggleTileActive(
   clickedDiv: HTMLDivElement,
   divArray: Array<HTMLDivElement>
@@ -90,7 +129,6 @@ function activatePlayerArea() {
     // add tile back to player's hand
     currentPlayer.divsArray.push(currentTile);
     currentPlayer.addTileToHand(currentTile);
-
 
     currentPlayer.renderHandToScreen(currentPlayer.divsArray);
 

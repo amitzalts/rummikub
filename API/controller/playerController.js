@@ -29,8 +29,8 @@ const getAllPlayers = (req, res, next) => __awaiter(void 0, void 0, void 0, func
 exports.getAllPlayers = getAllPlayers;
 const createPlayer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, hand, _id } = req.body;
-        const player = yield playerModel_1.default.create({ name, hand, _id });
+        const { name, hand, _id, active } = req.body;
+        const player = yield playerModel_1.default.create({ name, hand, _id, active });
         res.status(200).json({ player });
     }
     catch (error) {

@@ -64,3 +64,9 @@ class Tile {
     return tileDiv;
   }
 }
+
+interface TileDB {
+  color: string;
+  value: number;
+  id: string;
+}

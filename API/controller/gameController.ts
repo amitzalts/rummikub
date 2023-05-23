@@ -17,6 +17,53 @@ export const getAllGames = async (
   }
 };
 
+export const saveGameCookie = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { gameId } = req.body;
+
+    if (!gameId) throw new Error("gameId not found");
+
+    if (!secret) throw new Error("Missing jwt secret");
+
+    const token = jwt.encode({ gameId }, secret);
+
+    res.cookie("gameId", token, {
+      maxAge: 60 * 60 * 1000, //1 minute
+      httpOnly: true,
+    });
+    res.status(200).json({ ok: true });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getGame = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { gameId } = req.cookies;
+
+    if (!secret) throw new Error("No secret");
+    if (!gameId) throw new Error("No user found");
+
+    const decodedGameId = jwt.decode(gameId, secret);
+
+    const game = await Game.findById(decodedGameId.gameId).populate(
+      "user players board deck"
+    );
+
+    res.status(200).json({ game });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getUserGames = async (
   req: Request,
   res: Response,
@@ -60,7 +107,7 @@ export const createGame = async (
       deck: deckId,
     });
 
-    res.send({ ok: true, game });
+    res.send({ ok: true, gameId: game._id });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: "error.message" });

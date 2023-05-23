@@ -7,18 +7,23 @@ class Game {
     public board: Board,
     public deck: Deck
   ) {
-    this.players.forEach((player) => player.getNewHand(this.deck));
+    // this.players.forEach((player) => player.getNewHand(this.deck));
   }
 
   startGame() {
     // createEmptyBoard(this.board);
     renderBoard(this.board.divArr);
-    currentPlayer =
-      this.players[Math.floor(Math.random() * this.players.length)];
 
-    renderPlayers(currentGame.players);
+    const findActivePlayer = this.players.find(
+      (player) => player.isActive === true
+    );
 
-    activatePlayer(currentGame.players.indexOf(currentPlayer));
+    if (!findActivePlayer) return;
+    currentPlayer = findActivePlayer;
+
+    renderPlayers(this.players);
+
+    activatePlayer(this.players.indexOf(findActivePlayer));
   }
 
   saveCurrentGameStatus() {

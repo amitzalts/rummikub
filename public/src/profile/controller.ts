@@ -254,6 +254,19 @@ function handleSearchUsers() {
   }
 }
 
+interface GameDB {
+  _id: string;
+  user: {};
+  players: [
+    {
+      name: string;
+      hand: [{}];
+    }
+  ];
+  board: Board;
+  deck: Deck;
+}
+
 async function activateSavedGamesBtn() {
   const gamesFromDB = await fetch("api/v1/games/getUserGames")
     .then((res) => res.json())
@@ -269,7 +282,7 @@ async function activateSavedGamesBtn() {
   gamesDiv.classList.add("gamesDiv");
 
   const names = gamesFromDB.map(
-    (game) =>
+    (game: GameDB) =>
       `<div class="game" id="${game._id}">${game.players
         .map((player) => player.name)
         .join(", ")}</div>`
@@ -285,9 +298,18 @@ async function activateSavedGamesBtn() {
     ) as NodeListOf<HTMLDivElement>;
 
     divGames.forEach((game) =>
-      game.addEventListener("click", () => {
-        const findGame = gamesFromDB.find((obj) => obj._id === game.id);
-        console.log(findGame);
+      game.addEventListener("click", async () => {
+        const findGame = gamesFromDB.find((obj: GameDB) => obj._id === game.id);
+        
+        await fetch("api/v1/games/saveGameCookie", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ gameId: findGame._id }),
+        }).catch((error) => console.error(error));
+        location.href = "/game"
       })
     );
   });

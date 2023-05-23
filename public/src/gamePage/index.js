@@ -8,13 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-function checkIfGameStarted() {
-    if (!playerNamesForm)
-        return;
-    if (currentGame) {
-        playerNamesForm.style.display = "none";
-    }
-}
 if (playerNamesForm) {
     playerNamesForm.addEventListener("submit", handlePlayerForm);
 }
@@ -36,12 +29,16 @@ function handlePlayerForm(e) {
     const playerArr = [playerOne, playerTwo, playerThree, playerFour]
         .filter((player) => player != "")
         .map((player) => new Player(player));
+    const index = Math.floor(Math.random() * playerArr.length);
+    // currentPlayer = playerArr[index];
+    playerArr[index].isActive = true;
     const newBoard = new Board();
     newBoard.buildEmptyBoard();
     const newDeck = new Deck();
+    newDeck.createDeck();
     currentGame = new Game(playerArr, newBoard, newDeck);
-    createGameToDB(playerArr, newBoard, newDeck);
     currentGame.startGame();
+    createGameToDB(playerArr, newBoard, newDeck);
     playerNamesForm.style.display = "none";
 }
 function createGameToDB(playerArr, board, deck) {
@@ -53,13 +50,14 @@ function createGameToDB(playerArr, board, deck) {
                 const name = player.name;
                 const hand = player.hand;
                 const _id = player.id;
+                const active = player.isActive;
                 yield fetch(`${playerAPI}`, {
                     method: "POST",
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ name, hand, _id }),
+                    body: JSON.stringify({ name, hand, _id, active }),
                 }).catch((error) => console.error(error));
             }));
             //save board to DB
@@ -83,7 +81,7 @@ function createGameToDB(playerArr, board, deck) {
             // save Game to DB with all of the above...
             const playerIdArr = playerArr.map((player) => player.id);
             const user = yield getUser();
-            yield fetch(`${gameAPI}`, {
+            const createdGameId = yield fetch(`${gameAPI}`, {
                 method: "POST",
                 headers: {
                     Accept: "application/json",
@@ -95,6 +93,17 @@ function createGameToDB(playerArr, board, deck) {
                     boardId: board.id,
                     deckId: deck.id,
                 }),
+            })
+                .then((res) => res.json())
+                .then(({ gameId }) => gameId)
+                .catch((error) => console.error(error));
+            yield fetch("api/v1/games/saveGameCookie", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ gameId: createdGameId }),
             }).catch((error) => console.error(error));
         }
         catch (error) {
@@ -119,6 +128,7 @@ function startFakeGame() {
     const newBoard = new Board();
     newBoard.buildEmptyBoard();
     const newDeck = new Deck();
+    newDeck.createDeck();
     currentGame = new Game([playerOne, playerTwo, playerThree, playerFour], newBoard, newDeck);
     currentGame.startGame();
 }

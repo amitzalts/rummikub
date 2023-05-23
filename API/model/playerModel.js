@@ -36,7 +36,7 @@ exports.PlayerSchema = new mongoose_1.Schema({
     },
     active: {
         type: Boolean,
-        // required: true,
+        required: true,
     },
     _id: {
         type: String,

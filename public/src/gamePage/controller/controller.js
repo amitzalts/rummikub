@@ -1,4 +1,39 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+function checkIfGameStarted() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const game = yield fetch("api/v1/games/getGame")
+            .then((res) => res.json())
+            .then(({ game }) => game)
+            .catch((error) => console.error(error));
+        if (!game)
+            return console.info("No game found. Please start new game.");
+        if (!playerNamesForm)
+            return;
+        playerNamesForm.style.display = "none";
+        console.log(game);
+        const convertedPlayersArr = game.players.map((player) => {
+            const hand = player.hand.map((tile) => new Tile(tile.color, tile.value, tile.id));
+            return new Player(player.name, [], player._id, hand);
+        });
+        convertedPlayersArr.forEach((player) => player.activateHand());
+        const convertedBoardArr = game.board.tileArr.map((tile) => new Tile(tile.color, tile.value, tile.id));
+        const convertedDeckArr = game.deck.deck.map((tile) => new Tile(tile.color, tile.value, tile.id));
+        const deck = new Deck(convertedDeckArr);
+        const board = new Board(convertedBoardArr);
+        const recoveredGame = new Game(convertedPlayersArr, board, deck);
+        recoveredGame.startGame();
+        console.log(recoveredGame);
+    });
+}
 function toggleTileActive(clickedDiv, divArray) {
     clickedDiv.addEventListener("click", () => {
         if (!currentTile) {
