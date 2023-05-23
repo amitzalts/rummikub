@@ -24,7 +24,7 @@ sortByColorBtn.addEventListener("click", sortHandByColor);
 resetTurnBtn.addEventListener("click", resetMoves);
 activePlayerArea.addEventListener("click", activatePlayerArea);
 //start game...
-startFakeGame();
+// startFakeGame();
 function handlePlayerForm(e) {
     e.preventDefault();
     if (!playerNamesForm)

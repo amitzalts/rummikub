@@ -37,6 +37,8 @@ function moveFromPlayerHandToBoard(clickedOnSquare) {
         const indexOfcurrentTile = currentPlayer.divsArray.indexOf(currentTile);
         currentGame.board.divArr[indexOfNewLocation] = currentTile;
         currentPlayer.divsArray[indexOfcurrentTile] = clickedOnSquare;
+        currentPlayer.addTileToHand(clickedOnSquare);
+        currentPlayer.removeTileFromHand(currentTile.id);
         renderBoard(currentGame.board.divArr);
         currentPlayer.renderHandToScreen(currentPlayer.divsArray);
         resetCurrentTile();
@@ -47,6 +49,7 @@ function moveFromPlayerHandToBoard(clickedOnSquare) {
         currentGame.board.divArr[indexOfNewLocation] = currentTile;
         const index = currentPlayer.divsArray.indexOf(currentTile);
         currentPlayer.divsArray.splice(index, 1);
+        currentPlayer.removeTileFromHand(currentTile.id);
         renderBoard(currentGame.board.divArr);
         currentPlayer.renderHandToScreen(currentPlayer.divsArray);
         resetCurrentTile();
@@ -63,6 +66,8 @@ function switchTileFromBoardToHand(clickedOnSquare) {
         const indexOfcurrentTile = currentGame.board.divArr.indexOf(currentTile);
         currentGame.board.divArr[indexOfcurrentTile] = clickedOnSquare;
         currentPlayer.divsArray[indexOfNewLocation] = currentTile;
+        currentPlayer.addTileToHand(currentTile);
+        currentPlayer.removeTileFromHand(clickedOnSquare.id);
         renderBoard(currentGame.board.divArr);
         currentPlayer.renderHandToScreen(currentPlayer.divsArray);
         resetCurrentTile();

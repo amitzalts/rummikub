@@ -29,12 +29,11 @@ exports.getAllGames = getAllGames;
 const createGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId, players, boardId, deckId } = req.body;
-        console.log(req.body);
         const user = yield userModel_1.default.findById(userId);
         if (!user)
             return "User not found";
         const game = yield gameModel_1.default.create({
-            user,
+            user: userId,
             players: [...players],
             board: boardId,
             deck: deckId,

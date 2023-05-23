@@ -1,15 +1,27 @@
 import express, { NextFunction, Request, Response } from "express";
-const app = express();
+import { createServer } from "http";
+import { Server } from "socket.io";
+
 import mongoose from "mongoose";
 import path from "path";
 import cookieParser from "cookie-parser";
 import { config } from "../config/config";
+
+//routers
 import { userRouter } from "../routes/userRoutes";
 import { boardRouter } from "../routes/boardRoutes";
 import { deckRouter } from "../routes/deckRouter";
 import { gameRouter } from "../routes/gameRoutes";
-
 import { playerRouter } from "../routes/playerRoutes";
+
+const app = express();
+const server = createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:8080",
+  },
+});
 
 StartServer();
 
@@ -22,6 +34,8 @@ async function StartServer() {
     .catch((err) => {
       console.error(err);
     });
+
+  //middleware
   app.use(express.static("public"));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
@@ -50,7 +64,14 @@ async function StartServer() {
     res.sendFile(path.join(__dirname, "../../public", "game.html"));
   });
 
-  app.listen(config.server.port, () => {
+  server.listen(config.server.port, () => {
     console.log(`Server is listening on port ${config.server.port}...`);
+  });
+
+  io.on("connection", (socket) => {
+    console.log("new web socket connection: ", socket.id);
+    socket.on("buttonClicked", (id: string) => {
+      socket.broadcast.emit("broadcast", id)
+    });
   });
 }

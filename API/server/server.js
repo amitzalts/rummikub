@@ -13,16 +13,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const app = (0, express_1.default)();
+const http_1 = require("http");
+const socket_io_1 = require("socket.io");
 const mongoose_1 = __importDefault(require("mongoose"));
 const path_1 = __importDefault(require("path"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const config_1 = require("../config/config");
+//routers
 const userRoutes_1 = require("../routes/userRoutes");
 const boardRoutes_1 = require("../routes/boardRoutes");
 const deckRouter_1 = require("../routes/deckRouter");
 const gameRoutes_1 = require("../routes/gameRoutes");
 const playerRoutes_1 = require("../routes/playerRoutes");
+const app = (0, express_1.default)();
+const server = (0, http_1.createServer)(app);
+const io = new socket_io_1.Server(server, {
+    cors: {
+        origin: "http://localhost:8080",
+    },
+});
 StartServer();
 function StartServer() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -34,6 +43,7 @@ function StartServer() {
             .catch((err) => {
             console.error(err);
         });
+        //middleware
         app.use(express_1.default.static("public"));
         app.use(express_1.default.json());
         app.use(express_1.default.urlencoded({ extended: false }));
@@ -56,8 +66,14 @@ function StartServer() {
         app.get("/game", (req, res, next) => {
             res.sendFile(path_1.default.join(__dirname, "../../public", "game.html"));
         });
-        app.listen(config_1.config.server.port, () => {
+        server.listen(config_1.config.server.port, () => {
             console.log(`Server is listening on port ${config_1.config.server.port}...`);
+        });
+        io.on("connection", (socket) => {
+            console.log("new web socket connection: ", socket.id);
+            socket.on("buttonClicked", (id) => {
+                socket.broadcast.emit("broadcast", id);
+            });
         });
     });
 }

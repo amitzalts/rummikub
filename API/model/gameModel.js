@@ -25,10 +25,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameSchema = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const userModel_1 = require("./userModel");
 exports.GameSchema = new mongoose_1.Schema({
     user: {
-        type: userModel_1.UserSchema,
+        type: mongoose_1.Schema.Types.ObjectId, ref: "User",
         required: true,
     },
     players: {
