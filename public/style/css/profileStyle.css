@@ -22,6 +22,7 @@ body {
 .container {
   height: 90vh;
   width: 90vw;
+  position: relative;
   display: flex;
   align-items: center;
   flex-direction: column; }
@@ -39,37 +40,27 @@ body {
     cursor: pointer; }
 
 .profileLogo {
-  position: absolute;
-  top: 2rem;
-  right: 7rem;
+  position: relative;
+  bottom: 19vh;
+  left: 77vh;
   color: rgba(6, 39, 39, 0.808);
   font-size: 3rem; }
   .profileLogo:hover {
     cursor: pointer;
     text-shadow: 0 0 5px white; }
 
-.middleImage {
-  height: 30rem;
-  width: 30rem;
-  position: absolute;
-  top: 8rem;
-  left: 35rem;
-  background: url("https://www.johnadams.co.uk/wp-content/uploads/2021/01/Rummikub-Black-lifestyle.jpg") no-repeat center/cover;
-  border: 0.5rem solid black;
-  margin: auto; }
-
 .gameButtons {
-  height: 3rem;
-  width: 44rem;
+  height: 9vh;
+  width: 22vw;
   position: relative;
-  top: -19rem;
-  right: 0rem;
+  top: -12vh;
+  right: -2vh;
   display: flex;
   justify-content: space-between; }
   .gameButtons button {
     font-size: 0.8rem;
-    height: 3rem;
-    width: 5rem;
+    height: 6vh;
+    width: 4vw;
     background-color: gold;
     box-shadow: 0px 0px 20px;
     font-weight: 900;
@@ -84,16 +75,26 @@ body {
       background-color: seagreen;
       box-shadow: none; }
 
+.middleImage {
+  height: 70vh;
+  width: 70vh;
+  position: relative;
+  top: -10vh;
+  left: 1vh;
+  background: url("https://www.johnadams.co.uk/wp-content/uploads/2021/01/Rummikub-Black-lifestyle.jpg") no-repeat center/cover;
+  border: 0.5rem solid black;
+  margin: auto; }
+
 .personalDetailsWrapper {
   overflow: hidden;
   transition: max-height 0.2s ease-out;
-  width: 15rem;
-  height: 22rem;
+  width: 19vw;
+  height: 50vh;
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 6rem;
-  right: 1rem;
+  position: relative;
+  bottom: 17vh;
+  left: 75vh;
   background: rgba(255, 255, 255, 0.28);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
