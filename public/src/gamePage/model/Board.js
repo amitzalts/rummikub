@@ -35,14 +35,18 @@ class Board {
     updateBoardInDB() {
         return __awaiter(this, void 0, void 0, function* () {
             this.convertDivArrToTileArr();
-            yield fetch(`${boardAPI}/updateBoard`, {
+            const updatedBoard = yield fetch(`${boardAPI}/updateBoard`, {
                 method: "PATCH",
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ tileArr: this.tileArr, boardId: this.id }),
-            }).catch((error) => console.error(error));
+            })
+                .then((res) => res.json())
+                .then(({ board }) => board)
+                .catch((error) => console.error(error));
+            console.log(updatedBoard);
         });
     }
 }

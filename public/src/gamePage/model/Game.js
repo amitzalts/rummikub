@@ -16,17 +16,21 @@ class Game {
         // public board: Array<HTMLDivElement> = [];
         this.currentGameStatus = { board: [], playerHand: [] };
         this.sets = [];
-        // this.players.forEach((player) => player.getNewHand(this.deck));
+        if (this.players[0].divsArray.length === 0) {
+            this.givePlayersTiles();
+        }
     }
     startGame() {
         // createEmptyBoard(this.board);
         renderBoard(this.board.divArr);
         const findActivePlayer = this.players.find((player) => player.isActive === true);
-        if (!findActivePlayer)
-            return;
-        currentPlayer = findActivePlayer;
+        if (findActivePlayer)
+            currentPlayer = findActivePlayer;
         renderPlayers(this.players);
-        activatePlayer(this.players.indexOf(findActivePlayer));
+        activatePlayer(currentGame.players.indexOf(currentPlayer));
+    }
+    givePlayersTiles() {
+        this.players.forEach((player) => player.getNewHand(this.deck));
     }
     saveCurrentGameStatus() {
         this.currentGameStatus = {
@@ -36,6 +40,7 @@ class Game {
     }
     updateGameInDB() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("Updating game in DB...");
             this.players.forEach((player) => player.updatePlayerInDB());
             this.board.updateBoardInDB();
             this.deck.updateDeckInDB();

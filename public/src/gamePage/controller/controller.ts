@@ -6,20 +6,23 @@ async function checkIfGameStarted() {
 
   if (!game) return console.info("No game found. Please start new game.");
 
+  console.log(game);
+
   if (!playerNamesForm) return;
 
   playerNamesForm.style.display = "none";
 
-  console.log(game);
-
-  const convertedPlayersArr: Player[] = game.players.map((player: PlayerDB) => {
+  const playersArr: Player[] = game.players.map((player: PlayerDB) => {
     const hand = player.hand.map(
       (tile: TileDB) => new Tile(tile.color, tile.value, tile.id)
     );
     return new Player(player.name, [], player._id, hand);
   });
 
-  convertedPlayersArr.forEach((player) => player.activateHand());
+  const index = Math.floor(Math.random() * playersArr.length);
+  playersArr[index].isActive = true;
+
+  playersArr.forEach((player) => player.activateHand());
 
   const convertedBoardArr: Tile[] = game.board.tileArr.map(
     (tile: TileDB) => new Tile(tile.color, tile.value, tile.id)
@@ -30,11 +33,12 @@ async function checkIfGameStarted() {
   );
 
   const deck = new Deck(convertedDeckArr);
-  const board = new Board(convertedBoardArr);
 
-  const recoveredGame: Game = new Game(convertedPlayersArr, board, deck);
-  recoveredGame.startGame();
-  console.log(recoveredGame);
+  const board = new Board(convertedBoardArr, game.board._id);
+  board.updateDivArr();
+
+  currentGame = new Game(playersArr, board, deck);
+  currentGame.startGame();
 }
 
 function toggleTileActive(
@@ -68,6 +72,7 @@ function moveToNextPlayer() {
   if (!validateBoard()) return;
 
   if (checkIfPlayerWon()) return;
+
   currentGame.updateGameInDB();
 
   checkIfPlayerMadeAMove();

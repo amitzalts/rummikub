@@ -44,6 +44,7 @@ const updateBoard = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         const { boardId, tileArr } = req.body;
         yield boardModel_1.default.findByIdAndUpdate(boardId, { tileArr });
         const board = yield boardModel_1.default.findById(boardId);
+        console.log(board);
         res.status(200).json({ board });
     }
     catch (error) {

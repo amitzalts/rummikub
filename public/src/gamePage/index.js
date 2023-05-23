@@ -30,7 +30,6 @@ function handlePlayerForm(e) {
         .filter((player) => player != "")
         .map((player) => new Player(player));
     const index = Math.floor(Math.random() * playerArr.length);
-    // currentPlayer = playerArr[index];
     playerArr[index].isActive = true;
     const newBoard = new Board();
     newBoard.buildEmptyBoard();
