@@ -16,11 +16,11 @@ async function checkIfGameStarted() {
     const hand = player.hand.map(
       (tile: TileDB) => new Tile(tile.color, tile.value, tile.id)
     );
-    return new Player(player.name, [], player._id, hand);
+    return new Player(player.name, [], player._id, hand, player.active);
   });
 
-  const index = Math.floor(Math.random() * playersArr.length);
-  playersArr[index].isActive = true;
+  // const index = Math.floor(Math.random() * playersArr.length);
+  // playersArr[index].isActive = true;
 
   playersArr.forEach((player) => player.activateHand());
 
@@ -73,8 +73,6 @@ function moveToNextPlayer() {
 
   if (checkIfPlayerWon()) return;
 
-  currentGame.updateGameInDB();
-
   checkIfPlayerMadeAMove();
 
   alert("Pass the screen to next player.");
@@ -107,6 +105,8 @@ function activatePlayer(index: number) {
       player.classList.add("active");
     }
   });
+
+  currentGame.updateGameInDB();
 }
 
 function activatePlayerArea() {
@@ -168,7 +168,14 @@ function sortHandByColor() {
 
 function checkIfPlayerWon() {
   if (currentPlayer.divsArray.length === 0) {
+    currentGame.updateGameInDB();
     alert(`${currentPlayer.name} wins!`);
+
+    endTurnBtn.removeEventListener("click", moveToNextPlayer);
+    sortByNumbersBtn.removeEventListener("click", sortHandByNumber);
+    sortByColorBtn.removeEventListener("click", sortHandByColor);
+    resetTurnBtn.removeEventListener("click", resetMoves);
+
     return true;
   }
 

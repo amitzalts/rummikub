@@ -22,10 +22,10 @@ function checkIfGameStarted() {
         playerNamesForm.style.display = "none";
         const playersArr = game.players.map((player) => {
             const hand = player.hand.map((tile) => new Tile(tile.color, tile.value, tile.id));
-            return new Player(player.name, [], player._id, hand);
+            return new Player(player.name, [], player._id, hand, player.active);
         });
-        const index = Math.floor(Math.random() * playersArr.length);
-        playersArr[index].isActive = true;
+        // const index = Math.floor(Math.random() * playersArr.length);
+        // playersArr[index].isActive = true;
         playersArr.forEach((player) => player.activateHand());
         const convertedBoardArr = game.board.tileArr.map((tile) => new Tile(tile.color, tile.value, tile.id));
         const convertedDeckArr = game.deck.deck.map((tile) => new Tile(tile.color, tile.value, tile.id));
@@ -62,7 +62,6 @@ function moveToNextPlayer() {
         return;
     if (checkIfPlayerWon())
         return;
-    currentGame.updateGameInDB();
     checkIfPlayerMadeAMove();
     alert("Pass the screen to next player.");
     const numOfPlayers = currentGame.players.length;
@@ -87,6 +86,7 @@ function activatePlayer(index) {
             player.classList.add("active");
         }
     });
+    currentGame.updateGameInDB();
 }
 function activatePlayerArea() {
     if (!currentTile || !board)
@@ -137,7 +137,12 @@ function sortHandByColor() {
 }
 function checkIfPlayerWon() {
     if (currentPlayer.divsArray.length === 0) {
+        currentGame.updateGameInDB();
         alert(`${currentPlayer.name} wins!`);
+        endTurnBtn.removeEventListener("click", moveToNextPlayer);
+        sortByNumbersBtn.removeEventListener("click", sortHandByNumber);
+        sortByColorBtn.removeEventListener("click", sortHandByColor);
+        resetTurnBtn.removeEventListener("click", resetMoves);
         return true;
     }
     return false;

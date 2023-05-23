@@ -32,7 +32,7 @@ export const saveGameCookie = async (
     const token = jwt.encode({ gameId }, secret);
 
     res.cookie("gameId", token, {
-      maxAge: 60 * 60 * 1000, //1 minute
+      maxAge: 60*60*1000, //1 hour
       httpOnly: true,
     });
     res.status(200).json({ ok: true });

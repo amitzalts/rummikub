@@ -9,12 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 class Player {
-    constructor(name, divsArray = [], id = genRanHex(), hand = []) {
+    constructor(name, divsArray = [], id = genRanHex(), hand = [], isActive = false) {
         this.name = name;
         this.divsArray = divsArray;
         this.id = id;
         this.hand = hand;
-        this.isActive = false;
+        this.isActive = isActive;
         this.startingTurnDivs = [];
     }
     initializeStartHend() {

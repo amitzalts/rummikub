@@ -72,8 +72,8 @@ const deleteAllPlayers = (req, res, next) => __awaiter(void 0, void 0, void 0, f
 exports.deleteAllPlayers = deleteAllPlayers;
 const updatePlayer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { playerId, hand } = req.body;
-        yield playerModel_1.default.findByIdAndUpdate(playerId, { hand });
+        const { playerId, hand, active } = req.body;
+        yield playerModel_1.default.findByIdAndUpdate(playerId, { hand, active });
         const findPlayer = yield playerModel_1.default.findById(playerId);
         res.status(200).send({ findPlayer });
     }

@@ -1,12 +1,12 @@
 class Player {
-  public isActive: boolean = false;
   public startingTurnDivs: Array<HTMLDivElement> = [];
 
   constructor(
     public name: string,
     public divsArray: Array<HTMLDivElement> = [],
     public id: string = genRanHex(),
-    public hand: Tile[] = []
+    public hand: Tile[] = [],
+    public isActive: boolean = false
   ) {}
 
   initializeStartHend() {
@@ -77,4 +77,5 @@ interface PlayerDB {
   _id: string;
   name: string;
   hand: [TileDB];
+  active: boolean;
 }

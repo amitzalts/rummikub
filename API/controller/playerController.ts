@@ -81,9 +81,9 @@ export const updatePlayer = async (
   next: NextFunction
 ) => {
   try {
-    const { playerId, hand } = req.body;
+    const { playerId, hand, active } = req.body;
 
-    await Player.findByIdAndUpdate(playerId, { hand });
+    await Player.findByIdAndUpdate(playerId, { hand, active });
 
     const findPlayer = await Player.findById(playerId);
 
