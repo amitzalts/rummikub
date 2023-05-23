@@ -13,7 +13,7 @@
       src="https://kit.fontawesome.com/0d9e773bea.js"
       crossorigin="anonymous"
     ></script>
-  
+
     <!-- links to js -->
     <script src="./src/profile/view.js" defer></script>
     <script src="./src/profile/controller.js" defer></script>
@@ -21,24 +21,21 @@
     <link rel="icon" type="image/png" href="./img/pngwing.com.png" />
   </head>
   <body onload="handleGetUserDetails()">
-  <div class="container">
-    <h1 id="headerRoot">Welcome to user profile page</h1>
-    <div class="logoutButton" onclick="handleLogout()">logout</div>
-    <div class="profileLogo" onclick="collapsePersonalDetailsWrapper()">
-      <i class="fa-regular fa-circle-user"></i>
-      
+    <div class="container">
+      <h1 id="headerRoot">Welcome to user profile page</h1>
+      <div class="logoutButton" onclick="handleLogout()">logout</div>
+      <div class="profileLogo" onclick="collapsePersonalDetailsWrapper()">
+        <i class="fa-regular fa-circle-user"></i>
+      </div>
+      <div id="personalDetailsRoot"></div>
+
+      <div id="GameButtonsRoot"></div>
+
+      <div class="middleImage"></div>
+
+      <div id="allUsersWrapperRoot"></div>
+
+      <div id="GameButtonsRoot"></div>
     </div>
-    <div id="personalDetailsRoot"></div>
-
-    <div id="GameButtonsRoot"></div>
-
-    <div class="middleImage"></div>
-
-    <div id="allUsersWrapperRoot"></div>
-
-    <div id="GameButtonsRoot"></div>
-  </div>
-   
-
   </body>
 </html>

@@ -17,6 +17,31 @@ export const getAllGames = async (
   }
 };
 
+export const getUserGames = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { user } = req.cookies;
+
+    if (!secret) throw new Error("No secret");
+    if (!user) throw new Error("No user found");
+
+    const decoded = jwt.decode(user, secret);
+
+    const cookieUser = decoded;
+
+    const games = await Game.find({ user: cookieUser.userId }).populate(
+      "user players board deck"
+    );
+
+    res.status(200).json({ games });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const createGame = async (
   req: Request,
   res: Response,

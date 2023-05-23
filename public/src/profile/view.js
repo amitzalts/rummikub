@@ -54,8 +54,10 @@ function renderGameButtons() {
     <div class="gameButtons">
       <button>join game</button>
       <button>create game</button>
+      <button id="savedGamesBtn">saved games</button>
     </div>
     `;
+        activateSavedGamesBtn();
     }
     catch (error) {
         console.error(error);

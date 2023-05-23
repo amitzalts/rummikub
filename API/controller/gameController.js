@@ -12,9 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateGame = exports.deleteAllGames = exports.createGame = exports.getAllGames = void 0;
+exports.updateGame = exports.deleteAllGames = exports.createGame = exports.getUserGames = exports.getAllGames = void 0;
 const gameModel_1 = __importDefault(require("../model/gameModel"));
 const userModel_1 = __importDefault(require("../model/userModel"));
+const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const secret = process.env.JWT_SECRET;
 const getAllGames = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -26,6 +27,23 @@ const getAllGames = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.getAllGames = getAllGames;
+const getUserGames = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { user } = req.cookies;
+        if (!secret)
+            throw new Error("No secret");
+        if (!user)
+            throw new Error("No user found");
+        const decoded = jwt_simple_1.default.decode(user, secret);
+        const cookieUser = decoded;
+        const games = yield gameModel_1.default.find({ user: cookieUser.userId }).populate("user players board deck");
+        res.status(200).json({ games });
+    }
+    catch (error) {
+        console.error(error);
+    }
+});
+exports.getUserGames = getUserGames;
 const createGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userId, players, boardId, deckId } = req.body;

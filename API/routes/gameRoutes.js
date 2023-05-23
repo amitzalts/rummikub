@@ -9,5 +9,6 @@ const gameRouter = express_1.default.Router();
 exports.gameRouter = gameRouter;
 const gameController_1 = require("../controller/gameController");
 gameRouter.route("/").post(gameController_1.createGame);
+gameRouter.route("/getUserGames").get(gameController_1.getUserGames);
 gameRouter.route("/updateGame").patch(gameController_1.updateGame);
 gameRouter.route("/deleteGames").delete(gameController_1.deleteAllGames);
