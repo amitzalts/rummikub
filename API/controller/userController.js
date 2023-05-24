@@ -43,9 +43,7 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         const { firstName, lastName, gender, userName, password, email, adminToken, } = req.body;
         const takenEmail = yield userModel_1.default.findOne({ email });
         if (takenEmail) {
-            res
-                .status(500)
-                .json({
+            res.status(500).json({
                 ok: false,
                 errorMessage: `Email already exists in the system`,
             });
@@ -76,7 +74,7 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
                 role: "public",
             }, secret);
             res.cookie("user", token, {
-                maxAge: 24 * 60 * 60 * 1000,
+                expires: new Date(Date.now() + 7200000),
                 httpOnly: true,
             });
             res.redirect("/signIn");
@@ -106,7 +104,7 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             role: "public",
         }, secret);
         res.cookie("user", token, {
-            maxAge: 24 * 60 * 60 * 1000,
+            expires: new Date(Date.now() + 7200000),
             httpOnly: true,
         });
         res.redirect("/signIn");
@@ -154,7 +152,7 @@ const userLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function
             role: "public",
         }, secret);
         res.cookie("user", token, {
-            maxAge: 60 * 60 * 1000,
+            expires: new Date(Date.now() + 7200000),
             httpOnly: true,
         });
         res.redirect("/profile");
@@ -224,9 +222,7 @@ const updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         const takenEmailUser = yield userModel_1.default.findOne({ email });
         if (takenEmailUser) {
             if (takenEmailUser.email !== email) {
-                res
-                    .status(500)
-                    .json({
+                res.status(500).json({
                     ok: false,
                     errorMessage: `Email already exists in the system`,
                 });
@@ -269,7 +265,7 @@ function updatedUser(userId, firstName, lastName, gender, userName, email, res) 
                 role: "public",
             }, secret);
             res.cookie("user", token, {
-                maxAge: 24 * 60 * 60 * 1000,
+                expires: new Date(Date.now() + 7200000),
                 httpOnly: true,
             });
             res.status(201).json({ ok: true, user });
@@ -287,9 +283,7 @@ const updateUserByAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, 
         const takenEmailUser = yield userModel_1.default.findOne({ email });
         if (takenEmailUser) {
             if (takenEmailUser.email !== email) {
-                res
-                    .status(500)
-                    .json({
+                res.status(500).json({
                     ok: false,
                     errorMessage: `Email already exists in the system`,
                 });

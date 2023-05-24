@@ -14,4 +14,5 @@ gameRouter.route("/saveGameCookie").post(gameController_1.saveGameCookie);
 gameRouter.route("/removeGameCookie").delete(gameController_1.removeGameCookie);
 gameRouter.route("/getGame").get(gameController_1.getGame);
 gameRouter.route("/updateGame").patch(gameController_1.updateGame);
+gameRouter.route("/deleteThisGame").delete(gameController_1.deleteGameAndAllRelatedToIt);
 gameRouter.route("/deleteGames").delete(gameController_1.deleteAllGames);

@@ -49,12 +49,10 @@ export const createUser = async (
 
     const takenEmail = await User.findOne({ email });
     if (takenEmail) {
-      res
-        .status(500)
-        .json({
-          ok: false,
-          errorMessage: `Email already exists in the system`,
-        });
+      res.status(500).json({
+        ok: false,
+        errorMessage: `Email already exists in the system`,
+      });
     } else {
       const user = await User.create({
         firstName: firstName.toLowerCase(),
@@ -87,7 +85,7 @@ export const createUser = async (
       );
 
       res.cookie("user", token, {
-        maxAge: 24 * 60 * 60 * 1000, //24 hours
+        expires: new Date(Date.now() + 7200000), //2 hours
         httpOnly: true,
       });
 
@@ -125,7 +123,7 @@ export const createUser = async (
     );
 
     res.cookie("user", token, {
-      maxAge: 24 * 60 * 60 * 1000, //24 hours
+      expires: new Date(Date.now() + 7200000), //2 hours
       httpOnly: true,
     });
 
@@ -187,7 +185,7 @@ export const userLogin = async (
     );
 
     res.cookie("user", token, {
-      maxAge: 60 * 60 * 1000, //1 hours
+      expires: new Date(Date.now() + 7200000), //2 hours
       httpOnly: true,
     });
 
@@ -282,12 +280,10 @@ export const updateUser = async (
 
     if (takenEmailUser) {
       if (takenEmailUser.email !== email) {
-        res
-          .status(500)
-          .json({
-            ok: false,
-            errorMessage: `Email already exists in the system`,
-          });
+        res.status(500).json({
+          ok: false,
+          errorMessage: `Email already exists in the system`,
+        });
       } else if (takenEmailUser.email === email) {
         updatedUser(userId, firstName, lastName, gender, userName, email, res);
       }
@@ -339,7 +335,7 @@ async function updatedUser(
     );
 
     res.cookie("user", token, {
-      maxAge: 24 * 60 * 60 * 1000, //24 hours
+      expires: new Date(Date.now() + 7200000), //2 hours
       httpOnly: true,
     });
 
@@ -365,12 +361,10 @@ export const updateUserByAdmin = async (
 
     if (takenEmailUser) {
       if (takenEmailUser.email !== email) {
-        res
-          .status(500)
-          .json({
-            ok: false,
-            errorMessage: `Email already exists in the system`,
-          });
+        res.status(500).json({
+          ok: false,
+          errorMessage: `Email already exists in the system`,
+        });
       } else if (takenEmailUser.email === email) {
         updatedUserByAdmin(
           userId,

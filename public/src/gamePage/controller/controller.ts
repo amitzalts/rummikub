@@ -7,7 +7,7 @@ async function checkIfGameStarted() {
   if (!game) return console.info("No game found. Please start new game.");
 
   if (!playerNamesForm) return;
-
+  console.log(game);
   playerNamesForm.style.display = "none";
 
   const playersArr: Player[] = game.players.map((player: PlayerDB) => {
@@ -166,7 +166,7 @@ function sortHandByColor() {
 
 function checkIfPlayerWon() {
   if (currentPlayer.divsArray.length === 0) {
-    currentGame.updateGameInDB();
+    deleteGameFromDB();
     alert(`${currentPlayer.name} wins!`);
 
     endTurnBtn.removeEventListener("click", moveToNextPlayer);
@@ -178,4 +178,10 @@ function checkIfPlayerWon() {
   }
 
   return false;
+}
+
+async function deleteGameFromDB() {
+  await fetch("api/v1/games/deleteThisGame", { method: "DELETE" }).catch(
+    (error) => console.error(error)
+  );
 }

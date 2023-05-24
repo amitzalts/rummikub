@@ -1,5 +1,8 @@
 import { NextFunction, Response, Request } from "express";
 import Game, { GameInterface } from "../model/gameModel";
+import Player from "../model/playerModel";
+import Board from "../model/boardModel";
+import Deck from "../model/deckModel";
 import User from "../model/userModel";
 import jwt from "jwt-simple";
 const secret = process.env.JWT_SECRET;
@@ -29,7 +32,7 @@ export const saveGameCookie = async (
 
     if (!secret) throw new Error("Missing jwt secret");
 
-    const token = jwt.encode({ gameId }, secret);
+    const token = jwt.encode(gameId, secret);
 
     res.cookie("gameId", token, {
       maxAge: 60 * 60 * 1000, //1 hour
@@ -67,7 +70,7 @@ export const getGame = async (
 
     const decodedGameId = jwt.decode(gameId, secret);
 
-    const game = await Game.findById(decodedGameId.gameId).populate(
+    const game = await Game.findById(decodedGameId).populate(
       "user players board deck"
     );
 
@@ -155,6 +158,41 @@ export const updateGame = async (
     const findGame = await Game.findById(gameId);
 
     res.status(200).send({ findGame });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+};
+
+export const deleteGameAndAllRelatedToIt = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { gameId } = req.cookies;
+
+    if (!secret) throw new Error("No secret");
+    if (!gameId) throw new Error("No gameId found");
+
+    const decoded = jwt.decode(gameId, secret);
+
+    const game = await Game.findById(decoded);
+    if (!game) return;
+
+    console.log(game);
+
+    game.players.forEach(
+      async (player) => await Player.findByIdAndDelete(player)
+    );
+
+    await Board.findByIdAndDelete(game.board);
+
+    await Deck.findByIdAndDelete(game.deck);
+
+    const deleteGame = await Game.findByIdAndDelete(decoded);
+
+    res.status(200).send({ deleteGame });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });
