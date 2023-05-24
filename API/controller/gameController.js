@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateGame = exports.deleteAllGames = exports.createGame = exports.getUserGames = exports.getGame = exports.saveGameCookie = exports.getAllGames = void 0;
+exports.updateGame = exports.deleteAllGames = exports.createGame = exports.getUserGames = exports.getGame = exports.removeGameCookie = exports.saveGameCookie = exports.getAllGames = void 0;
 const gameModel_1 = __importDefault(require("../model/gameModel"));
 const userModel_1 = __importDefault(require("../model/userModel"));
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
@@ -46,6 +46,16 @@ const saveGameCookie = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     }
 });
 exports.saveGameCookie = saveGameCookie;
+const removeGameCookie = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        res.clearCookie("gameId");
+        res.status(200).json({ ok: true });
+    }
+    catch (error) {
+        console.error(error);
+    }
+});
+exports.removeGameCookie = removeGameCookie;
 const getGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { gameId } = req.cookies;

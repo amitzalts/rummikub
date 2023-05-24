@@ -9,14 +9,13 @@ export const getAllUsers = async (
   next: NextFunction
 ) => {
   try {
-    const users = await User.find({})
-    res.status(200).json({ users })
+    const users = await User.find({});
+    res.status(200).json({ users });
   } catch (error: any) {
-    console.error(error)
-    res.status(500).send({ error: error.message })
+    console.error(error);
+    res.status(500).send({ error: error.message });
   }
-}
-
+};
 
 export const getAllSimpleUsers = async (
   req: Request,
@@ -24,16 +23,13 @@ export const getAllSimpleUsers = async (
   next: NextFunction
 ) => {
   try {
-    const users = await User.find({ userRole: "simple" })
-    res.status(200).json({ users })
+    const users = await User.find({ userRole: "simple" });
+    res.status(200).json({ users });
   } catch (error: any) {
-    console.error(error)
-    res.status(500).send({ error: error.message })
+    console.error(error);
+    res.status(500).send({ error: error.message });
   }
-}
-
-
-
+};
 
 export const createUser = async (
   req: Request,
@@ -41,11 +37,24 @@ export const createUser = async (
   next: NextFunction
 ) => {
   try {
-    const { firstName, lastName, gender, userName, password, email, adminToken } = req.body;
+    const {
+      firstName,
+      lastName,
+      gender,
+      userName,
+      password,
+      email,
+      adminToken,
+    } = req.body;
 
     const takenEmail = await User.findOne({ email });
     if (takenEmail) {
-      res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` })
+      res
+        .status(500)
+        .json({
+          ok: false,
+          errorMessage: `Email already exists in the system`,
+        });
     } else {
       const user = await User.create({
         firstName: firstName.toLowerCase(),
@@ -57,22 +66,25 @@ export const createUser = async (
       });
 
       if (adminToken === "amit" && user.userRole === "simple") {
-        user.userRole = "admin"
-        user.save()
+        user.userRole = "admin";
+        user.save();
       }
 
       if (!secret) throw new Error("Missing jwt secret");
 
-      const token = jwt.encode({
-        userId: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        gender: user.gender,
-        userName: user.userName,
-        email: user.email,
-        userRole: user.userRole,
-        role: "public"
-      }, secret);
+      const token = jwt.encode(
+        {
+          userId: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          gender: user.gender,
+          userName: user.userName,
+          email: user.email,
+          userRole: user.userRole,
+          role: "public",
+        },
+        secret
+      );
 
       res.cookie("user", token, {
         maxAge: 24 * 60 * 60 * 1000, //24 hours
@@ -92,22 +104,25 @@ export const createUser = async (
     });
 
     if (adminToken === "amit" && user.userRole === "simple") {
-      user.userRole = "admin"
-      user.save()
+      user.userRole = "admin";
+      user.save();
     }
 
     if (!secret) throw new Error("Missing jwt secret");
 
-    const token = jwt.encode({
-      userId: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      gender: user.gender,
-      userName: user.userName,
-      email: user.email,
-      userRole: user.userRole,
-      role: "public"
-    }, secret);
+    const token = jwt.encode(
+      {
+        userId: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        gender: user.gender,
+        userName: user.userName,
+        email: user.email,
+        userRole: user.userRole,
+        role: "public",
+      },
+      secret
+    );
 
     res.cookie("user", token, {
       maxAge: 24 * 60 * 60 * 1000, //24 hours
@@ -129,22 +144,19 @@ export const getUser = async (
   try {
     const { user } = req.cookies;
 
-    if (!secret) throw new Error("No secret")
-    if (!user) throw new Error("No user found")
+    if (!secret) throw new Error("No secret");
+    if (!user) throw new Error("No user found");
 
-    const decoded = jwt.decode(user, secret)
+    const decoded = jwt.decode(user, secret);
 
-    const cookieUser = decoded
+    const cookieUser = decoded;
 
-    res.send({ ok: true, cookieUser })
-
+    res.send({ ok: true, cookieUser });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: "error.message" });
   }
 };
-
-
 
 export const userLogin = async (
   req: Request,
@@ -152,35 +164,37 @@ export const userLogin = async (
   next: NextFunction
 ) => {
   try {
-    const { userName, password } = req.body
+    const { userName, password } = req.body;
     //User Authentication...
 
-    const user = await User.findOne({ userName, password })
-    if (!user) throw new Error("User not found on get user function")
+    const user = await User.findOne({ userName, password });
+    if (!user) throw new Error("User not found on get user function");
 
-    if (!secret) throw new Error("Missing jwt secret")
-    
-    const token = jwt.encode({
-      userId: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      gender: user.gender,
-      userName: user.userName,
-      email: user.email,
-      userRole: user.userRole,
-      role: "public"
-    }, secret);
+    if (!secret) throw new Error("Missing jwt secret");
+
+    const token = jwt.encode(
+      {
+        userId: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        gender: user.gender,
+        userName: user.userName,
+        email: user.email,
+        userRole: user.userRole,
+        role: "public",
+      },
+      secret
+    );
 
     res.cookie("user", token, {
       maxAge: 60 * 60 * 1000, //1 hours
       httpOnly: true,
     });
 
-
     res.redirect("/profile");
   } catch (error: any) {
     console.error(error);
-    res.status(500).send({ error: error.message })
+    res.status(500).send({ error: error.message });
   }
 };
 
@@ -190,27 +204,27 @@ export const userLogout = async (
   next: NextFunction
 ) => {
   try {
-    const { userId } = req.cookies
+    const { userId } = req.cookies;
 
     const user = await User.findById(userId);
 
     if (!secret) throw new Error("Missing jwt secret");
-    const token = jwt.encode({
-      userId: userId,
-      role: "public"
-    }, secret);
+    const token = jwt.encode(
+      {
+        userId: userId,
+        role: "public",
+      },
+      secret
+    );
 
-    res.clearCookie("user")
+    res.clearCookie("user");
 
-    res.send({ ok: true })
+    res.send({ ok: true });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });
   }
 };
-
-
-
 
 export const passwordRecovery = async (
   req: Request,
@@ -235,30 +249,26 @@ export const passwordRecovery = async (
   }
 };
 
-
-
-
 export const deleteUser = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { userId } = req.body
+    const { userId } = req.body;
 
-    const deletedUser = await User.findByIdAndDelete(userId)
-    if (!deletedUser) throw new Error("User  was not found in delete user route")
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser)
+      throw new Error("User  was not found in delete user route");
 
-    const users = await User.find({ userRole: "simple" })
+    const users = await User.find({ userRole: "simple" });
 
     res.status(200).send({ users });
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ error: error.message });
   }
-}
-
-
+};
 
 export const updateUser = async (
   req: Request,
@@ -268,24 +278,37 @@ export const updateUser = async (
   try {
     const { userId, firstName, lastName, gender, userName, email } = req.body;
 
-    const takenEmailUser = await User.findOne({ email })
-   
-    if (takenEmailUser){
+    const takenEmailUser = await User.findOne({ email });
+
+    if (takenEmailUser) {
       if (takenEmailUser.email !== email) {
-        res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` })
-      }else if(takenEmailUser.email === email){
-        updatedUser(userId, firstName, lastName, gender, userName, email, res)
+        res
+          .status(500)
+          .json({
+            ok: false,
+            errorMessage: `Email already exists in the system`,
+          });
+      } else if (takenEmailUser.email === email) {
+        updatedUser(userId, firstName, lastName, gender, userName, email, res);
       }
     } else {
-      updatedUser(userId, firstName, lastName, gender, userName, email, res)
+      updatedUser(userId, firstName, lastName, gender, userName, email, res);
     }
   } catch (error: any) {
     console.error(error);
-    res.status(500).send({ error: error.message })
+    res.status(500).send({ error: error.message });
   }
-}
+};
 
-async function updatedUser(userId:any, firstName:any, lastName:any, gender:any, userName:any, email:any, res: Response,){
+async function updatedUser(
+  userId: any,
+  firstName: any,
+  lastName: any,
+  gender: any,
+  userName: any,
+  email: any,
+  res: Response
+) {
   try {
     const updatedUser = await User.findByIdAndUpdate(
       { _id: userId },
@@ -301,30 +324,31 @@ async function updatedUser(userId:any, firstName:any, lastName:any, gender:any, 
     const user = await User.findById(userId);
 
     if (!secret) throw new Error("Missing jwt secret");
-    const token = jwt.encode({
-      userId: userId,
-      firstName: firstName,
-      lastName: lastName,
-      gender: gender,
-      userName: userName,
-      email: email,
-      userRole: "simple",
-      role: "public"
-    }, secret)
+    const token = jwt.encode(
+      {
+        userId: userId,
+        firstName: firstName,
+        lastName: lastName,
+        gender: gender,
+        userName: userName,
+        email: email,
+        userRole: "simple",
+        role: "public",
+      },
+      secret
+    );
 
     res.cookie("user", token, {
       maxAge: 24 * 60 * 60 * 1000, //24 hours
       httpOnly: true,
-    })
+    });
 
-    res.status(201).json({ ok: true, user })
+    res.status(201).json({ ok: true, user });
   } catch (error: any) {
-    console.error(error)
-    res.status(500).send({ error: error.message })
+    console.error(error);
+    res.status(500).send({ error: error.message });
   }
 }
-
-
 
 //////////////////////////
 
@@ -334,26 +358,59 @@ export const updateUserByAdmin = async (
   next: NextFunction
 ) => {
   try {
-    const { userId, firstName, lastName, gender, userName, email, password } = req.body;
+    const { userId, firstName, lastName, gender, userName, email, password } =
+      req.body;
 
-    const takenEmailUser = await User.findOne({ email })
-   
-    if (takenEmailUser){
+    const takenEmailUser = await User.findOne({ email });
+
+    if (takenEmailUser) {
       if (takenEmailUser.email !== email) {
-        res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` })
-      }else if(takenEmailUser.email === email){
-        updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, password, res)
+        res
+          .status(500)
+          .json({
+            ok: false,
+            errorMessage: `Email already exists in the system`,
+          });
+      } else if (takenEmailUser.email === email) {
+        updatedUserByAdmin(
+          userId,
+          firstName,
+          lastName,
+          gender,
+          userName,
+          email,
+          password,
+          res
+        );
       }
     } else {
-      updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, password, res)
+      updatedUserByAdmin(
+        userId,
+        firstName,
+        lastName,
+        gender,
+        userName,
+        email,
+        password,
+        res
+      );
     }
   } catch (error: any) {
-    console.error(error)
-    res.status(500).send({ error: error.message })
+    console.error(error);
+    res.status(500).send({ error: error.message });
   }
-}
+};
 
-async function updatedUserByAdmin(userId:any, firstName:any, lastName:any, gender:any, userName:any, email:any, password:any, res: Response,){
+async function updatedUserByAdmin(
+  userId: any,
+  firstName: any,
+  lastName: any,
+  gender: any,
+  userName: any,
+  email: any,
+  password: any,
+  res: Response
+) {
   try {
     const updatedUser = await User.findByIdAndUpdate(
       { _id: userId },
@@ -365,17 +422,16 @@ async function updatedUserByAdmin(userId:any, firstName:any, lastName:any, gende
         email,
         password,
       }
-    )
+    );
 
-    const user = await User.findById(userId)
+    const user = await User.findById(userId);
 
-    res.status(201).json({ ok: true, user})
+    res.status(201).json({ ok: true, user });
   } catch (error: any) {
-    console.error(error)
-    res.status(500).send({ error: error.message })
+    console.error(error);
+    res.status(500).send({ error: error.message });
   }
 }
-
 
 export const searchUser = async (
   req: Request,
@@ -383,22 +439,21 @@ export const searchUser = async (
   next: NextFunction
 ) => {
   try {
-    const { userInputValue } = req.body
+    const { userInputValue } = req.body;
 
-    const users = await User.find(
-      { userRole: "simple",
-       $or:[
-         {'firstName':userInputValue},
-         {'lastName':userInputValue},
-         {'userName':userInputValue},
-         {'gender':userInputValue},
-         {'email':userInputValue},
-         ]  
-      })
-    res.status(200).json({ ok: true, users })
-    
-  } catch (error:any) {
-    console.error(error)
-    res.status(500).send({ error: error.message })
+    const users = await User.find({
+      userRole: "simple",
+      $or: [
+        { firstName: userInputValue },
+        { lastName: userInputValue },
+        { userName: userInputValue },
+        { gender: userInputValue },
+        { email: userInputValue },
+      ],
+    });
+    res.status(200).json({ ok: true, users });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
   }
-}
+};

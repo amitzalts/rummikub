@@ -46,7 +46,6 @@ class Board {
                 .then((res) => res.json())
                 .then(({ board }) => board)
                 .catch((error) => console.error(error));
-            console.log(updatedBoard);
         });
     }
 }

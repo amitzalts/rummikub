@@ -32,9 +32,22 @@ export const saveGameCookie = async (
     const token = jwt.encode({ gameId }, secret);
 
     res.cookie("gameId", token, {
-      maxAge: 60*60*1000, //1 hour
+      maxAge: 60 * 60 * 1000, //1 hour
       httpOnly: true,
     });
+    res.status(200).json({ ok: true });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const removeGameCookie = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.clearCookie("gameId");
     res.status(200).json({ ok: true });
   } catch (error) {
     console.error(error);

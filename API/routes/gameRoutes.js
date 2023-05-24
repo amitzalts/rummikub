@@ -11,6 +11,7 @@ const gameController_1 = require("../controller/gameController");
 gameRouter.route("/").post(gameController_1.createGame);
 gameRouter.route("/getUserGames").get(gameController_1.getUserGames);
 gameRouter.route("/saveGameCookie").post(gameController_1.saveGameCookie);
+gameRouter.route("/removeGameCookie").delete(gameController_1.removeGameCookie);
 gameRouter.route("/getGame").get(gameController_1.getGame);
 gameRouter.route("/updateGame").patch(gameController_1.updateGame);
 gameRouter.route("/deleteGames").delete(gameController_1.deleteAllGames);

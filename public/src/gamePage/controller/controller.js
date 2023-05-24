@@ -16,7 +16,6 @@ function checkIfGameStarted() {
             .catch((error) => console.error(error));
         if (!game)
             return console.info("No game found. Please start new game.");
-        console.log(game);
         if (!playerNamesForm)
             return;
         playerNamesForm.style.display = "none";

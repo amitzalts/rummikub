@@ -46,7 +46,6 @@ export const updateBoard = async (
 
     const board = await Board.findById(boardId);
 
-    console.log(board);
     res.status(200).json({ board });
   } catch (error: any) {
     console.error(error);
