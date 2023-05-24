@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-checkIfUserSignedIn();
-function checkIfUserSignedIn() {
+checkIfUserSavedInCookies();
+function checkIfUserSavedInCookies() {
     return __awaiter(this, void 0, void 0, function* () {
         const user = yield fetch("api/v1/users/getUser")
             .then((res) => res.json())
