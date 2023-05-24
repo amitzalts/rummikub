@@ -23,7 +23,7 @@ export const PlayerSchema: Schema = new Schema(
     },
     active: {
       type: Boolean,
-      // required: true,
+      required: true,
     },
     _id: {
       type: String,

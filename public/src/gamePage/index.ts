@@ -1,10 +1,3 @@
-function checkIfGameStarted() {
-  if (!playerNamesForm) return;
-  if (currentGame) {
-    playerNamesForm.style.display = "none";
-  }
-}
-
 if (playerNamesForm) {
   playerNamesForm.addEventListener("submit", handlePlayerForm);
 }
@@ -33,15 +26,20 @@ function handlePlayerForm(e: Event) {
     .filter((player) => player != "")
     .map((player) => new Player(player));
 
+  const index = Math.floor(Math.random() * playerArr.length);
+  playerArr[index].isActive = true;
+
   const newBoard = new Board();
   newBoard.buildEmptyBoard();
 
   const newDeck = new Deck();
+  newDeck.createDeck();
 
   currentGame = new Game(playerArr, newBoard, newDeck);
 
-  createGameToDB(playerArr, newBoard, newDeck);
   currentGame.startGame();
+
+  createGameToDB(playerArr, newBoard, newDeck);
 
   playerNamesForm.style.display = "none";
 }
@@ -56,6 +54,7 @@ async function createGameToDB(playerArr: Player[], board: Board, deck: Deck) {
       const name = player.name;
       const hand = player.hand;
       const _id = player.id;
+      const active = player.isActive;
 
       await fetch(`${playerAPI}`, {
         method: "POST",
@@ -63,7 +62,7 @@ async function createGameToDB(playerArr: Player[], board: Board, deck: Deck) {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, hand, _id }),
+        body: JSON.stringify({ name, hand, _id, active }),
       }).catch((error) => console.error(error));
     });
 
@@ -93,7 +92,7 @@ async function createGameToDB(playerArr: Player[], board: Board, deck: Deck) {
     const playerIdArr = playerArr.map((player) => player.id);
     const user = await getUser();
 
-    await fetch(`${gameAPI}`, {
+    const createdGameId = await fetch(`${gameAPI}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -105,6 +104,18 @@ async function createGameToDB(playerArr: Player[], board: Board, deck: Deck) {
         boardId: board.id,
         deckId: deck.id,
       }),
+    })
+      .then((res) => res.json())
+      .then(({ gameId }) => gameId)
+      .catch((error) => console.error(error));
+
+    await fetch("api/v1/games/saveGameCookie", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ gameId: createdGameId }),
     }).catch((error) => console.error(error));
   } catch (error) {
     console.error(error);
@@ -133,6 +144,7 @@ function startFakeGame() {
   newBoard.buildEmptyBoard();
 
   const newDeck = new Deck();
+  newDeck.createDeck();
 
   currentGame = new Game(
     [playerOne, playerTwo, playerThree, playerFour],

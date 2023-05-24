@@ -1,3 +1,5 @@
+clearGameCookie();
+
 const playNowBtn: HTMLButtonElement | null =
   document.querySelector("#playNowBtn");
 
@@ -18,4 +20,8 @@ if (playNowBtn) {
       }
     }
   });
+}
+
+async function clearGameCookie() {
+  await fetch("api/v1/games/removeGameCookie", { method: "DELETE" });
 }

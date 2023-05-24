@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+clearGameCookie();
 const playNowBtn = document.querySelector("#playNowBtn");
 const gameTypeWindow = document.querySelector(".gameTypeWindow");
 if (playNowBtn) {
@@ -25,4 +26,9 @@ if (playNowBtn) {
             }
         }
     }));
+}
+function clearGameCookie() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield fetch("api/v1/games/removeGameCookie", { method: "DELETE" });
+    });
 }

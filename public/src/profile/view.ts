@@ -66,6 +66,7 @@ function renderPersonalDetailsBar(user: any) {
 //     console.error(error);
 //   }
 // }
+      <button id="savedGamesBtn">saved games</button>
 
 function collapsePersonalDetailsWrapper() {
   try {

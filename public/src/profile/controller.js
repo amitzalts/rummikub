@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 function handleGetUserDetails() {
     try {
         fetch("/api/v1/users/getUser")
@@ -64,7 +73,14 @@ function handleSaveEditUserDetails() {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ userId, firstName, lastName, gender, userName, email }),
+                body: JSON.stringify({
+                    userId,
+                    firstName,
+                    lastName,
+                    gender,
+                    userName,
+                    email,
+                }),
             })
                 .then((res) => res.json())
                 .then((data) => {
@@ -143,7 +159,15 @@ function handleSaveEditUserDetailsByAdmin(userId) {
                 Accept: "application/json",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ userId, firstName, lastName, gender, userName, email, password }),
+            body: JSON.stringify({
+                userId,
+                firstName,
+                lastName,
+                gender,
+                userName,
+                email,
+                password,
+            }),
         })
             .then((res) => res.json())
             .then((data) => {
@@ -213,4 +237,37 @@ function handleSearchUsers() {
     catch (error) {
         console.error(error);
     }
+}
+function activateSavedGamesBtn() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const gamesFromDB = yield fetch("api/v1/games/getUserGames")
+            .then((res) => res.json())
+            .then(({ games }) => games)
+            .catch((err) => console.error(err));
+        const savedGamesBtn = document.querySelector("#savedGamesBtn");
+        const middleImage = document.querySelector(".middleImage");
+        const gamesDiv = document.createElement("div");
+        gamesDiv.classList.add("gamesDiv");
+        const names = gamesFromDB.map((game) => `<div class="game" id="${game._id}">${game.players
+            .map((player) => player.name)
+            .join(", ")}</div>`);
+        // gamesDiv.innerHTML = names.join("");
+        savedGamesBtn.addEventListener("click", () => {
+            // middleImage.append(gamesDiv);
+            middleImage.innerHTML = names.join("");
+            const divGames = middleImage.querySelectorAll(".game");
+            divGames.forEach((game) => game.addEventListener("click", () => __awaiter(this, void 0, void 0, function* () {
+                const findGame = gamesFromDB.find((obj) => obj._id === game.id);
+                yield fetch("api/v1/games/saveGameCookie", {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ gameId: findGame._id }),
+                }).catch((error) => console.error(error));
+                location.href = "/game";
+            })));
+        });
+    });
 }

@@ -24,14 +24,18 @@ class Board {
   }
 
   async updateBoardInDB() {
+    
     this.convertDivArrToTileArr();
-    await fetch(`${boardAPI}/updateBoard`, {
+    const updatedBoard = await fetch(`${boardAPI}/updateBoard`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ tileArr: this.tileArr, boardId: this.id }),
-    }).catch((error) => console.error(error));
+    })
+      .then((res) => res.json())
+      .then(({ board }) => board)
+      .catch((error) => console.error(error));
   }
 }

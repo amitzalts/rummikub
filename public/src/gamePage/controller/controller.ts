@@ -1,3 +1,44 @@
+async function checkIfGameStarted() {
+  const game = await fetch("api/v1/games/getGame")
+    .then((res) => res.json())
+    .then(({ game }) => game)
+    .catch((error) => console.error(error));
+
+  if (!game) return console.info("No game found. Please start new game.");
+
+  if (!playerNamesForm) return;
+  console.log(game);
+  playerNamesForm.style.display = "none";
+
+  const playersArr: Player[] = game.players.map((player: PlayerDB) => {
+    const hand = player.hand.map(
+      (tile: TileDB) => new Tile(tile.color, tile.value, tile.id)
+    );
+    return new Player(player.name, [], player._id, hand, player.active);
+  });
+
+  // const index = Math.floor(Math.random() * playersArr.length);
+  // playersArr[index].isActive = true;
+
+  playersArr.forEach((player) => player.activateHand());
+
+  const convertedBoardArr: Tile[] = game.board.tileArr.map(
+    (tile: TileDB) => new Tile(tile.color, tile.value, tile.id)
+  );
+
+  const convertedDeckArr: Tile[] = game.deck.deck.map(
+    (tile: TileDB) => new Tile(tile.color, tile.value, tile.id)
+  );
+
+  const deck = new Deck(convertedDeckArr);
+
+  const board = new Board(convertedBoardArr, game.board._id);
+  board.updateDivArr();
+
+  currentGame = new Game(playersArr, board, deck);
+  currentGame.startGame();
+}
+
 function toggleTileActive(
   clickedDiv: HTMLDivElement,
   divArray: Array<HTMLDivElement>
@@ -29,7 +70,6 @@ function moveToNextPlayer() {
   if (!validateBoard()) return;
 
   if (checkIfPlayerWon()) return;
-  currentGame.updateGameInDB();
 
   checkIfPlayerMadeAMove();
 
@@ -63,6 +103,8 @@ function activatePlayer(index: number) {
       player.classList.add("active");
     }
   });
+
+  currentGame.updateGameInDB();
 }
 
 function activatePlayerArea() {
@@ -90,7 +132,6 @@ function activatePlayerArea() {
     // add tile back to player's hand
     currentPlayer.divsArray.push(currentTile);
     currentPlayer.addTileToHand(currentTile);
-
 
     currentPlayer.renderHandToScreen(currentPlayer.divsArray);
 
@@ -125,9 +166,22 @@ function sortHandByColor() {
 
 function checkIfPlayerWon() {
   if (currentPlayer.divsArray.length === 0) {
+    deleteGameFromDB();
     alert(`${currentPlayer.name} wins!`);
+
+    endTurnBtn.removeEventListener("click", moveToNextPlayer);
+    sortByNumbersBtn.removeEventListener("click", sortHandByNumber);
+    sortByColorBtn.removeEventListener("click", sortHandByColor);
+    resetTurnBtn.removeEventListener("click", resetMoves);
+
     return true;
   }
 
   return false;
+}
+
+async function deleteGameFromDB() {
+  await fetch("api/v1/games/deleteThisGame", { method: "DELETE" }).catch(
+    (error) => console.error(error)
+  );
 }

@@ -40,10 +40,13 @@ const getAllSimpleUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, 
 exports.getAllSimpleUsers = getAllSimpleUsers;
 const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { firstName, lastName, gender, userName, password, email, adminToken } = req.body;
+        const { firstName, lastName, gender, userName, password, email, adminToken, } = req.body;
         const takenEmail = yield userModel_1.default.findOne({ email });
         if (takenEmail) {
-            res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` });
+            res.status(500).json({
+                ok: false,
+                errorMessage: `Email already exists in the system`,
+            });
         }
         else {
             const user = yield userModel_1.default.create({
@@ -68,10 +71,10 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
                 userName: user.userName,
                 email: user.email,
                 userRole: user.userRole,
-                role: "public"
+                role: "public",
             }, secret);
             res.cookie("user", token, {
-                maxAge: 24 * 60 * 60 * 1000,
+                expires: new Date(Date.now() + 7200000),
                 httpOnly: true,
             });
             res.redirect("/signIn");
@@ -98,10 +101,10 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             userName: user.userName,
             email: user.email,
             userRole: user.userRole,
-            role: "public"
+            role: "public",
         }, secret);
         res.cookie("user", token, {
-            maxAge: 24 * 60 * 60 * 1000,
+            expires: new Date(Date.now() + 7200000),
             httpOnly: true,
         });
         res.redirect("/signIn");
@@ -146,13 +149,12 @@ const userLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function
             userName: user.userName,
             email: user.email,
             userRole: user.userRole,
-            role: "public"
+            role: "public",
         }, secret);
         res.cookie("user", token, {
-            maxAge: 60 * 60 * 1000,
+            expires: new Date(Date.now() + 7200000),
             httpOnly: true,
         });
-        console.log("login");
         res.redirect("/profile");
     }
     catch (error) {
@@ -169,7 +171,7 @@ const userLogout = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             throw new Error("Missing jwt secret");
         const token = jwt_simple_1.default.encode({
             userId: userId,
-            role: "public"
+            role: "public",
         }, secret);
         res.clearCookie("user");
         res.send({ ok: true });
@@ -220,7 +222,10 @@ const updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         const takenEmailUser = yield userModel_1.default.findOne({ email });
         if (takenEmailUser) {
             if (takenEmailUser.email !== email) {
-                res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` });
+                res.status(500).json({
+                    ok: false,
+                    errorMessage: `Email already exists in the system`,
+                });
             }
             else if (takenEmailUser.email === email) {
                 updatedUser(userId, firstName, lastName, gender, userName, email, res);
@@ -257,10 +262,10 @@ function updatedUser(userId, firstName, lastName, gender, userName, email, res) 
                 userName: userName,
                 email: email,
                 userRole: "simple",
-                role: "public"
+                role: "public",
             }, secret);
             res.cookie("user", token, {
-                maxAge: 24 * 60 * 60 * 1000,
+                expires: new Date(Date.now() + 7200000),
                 httpOnly: true,
             });
             res.status(201).json({ ok: true, user });
@@ -278,7 +283,10 @@ const updateUserByAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, 
         const takenEmailUser = yield userModel_1.default.findOne({ email });
         if (takenEmailUser) {
             if (takenEmailUser.email !== email) {
-                res.status(500).json({ ok: false, errorMessage: `Email already exists in the system` });
+                res.status(500).json({
+                    ok: false,
+                    errorMessage: `Email already exists in the system`,
+                });
             }
             else if (takenEmailUser.email === email) {
                 updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, password, res);
@@ -317,14 +325,15 @@ function updatedUserByAdmin(userId, firstName, lastName, gender, userName, email
 const searchUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userInputValue } = req.body;
-        const users = yield userModel_1.default.find({ userRole: "simple",
+        const users = yield userModel_1.default.find({
+            userRole: "simple",
             $or: [
-                { 'firstName': userInputValue },
-                { 'lastName': userInputValue },
-                { 'userName': userInputValue },
-                { 'gender': userInputValue },
-                { 'email': userInputValue },
-            ]
+                { firstName: userInputValue },
+                { lastName: userInputValue },
+                { userName: userInputValue },
+                { gender: userInputValue },
+                { email: userInputValue },
+            ],
         });
         res.status(200).json({ ok: true, users });
     }

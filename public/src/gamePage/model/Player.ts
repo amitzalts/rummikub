@@ -1,12 +1,12 @@
 class Player {
-  public isActive: boolean = false;
   public startingTurnDivs: Array<HTMLDivElement> = [];
-  public hand: Tile[] = [];
 
   constructor(
     public name: string,
     public divsArray: Array<HTMLDivElement> = [],
-    public id: string = genRanHex()
+    public id: string = genRanHex(),
+    public hand: Tile[] = [],
+    public isActive: boolean = false
   ) {}
 
   initializeStartHend() {
@@ -64,7 +64,18 @@ class Player {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ hand: this.hand, playerId: this.id }),
+      body: JSON.stringify({
+        hand: this.hand,
+        playerId: this.id,
+        active: this.isActive,
+      }),
     }).catch((error) => console.error(error));
   }
+}
+
+interface PlayerDB {
+  _id: string;
+  name: string;
+  hand: [TileDB];
+  active: boolean;
 }

@@ -30,7 +30,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 2rem 1rem;
   gap: 10%; }
   .playersInGameArea .active {
     box-shadow: 0 0 10px white; }
@@ -76,7 +76,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: 0.5rem; }
+    padding: 0.5rem;
+    font-size: 2vh; }
     .action button img {
       width: 20%; }
 
@@ -100,41 +101,13 @@ body {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  font-size: 1.1rem; }
+  font-size: 3vh; }
 
 .square.active {
   transform: scale(0.7); }
 
-#playerNamesForm {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: darkblue;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: column;
-  gap: 5px;
-  z-index: 10; }
-  #playerNamesForm a {
-    text-decoration: none;
-    color: white;
-    position: absolute;
-    top: 1rem;
-    left: 1rem; }
-  #playerNamesForm h1 {
-    color: whitesmoke; }
-  #playerNamesForm input {
-    background-color: #eee;
-    border: 1px solid rgba(0, 0, 0, 0.058);
-    border-radius: 3px;
-    padding: 0.6rem;
-    width: 30%;
-    outline: none; }
-
 .square[data-color="jocker"] {
-  color: purple;
-  font-size: 1.3rem; }
+  color: purple; }
 
 .square[data-color="black"] {
   color: black; }
@@ -147,3 +120,32 @@ body {
 
 .square[data-color="red"] {
   color: darkred; }
+
+a {
+  text-decoration: none;
+  color: white;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-size: 0.7rem; }
+
+#playerNamesForm {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: darkblue;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 10; }
+  #playerNamesForm h1 {
+    color: whitesmoke; }
+  #playerNamesForm input {
+    background-color: #eee;
+    border: 1px solid rgba(0, 0, 0, 0.058);
+    border-radius: 3px;
+    padding: 0.6rem;
+    width: 30%;
+    outline: none; }

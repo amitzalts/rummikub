@@ -1,9 +1,5 @@
 class Deck {
-  public deck: Tile[];
-
-  constructor(public id: string = genRanHex()) {
-    this.deck = this.createDeck();
-  }
+  constructor(public deck: Tile[] = [], public id: string = genRanHex()) {}
 
   deal() {
     const randomDeckIndex = Math.floor(Math.random() * this.deck.length);
@@ -26,11 +22,7 @@ class Deck {
       deck.push(jocker);
     }
 
-    return deck;
-  }
-
-  resetDeck() {
-    this.deck = [...this.createDeck()];
+    this.deck = deck;
   }
 
   async updateDeckInDB() {

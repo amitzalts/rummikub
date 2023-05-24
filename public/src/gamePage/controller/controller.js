@@ -1,4 +1,41 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+function checkIfGameStarted() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const game = yield fetch("api/v1/games/getGame")
+            .then((res) => res.json())
+            .then(({ game }) => game)
+            .catch((error) => console.error(error));
+        if (!game)
+            return console.info("No game found. Please start new game.");
+        if (!playerNamesForm)
+            return;
+        console.log(game);
+        playerNamesForm.style.display = "none";
+        const playersArr = game.players.map((player) => {
+            const hand = player.hand.map((tile) => new Tile(tile.color, tile.value, tile.id));
+            return new Player(player.name, [], player._id, hand, player.active);
+        });
+        // const index = Math.floor(Math.random() * playersArr.length);
+        // playersArr[index].isActive = true;
+        playersArr.forEach((player) => player.activateHand());
+        const convertedBoardArr = game.board.tileArr.map((tile) => new Tile(tile.color, tile.value, tile.id));
+        const convertedDeckArr = game.deck.deck.map((tile) => new Tile(tile.color, tile.value, tile.id));
+        const deck = new Deck(convertedDeckArr);
+        const board = new Board(convertedBoardArr, game.board._id);
+        board.updateDivArr();
+        currentGame = new Game(playersArr, board, deck);
+        currentGame.startGame();
+    });
+}
 function toggleTileActive(clickedDiv, divArray) {
     clickedDiv.addEventListener("click", () => {
         if (!currentTile) {
@@ -25,7 +62,6 @@ function moveToNextPlayer() {
         return;
     if (checkIfPlayerWon())
         return;
-    currentGame.updateGameInDB();
     checkIfPlayerMadeAMove();
     alert("Pass the screen to next player.");
     const numOfPlayers = currentGame.players.length;
@@ -50,6 +86,7 @@ function activatePlayer(index) {
             player.classList.add("active");
         }
     });
+    currentGame.updateGameInDB();
 }
 function activatePlayerArea() {
     if (!currentTile || !board)
@@ -100,8 +137,18 @@ function sortHandByColor() {
 }
 function checkIfPlayerWon() {
     if (currentPlayer.divsArray.length === 0) {
+        deleteGameFromDB();
         alert(`${currentPlayer.name} wins!`);
+        endTurnBtn.removeEventListener("click", moveToNextPlayer);
+        sortByNumbersBtn.removeEventListener("click", sortHandByNumber);
+        sortByColorBtn.removeEventListener("click", sortHandByColor);
+        resetTurnBtn.removeEventListener("click", resetMoves);
         return true;
     }
     return false;
+}
+function deleteGameFromDB() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield fetch("api/v1/games/deleteThisGame", { method: "DELETE" }).catch((error) => console.error(error));
+    });
 }

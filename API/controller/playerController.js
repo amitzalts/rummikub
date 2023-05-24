@@ -29,8 +29,8 @@ const getAllPlayers = (req, res, next) => __awaiter(void 0, void 0, void 0, func
 exports.getAllPlayers = getAllPlayers;
 const createPlayer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, hand, _id } = req.body;
-        const player = yield playerModel_1.default.create({ name, hand, _id });
+        const { name, hand, _id, active } = req.body;
+        const player = yield playerModel_1.default.create({ name, hand, _id, active });
         res.status(200).json({ player });
     }
     catch (error) {
@@ -72,8 +72,8 @@ const deleteAllPlayers = (req, res, next) => __awaiter(void 0, void 0, void 0, f
 exports.deleteAllPlayers = deleteAllPlayers;
 const updatePlayer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { playerId, hand } = req.body;
-        yield playerModel_1.default.findByIdAndUpdate(playerId, { hand });
+        const { playerId, hand, active } = req.body;
+        yield playerModel_1.default.findByIdAndUpdate(playerId, { hand, active });
         const findPlayer = yield playerModel_1.default.findById(playerId);
         res.status(200).send({ findPlayer });
     }

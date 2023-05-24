@@ -45,6 +45,7 @@ export const updateBoard = async (
     await Board.findByIdAndUpdate(boardId, { tileArr });
 
     const board = await Board.findById(boardId);
+
     res.status(200).json({ board });
   } catch (error: any) {
     console.error(error);
