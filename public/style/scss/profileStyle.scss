@@ -14,201 +14,179 @@ video {
 body {
   height: 100vh;
   width: 100vw;
-  background: url("https://wallpapercave.com/wp/wp1966217.jpg") no-repeat center / cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: url("https://wallpapercave.com/wp/wp1966217.jpg") no-repeat center /
+    cover;
 }
 
-
-
-.container{
-  height: 90vh;
-  width: 90vw;
-  position: relative;
-  h1{
-    margin-bottom: 4vh;
-    text-align: center;
-  }
-
-  .logoutButton{
-    height: 2.5vh;
-    width: 3.5vw;
-    font-size: 12px;
-    color: white;
-    position: relative;
-    top: -8vh;
-    right: -2vh;
-    &:hover{
-      text-decoration: underline;
-      cursor: pointer;
-    }
-  }
-  
-  .profileLogo {
-    height: 8vh;
-    width: 4vw;
-    position: relative;
-    bottom: 11vh;
-    left: 160vh;
-    margin: 1px;
-    color: rgba(6, 39, 39, 0.808);
-    font-size: 3rem;
-    &:hover {
-      cursor: pointer;
-      text-shadow: 0 0 5px white;
-    }
-  }
-
-  .personalDetailsWrapper{
-    width: 17vw;
-    height: 43vh;
-    visibility: hidden;
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5vh;
+  nav {
+    height: 10%;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    position: relative;
-    bottom: 11vh;
-    left: 145vh;
-    background: rgba(255, 255, 255, 0.28);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     align-items: center;
-    &__buttons{
-      width: 14vw;
-      height: 5vh;
-      position: relative;
-      top: 0.5rem;
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-      i{
-        font-size: 26px;
-        color: rgba(6, 39, 39, 0.808);
-        &:hover{
-          cursor: pointer;
-          scale: 1.15;
-        }
-        &:active{
-          color: blue;
-        }
+    justify-content: space-between;
+    padding: 0 2rem;
+    .logoutButton {
+      font-size: 0.7rem;
+      color: white;
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
       }
     }
-    &__detailsBox{
-      width: 14vw;
-      height: 34vh;
+    .profileLogo {
+      font-size: 3rem;
+      &:hover {
+        cursor: pointer;
+        text-shadow: 0 0 5px white;
+      }
+    }
+  }
+  #personalDetailsRoot {
+    width: 20vw;
+    height: 50vh;
+    position: absolute;
+    top: 10vh;
+    right: 0;
+    padding: 2rem;
+    .personalDetailsWrapper {
+      width: 100%;
+      height: 100%;
+      padding: 0.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      &__detail{
-        width: 14vw;
-        height: 7vh;
-        background: rgba(255, 255, 255, 0.51);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(0px);
+      background: rgba(255, 255, 255, 0.28);
+      border-radius: 16px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      &__buttons {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 0.5rem;
+        i {
+          font-size: 1.5rem;
+          color: rgba(6, 39, 39, 0.808);
+          &:hover {
+            cursor: pointer;
+            scale: 1.15;
+          }
+          &:active {
+            color: blue;
+          }
+        }
+      }
+      &__detailsBox {
+        width: 100%;
+        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        font-weight: 700;
-        div{
-          width: 13vw;
-          height: 5vh;
+        padding: 0.5rem;
+        background: rgba(255, 255, 255, 0.51);
+        &__detail {
+          width: 100%;
+          height: 100%;
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+          backdrop-filter: blur(0px);
           display: flex;
           flex-direction: column;
           align-items: center;
-          background: rgba(255, 255, 255, 0.15);
-          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-          backdrop-filter: blur(0px);
-          border: 1px solid rgba(14, 14, 14, 0.3);
-          line-height: 2rem;
-          font-weight: 100;
+          font-weight: 700;
+          div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(0px);
+            border: 1px solid rgba(14, 14, 14, 0.3);
+            line-height: 2rem;
+            font-weight: 100;
+          }
         }
       }
     }
   }
-  
-  .gameButtons{
-    height: 6vh;
-    width: 28vw;
-    position: relative;
-    top: -50vh;
-    right: -59vh;
-    display: flex;
-    justify-content: space-between;
-    button{
-    font-size: 0.8rem;
-    height: 6vh;
-    width: 4vw;
-    background-color: gold;
-    box-shadow: 0px 0px 20px;
-    font-weight: 900;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    &:hover{
-      cursor: pointer;
-      box-shadow: none;
-      background-color: beige;
-      transition: 0.2s ease-out;
-    }
-    &:active{
-      background-color: seagreen;
-      box-shadow: none;
-    }
-  }
-  }
-  
-  .middleImage{  
-    height: 57vh;
+
+  .gameButtons {
     width: 30vw;
-    position: relative;
-    bottom: 48vh;
-    left: 58vh;
+    display: flex;
+    justify-content: space-around;
+    button {
+      font-size: 0.8rem;
+      background-color: gold;
+      box-shadow: 0px 0px 20px;
+      font-weight: 900;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      &:hover {
+        cursor: pointer;
+        box-shadow: none;
+        background-color: beige;
+        transition: 0.2s ease-out;
+      }
+      &:active {
+        background-color: seagreen;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .middleImage {
+    height: 50vh;
+    aspect-ratio: 1/1;
     background-image: url("https://www.johnadams.co.uk/wp-content/uploads/2021/01/Rummikub-Black-lifestyle.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     border: 0.5rem solid rgb(0, 0, 0);
   }
-  
+
   ////////////////////////ADMIN/////////////////////
-  
-  .allUsersWrapper{
-    width: 25vw;
-    height: 57vh;
-    position: relative;
-    bottom: 105vh;
-    left: 4vh;
+  #allUsersWrapperRoot {
+    position: absolute;
+    left: 0;
+    top: 15vh;
+    padding: 0.5rem;
+  }
+  .allUsersWrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     text-align: center;
-    h1{
+    h1 {
       margin: auto;
       font-weight: 600;
       text-transform: uppercase;
     }
-    &__filterBar{
-      width: 24.8vw;
-      height: 4vh;
+    &__filterBar {
       display: flex;
       flex-direction: row;
       border: 0.1rem solid black;
       background-color: grey;
-      &__searchBar{
-        width: 24.8vw;
-        height: 4vh;
+      &__searchBar {
+        width: 100%;
         padding-left: 0.5rem;
       }
-      i{
+      i {
         font-size: 18px;
-              margin:0.4rem;
-              &:hover{
-                color: rgb(237, 228, 228);
-                cursor: pointer;
-              }
+        margin: 0.4rem;
+        &:hover {
+          color: rgb(237, 228, 228);
+          cursor: pointer;
+        }
       }
     }
-    &__users{
-      width: 24.9vw;
-      height: 45vh;
+    &__users {
+      height: 50vh;
       overflow-y: scroll;
       font-size: 1rem;
       border: 0.1rem solid black;
@@ -222,25 +200,23 @@ body {
       &::-webkit-scrollbar {
         width: 14px;
       }
-      
+
       &::-webkit-scrollbar-track {
         background: transparent;
       }
       &::-webkit-scrollbar-thumb {
-        background-color:  transparent;   
-        border-radius: 20px;    
+        background-color: transparent;
+        border-radius: 20px;
         border: 3px solid black;
       }
-      &__user{
-        width: 23vw;
-        height: 40vh;
+      &__user {
         border-bottom: 0.1rem solid black;
         padding: 0.4rem 0.4rem;
         line-height: 2rem;
         vertical-align: middle;
         display: flex;
         flex-direction: column;
-        h2{
+        h2 {
           width: 22vw;
           height: 3vh;
           font-size: 20px;
@@ -248,15 +224,15 @@ body {
           line-height: 24px;
           display: flex;
           justify-content: space-between;
-          margin:0;
-          i{
-            &:hover{
+          margin: 0;
+          i {
+            &:hover {
               cursor: pointer;
               text-shadow: 0 0 5px white;
             }
           }
         }
-        &__details{
+        &__details {
           width: 22vw;
           height: 34vh;
           display: flex;
@@ -267,8 +243,8 @@ body {
           line-height: 1.5rem;
           overflow: hidden;
           transition: max-height 0.2s ease-out;
-          button{
-            margin:0.5rem;
+          button {
+            margin: 0.5rem;
             background-color: red;
             box-shadow: 0px 0px 15px;
             font-weight: 900;
@@ -276,7 +252,7 @@ body {
             padding: 0.5rem;
             font-size: 16px;
             margin-bottom: 0.5rem;
-            &:hover{
+            &:hover {
               cursor: pointer;
               box-shadow: none;
               background-color: black;
@@ -284,34 +260,32 @@ body {
               color: red;
             }
           }
-          &__buttons{
+          &__buttons {
             width: 22vw;
             height: 5vh;
             display: flex;
             justify-content: space-between;
-            i{
+            i {
               font-size: 26px;
-              margin:0.4rem;
-              &:hover{
+              margin: 0.4rem;
+              &:hover {
                 cursor: pointer;
                 scale: 1.1;
               }
             }
           }
-          p{
+          p {
             font-weight: 900;
           }
-          span{
+          span {
             font-weight: 200;
           }
         }
       }
     }
   }
-  
-  
-  
-  #noResultsRoot{
+
+  #noResultsRoot {
     background-color: red;
     border: 0.1rem solid black;
     width: 24.5vw;
@@ -319,4 +293,3 @@ body {
     align-self: center;
   }
 }
-

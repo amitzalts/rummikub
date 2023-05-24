@@ -12,8 +12,11 @@ function renderPageHeader(user: any) {
 
 function renderPersonalDetailsBar(user: any) {
   try {
-    const personalDetailsRoot: HTMLDivElement | null = document.querySelector("#personalDetailsRoot");
-    if (!personalDetailsRoot) throw new Error("personalDetailsRoot not found on DOM");
+    const personalDetailsRoot: HTMLDivElement | null = document.querySelector(
+      "#personalDetailsRoot"
+    );
+    if (!personalDetailsRoot)
+      throw new Error("personalDetailsRoot not found on DOM");
 
     personalDetailsRoot.innerHTML = `
     <div id="personalDetailsWrapperRoot" class="personalDetailsWrapper" style="visibility: hidden;">
@@ -50,33 +53,18 @@ function renderPersonalDetailsBar(user: any) {
   }
 }
 
-// function renderGameButtons() {
-//   try {
-//     const GameButtonsRoot: HTMLDivElement | null =
-//       document.querySelector("#GameButtonsRoot");
-//     if (!GameButtonsRoot) throw new Error("GameButtonsRoot not found on DOM");
-
-//     GameButtonsRoot.innerHTML = `
-//     <div class="gameButtons">
-//       <button>join game</button>
-//       <button>create game</button>
-//     </div>
-//     `;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-      <button id="savedGamesBtn">saved games</button>
-
 function collapsePersonalDetailsWrapper() {
   try {
-    const wrapper: HTMLDivElement | null = document.querySelector("#personalDetailsWrapperRoot");
-    if (!wrapper) throw new Error("personalDetailsWrapperRoot not found on DOM");
+    const wrapper: HTMLDivElement | null = document.querySelector(
+      "#personalDetailsWrapperRoot"
+    );
+    if (!wrapper)
+      throw new Error("personalDetailsWrapperRoot not found on DOM");
 
     if (wrapper.style.visibility === "hidden") {
-      wrapper.style.visibility = "visible"
+      wrapper.style.visibility = "visible";
     } else {
-      wrapper.style.visibility = "hidden"
+      wrapper.style.visibility = "hidden";
     }
   } catch (error) {
     console.error(error);
@@ -232,7 +220,7 @@ function collapseUserDetails(userId: string) {
         throw new Error("collapsibleArrow not found on DOM");
 
       if (collapsible.style.maxHeight === "0px") {
-        collapsible.style.maxHeight = "35vh";
+        collapsible.style.maxHeight = "30vh";
         collapsibleArrow.style.transform = "scaleY(-1)";
       } else {
         collapsible.style.maxHeight = "0px";

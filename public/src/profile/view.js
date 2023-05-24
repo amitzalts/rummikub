@@ -50,21 +50,6 @@ function renderPersonalDetailsBar(user) {
         console.error(error);
     }
 }
-// function renderGameButtons() {
-//   try {
-//     const GameButtonsRoot: HTMLDivElement | null =
-//       document.querySelector("#GameButtonsRoot");
-//     if (!GameButtonsRoot) throw new Error("GameButtonsRoot not found on DOM");
-//     GameButtonsRoot.innerHTML = `
-//     <div class="gameButtons">
-//       <button>join game</button>
-//       <button>create game</button>
-//     </div>
-//     `;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
 function collapsePersonalDetailsWrapper() {
     try {
         const wrapper = document.querySelector("#personalDetailsWrapperRoot");
@@ -196,7 +181,7 @@ function collapseUserDetails(userId) {
             if (!collapsibleArrow)
                 throw new Error("collapsibleArrow not found on DOM");
             if (collapsible.style.maxHeight === "0px") {
-                collapsible.style.maxHeight = "35vh";
+                collapsible.style.maxHeight = "30vh";
                 collapsibleArrow.style.transform = "scaleY(-1)";
             }
             else {
