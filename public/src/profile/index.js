@@ -9,6 +9,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 checkIfUserSavedInCookies();
+loadUserGames();
+savedGamesBtn.addEventListener("click", () => {
+    if (savedGamesWindow.style.display === "" ||
+        savedGamesWindow.style.display === "none") {
+        savedGamesWindow.style.display = "flex";
+    }
+    else {
+        savedGamesWindow.style.display = "none";
+    }
+    if (createGameWindow.style.display === "flex") {
+        createGameWindow.style.display = "none";
+    }
+});
+createGameBtn.addEventListener("click", () => {
+    if (createGameWindow.style.display === "" ||
+        createGameWindow.style.display === "none") {
+        createGameWindow.style.display = "flex";
+    }
+    else {
+        createGameWindow.style.display = "none";
+    }
+    if (savedGamesWindow.style.display === "flex") {
+        savedGamesWindow.style.display = "none";
+    }
+});
+function toggleWindows() { }
 function checkIfUserSavedInCookies() {
     return __awaiter(this, void 0, void 0, function* () {
         const user = yield fetch("api/v1/users/getUser")

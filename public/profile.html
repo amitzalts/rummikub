@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- link to style -->
+    <link rel="stylesheet" href="./style/css/button.css" />
     <link rel="stylesheet" href="./style/css/profileStyle.css" />
 
     <!-- link to fontawesome -->
@@ -35,12 +36,18 @@
 
       <div class="gameButtons">
         <button>join game</button>
-        <button>create game</button>
+        <button id="createGameBtn">create game</button>
         <button id="savedGamesBtn">saved games</button>
       </div>
 
-      <div class="middleImage"></div>
-      
+      <div class="middleImage">
+        <div class="createGameWindow">
+          <a href="/game"><button class="buttonStyleOne">Local</button></a>
+          <button class="buttonStyleOne">Online</button>
+        </div>
+        <div class="savedGamesWindow"></div>
+      </div>
+
       <div id="allUsersWrapperRoot"></div>
     </div>
   </body>

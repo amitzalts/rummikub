@@ -24,8 +24,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding-bottom: 5vh;
+  justify-content: center;
+  gap: 5vh;
   nav {
     height: 10%;
     width: 100%;
@@ -51,9 +51,15 @@ body {
   }
   #personalDetailsRoot {
     position: absolute;
-    top: 5vh;
-    right: 0;
+    // top: 20vh;
+    // right: 0;
+    margin: auto;
     padding: 2rem;
+    display: none;
+    box-shadow: 0 0 100px 100px black;
+    background-color: black;
+    width: 40vw;
+    min-height: 80vh;
     .personalDetailsWrapper {
       width: 100%;
       height: 100%;
@@ -107,7 +113,7 @@ body {
             border: 1px solid rgba(14, 14, 14, 0.3);
             text-align: center;
             font-weight: 100;
-            padding: .5rem;
+            padding: 0.5rem;
           }
         }
       }
@@ -140,11 +146,45 @@ body {
 
   .middleImage {
     height: 70vh;
-    aspect-ratio: 1/1;
+    aspect-ratio: 3/2;
     background-image: url("https://www.johnadams.co.uk/wp-content/uploads/2021/01/Rummikub-Black-lifestyle.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     border: 0.5rem solid rgb(0, 0, 0);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    .createGameWindow,
+    .savedGamesWindow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      gap: 5vh;
+      height: 50vh;
+      width: 50vw;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      width: 100%;
+      height: 100%;
+      display: none;
+      .game {
+        background-color: whitesmoke;
+        border-radius: 5px;
+        padding: 0.3rem 0.7rem;
+        font-size: 1.1;
+        font-weight: 300;
+        cursor: pointer;
+      }
+      .game:hover {
+        box-shadow: 0 0 5px white;
+      }
+    }
+    .savedGamesWindow {
+      padding: 1rem;
+      justify-content: start;
+    }
   }
 
   ////////////////////////ADMIN/////////////////////

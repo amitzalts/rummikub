@@ -1,3 +1,18 @@
+const savedGamesBtn = document.querySelector(
+  "#savedGamesBtn"
+) as HTMLButtonElement;
+
+const createGameBtn = document.querySelector(
+  "#createGameBtn"
+) as HTMLButtonElement;
+
+const createGameWindow = document.querySelector(
+  ".createGameWindow"
+) as HTMLDivElement;
+const savedGamesWindow = document.querySelector(
+  ".savedGamesWindow"
+) as HTMLDivElement;
+
 function renderPageHeader(user: any) {
   try {
     const headerRoot: HTMLDivElement | null =
@@ -19,7 +34,7 @@ function renderPersonalDetailsBar(user: any) {
       throw new Error("personalDetailsRoot not found on DOM");
 
     personalDetailsRoot.innerHTML = `
-    <div id="personalDetailsWrapperRoot" class="personalDetailsWrapper" style="visibility: hidden;">
+    <div class="personalDetailsWrapper">
       <div class="personalDetailsWrapper__buttons">
           <i onclick="handleEditUserDetails()" class="fa-solid fa-pen-to-square personalDetailsWrapper__buttons__button"></i>
           <i onclick="handleSaveEditUserDetails()" class="fa-solid fa-floppy-disk personalDetailsWrapper__buttons__button"></i>
@@ -55,16 +70,19 @@ function renderPersonalDetailsBar(user: any) {
 
 function collapsePersonalDetailsWrapper() {
   try {
-    const wrapper: HTMLDivElement | null = document.querySelector(
-      "#personalDetailsWrapperRoot"
+    const personalDetailsRoot: HTMLDivElement | null = document.querySelector(
+      "#personalDetailsRoot"
     );
-    if (!wrapper)
-      throw new Error("personalDetailsWrapperRoot not found on DOM");
+    if (!personalDetailsRoot)
+      throw new Error("personalDetailsRoot not found on DOM");
 
-    if (wrapper.style.visibility === "hidden") {
-      wrapper.style.visibility = "visible";
+    if (
+      personalDetailsRoot.style.display === "none" ||
+      personalDetailsRoot.style.display === ""
+    ) {
+      personalDetailsRoot.style.display = "flex";
     } else {
-      wrapper.style.visibility = "hidden";
+      personalDetailsRoot.style.display = "none";
     }
   } catch (error) {
     console.error(error);

@@ -263,19 +263,13 @@ interface GameDB {
   deck: Deck;
 }
 
-async function activateSavedGamesBtn() {
+async function loadUserGames() {
   const gamesFromDB = await fetch("api/v1/games/getUserGames")
     .then((res) => res.json())
     .then(({ games }) => games)
     .catch((err) => console.error(err));
 
-  const savedGamesBtn = document.querySelector(
-    "#savedGamesBtn"
-  ) as HTMLButtonElement;
   const middleImage = document.querySelector(".middleImage") as HTMLDivElement;
-
-  const gamesDiv = document.createElement("div");
-  gamesDiv.classList.add("gamesDiv");
 
   const names = gamesFromDB.map(
     (game: GameDB) =>
@@ -284,12 +278,10 @@ async function activateSavedGamesBtn() {
         .join(", ")}</div>`
   );
 
-  // gamesDiv.innerHTML = names.join("");
   savedGamesBtn.addEventListener("click", () => {
-    // middleImage.append(gamesDiv);
-    middleImage.innerHTML = names.join("");
+    savedGamesWindow.innerHTML = names.join("");
 
-    const divGames = middleImage.querySelectorAll(
+    const divGames = savedGamesWindow.querySelectorAll(
       ".game"
     ) as NodeListOf<HTMLDivElement>;
 

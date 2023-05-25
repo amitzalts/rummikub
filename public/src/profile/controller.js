@@ -238,24 +238,19 @@ function handleSearchUsers() {
         console.error(error);
     }
 }
-function activateSavedGamesBtn() {
+function loadUserGames() {
     return __awaiter(this, void 0, void 0, function* () {
         const gamesFromDB = yield fetch("api/v1/games/getUserGames")
             .then((res) => res.json())
             .then(({ games }) => games)
             .catch((err) => console.error(err));
-        const savedGamesBtn = document.querySelector("#savedGamesBtn");
         const middleImage = document.querySelector(".middleImage");
-        const gamesDiv = document.createElement("div");
-        gamesDiv.classList.add("gamesDiv");
         const names = gamesFromDB.map((game) => `<div class="game" id="${game._id}">${game.players
             .map((player) => player.name)
             .join(", ")}</div>`);
-        // gamesDiv.innerHTML = names.join("");
         savedGamesBtn.addEventListener("click", () => {
-            // middleImage.append(gamesDiv);
-            middleImage.innerHTML = names.join("");
-            const divGames = middleImage.querySelectorAll(".game");
+            savedGamesWindow.innerHTML = names.join("");
+            const divGames = savedGamesWindow.querySelectorAll(".game");
             divGames.forEach((game) => game.addEventListener("click", () => __awaiter(this, void 0, void 0, function* () {
                 const findGame = gamesFromDB.find((obj) => obj._id === game.id);
                 yield fetch("api/v1/games/saveGameCookie", {

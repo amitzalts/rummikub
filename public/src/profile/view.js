@@ -1,4 +1,8 @@
 "use strict";
+const savedGamesBtn = document.querySelector("#savedGamesBtn");
+const createGameBtn = document.querySelector("#createGameBtn");
+const createGameWindow = document.querySelector(".createGameWindow");
+const savedGamesWindow = document.querySelector(".savedGamesWindow");
 function renderPageHeader(user) {
     try {
         const headerRoot = document.querySelector("#headerRoot");
@@ -16,7 +20,7 @@ function renderPersonalDetailsBar(user) {
         if (!personalDetailsRoot)
             throw new Error("personalDetailsRoot not found on DOM");
         personalDetailsRoot.innerHTML = `
-    <div id="personalDetailsWrapperRoot" class="personalDetailsWrapper" style="visibility: hidden;">
+    <div class="personalDetailsWrapper">
       <div class="personalDetailsWrapper__buttons">
           <i onclick="handleEditUserDetails()" class="fa-solid fa-pen-to-square personalDetailsWrapper__buttons__button"></i>
           <i onclick="handleSaveEditUserDetails()" class="fa-solid fa-floppy-disk personalDetailsWrapper__buttons__button"></i>
@@ -52,14 +56,15 @@ function renderPersonalDetailsBar(user) {
 }
 function collapsePersonalDetailsWrapper() {
     try {
-        const wrapper = document.querySelector("#personalDetailsWrapperRoot");
-        if (!wrapper)
-            throw new Error("personalDetailsWrapperRoot not found on DOM");
-        if (wrapper.style.visibility === "hidden") {
-            wrapper.style.visibility = "visible";
+        const personalDetailsRoot = document.querySelector("#personalDetailsRoot");
+        if (!personalDetailsRoot)
+            throw new Error("personalDetailsRoot not found on DOM");
+        if (personalDetailsRoot.style.display === "none" ||
+            personalDetailsRoot.style.display === "") {
+            personalDetailsRoot.style.display = "flex";
         }
         else {
-            wrapper.style.visibility = "hidden";
+            personalDetailsRoot.style.display = "none";
         }
     }
     catch (error) {
