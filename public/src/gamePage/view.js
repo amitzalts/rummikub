@@ -18,3 +18,16 @@ const boardAPI = "api/v1/boards";
 const playerAPI = "api/v1/players";
 const gameAPI = "api/v1/games";
 const userAPI = "api/v1/users";
+function createActivePlayerArr(playerOne, playerTwo, playerThree, playerFour) {
+    try {
+        const playerArr = [playerOne, playerTwo, playerThree, playerFour]
+            .filter((player) => player != "")
+            .map((player) => new Player(player));
+        const index = Math.floor(Math.random() * playerArr.length);
+        playerArr[index].isActive = true;
+        return playerArr;
+    }
+    catch (error) {
+        console.error(error);
+    }
+}

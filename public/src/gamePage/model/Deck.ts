@@ -8,32 +8,55 @@ class Deck {
   }
 
   createDeck() {
-    const colors = ["black", "red", "blue", "yellow"];
-    const deck: Tile[] = [];
+    try {
+      const colors = ["black", "red", "blue", "yellow"];
+      const deck: Tile[] = [];
 
-    for (let j = 1; j < 3; j++) {
-      const jocker = new Tile("jocker", 0);
-      colors.forEach((color) => {
-        for (let i = 1; i <= 13; i++) {
-          const tile = new Tile(color, i);
-          deck.push(tile);
-        }
-      });
-      deck.push(jocker);
+      for (let j = 1; j < 3; j++) {
+        const jocker = new Tile("jocker", 0);
+        colors.forEach((color) => {
+          for (let i = 1; i <= 13; i++) {
+            const tile = new Tile(color, i);
+            deck.push(tile);
+          }
+        });
+        deck.push(jocker);
+      }
+
+      this.deck = deck;
+    } catch (error) {
+      console.error(error);
     }
+  }
 
-    this.deck = deck;
+  async saveDeckToDB() {
+    try {
+      await fetch(`${deckAPI}`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ _id: this.id, deck: this.deck }),
+      }).catch((error) => console.error(error));
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async updateDeckInDB() {
-    await fetch(`${deckAPI}/updateDeck`, {
-      method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ deck: this.deck, deckId: this.id }),
-    }).catch((error) => console.error(error));
+    try {
+      await fetch(`${deckAPI}/updateDeck`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ deck: this.deck, deckId: this.id }),
+      }).catch((error) => console.error(error));
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 

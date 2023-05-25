@@ -1,20 +1,26 @@
 const resetCurrentTile = () => {
-  if (!currentTile) throw new Error("current tile not found.");
-  currentTile.classList.remove("active");
-  currentTile = undefined;
+  try {
+    if (!currentTile) throw new Error("current tile not found.");
+    currentTile.classList.remove("active");
+    currentTile = undefined;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const compareArrays = (a: Array<HTMLDivElement>, b: Array<HTMLDivElement>) =>
   a.length === b.length;
 
-// && a.every((element, index) => element === b[index])
-
 function tileBelongesToPlayer(div: HTMLDivElement) {
-  if (!currentPlayer.startingTurnDivs.includes(div)) {
-    resetCurrentTile();
-    return false;
+  try {
+    if (!currentPlayer.startingTurnDivs.includes(div)) {
+      resetCurrentTile();
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error(error);
   }
-  return true;
 }
 
 const genRanHex = () =>

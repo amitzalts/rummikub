@@ -54,6 +54,28 @@ class Player {
         }
         tileArr.forEach((div) => activePlayerArea.append(div));
     }
+    savePlayerToDB() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield fetch(`${playerAPI}`, {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        name: this.name,
+                        hand: this.hand,
+                        _id: this.id,
+                        active: this.isActive,
+                    }),
+                }).catch((error) => console.error(error));
+            }
+            catch (error) {
+                console.error(error);
+            }
+        });
+    }
     updatePlayerInDB() {
         return __awaiter(this, void 0, void 0, function* () {
             yield fetch(`${playerAPI}/updatePlayer`, {

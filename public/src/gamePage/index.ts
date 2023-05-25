@@ -13,144 +13,67 @@ activePlayerArea.addEventListener("click", activatePlayerArea);
 // startFakeGame();
 
 function handlePlayerForm(e: Event) {
-  e.preventDefault();
+  try {
+    e.preventDefault();
 
-  if (!playerNamesForm) return;
+    if (!playerNamesForm) return;
 
-  const playerOne = playerNamesForm.playerOne.value;
-  const playerTwo = playerNamesForm.playerTwo.value;
-  const playerThree = playerNamesForm.playerThree.value;
-  const playerFour = playerNamesForm.playerFour.value;
+    const playerOne = playerNamesForm.playerOne.value;
+    const playerTwo = playerNamesForm.playerTwo.value;
+    const playerThree = playerNamesForm.playerThree.value;
+    const playerFour = playerNamesForm.playerFour.value;
 
-  const playerArr = [playerOne, playerTwo, playerThree, playerFour]
-    .filter((player) => player != "")
-    .map((player) => new Player(player));
+    const playerArr = createActivePlayerArr(
+      playerOne,
+      playerTwo,
+      playerThree,
+      playerFour
+    );
+    if (!playerArr) return;
 
-  const index = Math.floor(Math.random() * playerArr.length);
-  playerArr[index].isActive = true;
+    const newBoard = new Board();
+    newBoard.buildEmptyBoard();
 
-  const newBoard = new Board();
-  newBoard.buildEmptyBoard();
+    const newDeck = new Deck();
+    newDeck.createDeck();
 
-  const newDeck = new Deck();
-  newDeck.createDeck();
+    currentGame = new Game(playerArr, newBoard, newDeck);
 
-  currentGame = new Game(playerArr, newBoard, newDeck);
+    currentGame.startGame();
 
-  currentGame.startGame();
+    saveNewGameToDB(playerArr, newBoard, newDeck);
 
-  createGameToDB(playerArr, newBoard, newDeck);
-
-  playerNamesForm.style.display = "none";
+    playerNamesForm.style.display = "none";
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-async function createGameToDB(playerArr: Player[], board: Board, deck: Deck) {
+async function saveNewGameToDB(playerArr: Player[], board: Board, deck: Deck) {
   try {
-    console.log("saving to DB...");
-
-    // save players to DB
-
     playerArr.forEach(async (player) => {
-      const name = player.name;
-      const hand = player.hand;
-      const _id = player.id;
-      const active = player.isActive;
-
-      await fetch(`${playerAPI}`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, hand, _id, active }),
-      }).catch((error) => console.error(error));
+      player.savePlayerToDB();
     });
 
-    //save board to DB
+    board.saveBoardToDB();
 
-    await fetch(`${boardAPI}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ _id: board.id, tileArr: board.tileArr }),
-    }).catch((error) => console.error(error));
+    deck.saveDeckToDB();
 
-    //save deck to DB
-
-    await fetch(`${deckAPI}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ _id: deck.id, deck: deck.deck }),
-    }).catch((error) => console.error(error));
-
-    // save Game to DB with all of the above...
-    const playerIdArr = playerArr.map((player) => player.id);
-    const user = await getUser();
-
-    const createdGameId = await fetch(`${gameAPI}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: user._id,
-        players: playerIdArr,
-        boardId: board.id,
-        deckId: deck.id,
-      }),
-    })
-      .then((res) => res.json())
-      .then(({ gameId }) => gameId)
-      .catch((error) => console.error(error));
-
-    await fetch("api/v1/games/saveGameCookie", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ gameId: createdGameId }),
-    }).catch((error) => console.error(error));
+    currentGame.saveGameToDB();
   } catch (error) {
     console.error(error);
   }
 }
 
 async function getUser() {
-  const fetchUser = await fetch(`${userAPI}/getUser`)
-    .then((res) => res.json())
-    .then(({ user }) => user)
-    .catch((error) => console.error(error));
+  try {
+    const fetchUser = await fetch(`${userAPI}/getUser`)
+      .then((res) => res.json())
+      .then(({ user }) => user)
+      .catch((error) => console.error(error));
 
-  return fetchUser;
-}
-
-function startFakeGame() {
-  const playerOne = new Player("vladi");
-
-  const playerTwo = new Player("shlomi");
-
-  const playerThree = new Player("amit");
-
-  const playerFour = new Player("bob");
-
-  const newBoard = new Board();
-  newBoard.buildEmptyBoard();
-
-  const newDeck = new Deck();
-  newDeck.createDeck();
-
-  currentGame = new Game(
-    [playerOne, playerTwo, playerThree, playerFour],
-    newBoard,
-    newDeck
-  );
-
-  currentGame.startGame();
+    return fetchUser;
+  } catch (error) {
+    console.error(error);
+  }
 }

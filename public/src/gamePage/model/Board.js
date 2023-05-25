@@ -32,6 +32,18 @@ class Board {
             return new Tile(color, parseInt(value));
         });
     }
+    saveBoardToDB() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield fetch(`${boardAPI}`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ _id: this.id, tileArr: this.tileArr }),
+            }).catch((error) => console.error(error));
+        });
+    }
     updateBoardInDB() {
         return __awaiter(this, void 0, void 0, function* () {
             this.convertDivArrToTileArr();

@@ -23,8 +23,18 @@ class Board {
     });
   }
 
+  async saveBoardToDB() {
+    await fetch(`${boardAPI}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ _id: this.id, tileArr: this.tileArr }),
+    }).catch((error) => console.error(error));
+  }
+
   async updateBoardInDB() {
-    
     this.convertDivArrToTileArr();
     const updatedBoard = await fetch(`${boardAPI}/updateBoard`, {
       method: "PATCH",
