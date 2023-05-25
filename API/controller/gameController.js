@@ -77,14 +77,14 @@ const getGame = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
 exports.getGame = getGame;
 const getUserGames = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { user } = req.cookies;
+        const { userId } = req.cookies;
         if (!secret)
             throw new Error("No secret");
-        if (!user)
+        if (!userId)
             throw new Error("No user found");
-        const decoded = jwt_simple_1.default.decode(user, secret);
-        const cookieUser = decoded;
-        const games = yield gameModel_1.default.find({ user: cookieUser.userId }).populate("user players board deck");
+        const decoded = jwt_simple_1.default.decode(userId, secret);
+        const user = yield userModel_1.default.findById(decoded);
+        const games = yield gameModel_1.default.find({ user: decoded }).populate("user players board deck");
         res.status(200).json({ games });
     }
     catch (error) {

@@ -36,7 +36,7 @@ function toggleWindows() {}
 async function checkIfUserSavedInCookies() {
   const user = await fetch("api/v1/users/getUser")
     .then((res) => res.json())
-    .then(({ cookieUser }) => cookieUser)
+    .then(({ user }) => user)
     .catch((error) => console.error(error));
 
   if (!user) {

@@ -16,12 +16,12 @@ checkIfUserSignedIn();
 // console.log("knnjnjiu")
 
 async function checkIfUserSignedIn() {
-  const user = await fetch("api/v1/users/getUser")
+  const fetchUser = await fetch("api/v1/users/getUser")
     .then((res) => res.json())
-    .then(({ cookieUser }) => cookieUser)
+    .then(({ user }) => user)
     .catch((error) => console.error(error));
 
-  if (user) {
+  if (fetchUser) {
     location.href = "/profile";
   }
 }

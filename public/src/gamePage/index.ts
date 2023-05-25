@@ -99,7 +99,7 @@ async function createGameToDB(playerArr: Player[], board: Board, deck: Deck) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId: user.userId,
+        userId: user._id,
         players: playerIdArr,
         boardId: board.id,
         deckId: deck.id,
@@ -123,12 +123,12 @@ async function createGameToDB(playerArr: Player[], board: Board, deck: Deck) {
 }
 
 async function getUser() {
-  const getUser = await fetch(`${userAPI}/getUser`)
+  const fetchUser = await fetch(`${userAPI}/getUser`)
     .then((res) => res.json())
-    .then(({ cookieUser }) => cookieUser)
+    .then(({ user }) => user)
     .catch((error) => console.error(error));
 
-  return getUser;
+  return fetchUser;
 }
 
 function startFakeGame() {

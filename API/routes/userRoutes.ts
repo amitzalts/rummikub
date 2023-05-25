@@ -8,31 +8,34 @@ import {
   userLogin,
   userLogout,
   deleteUser,
+  deleteAllUsers,
   updateUser,
   getAllSimpleUsers,
   updateUserByAdmin,
   searchUser,
 } from "../controller/userController";
 
-userRouter.route("/").get(getAllUsers).post(createUser)
+userRouter.route("/").get(getAllUsers).post(createUser);
 
-userRouter.route("/getAllSimpleUsers").get(getAllSimpleUsers)
+userRouter.route("/getAllSimpleUsers").get(getAllSimpleUsers);
 
-userRouter.route("/searchUser").post(searchUser)
+userRouter.route("/searchUser").post(searchUser);
 
-userRouter.route("/getAllUsers").get(getAllUsers)
+userRouter.route("/getAllUsers").get(getAllUsers);
 
-userRouter.route("/getUser").get(getUser)
+userRouter.route("/getUser").get(getUser);
 
-userRouter.route("/deleteUser").delete(deleteUser)
+userRouter.route("/deleteUser").delete(deleteUser);
 
-userRouter.route("/updateUser").patch(updateUser)
+userRouter.route("/deleteAllUsers").delete(deleteAllUsers);
 
-userRouter.route("/updateUserByAdmin").patch(updateUserByAdmin)
+userRouter.route("/updateUser").patch(updateUser);
 
-userRouter.route("/userLogin").post(userLogin)
+userRouter.route("/updateUserByAdmin").patch(updateUserByAdmin);
 
-userRouter.route("/userLogout").get(userLogout)
+userRouter.route("/userLogin").post(userLogin);
+
+userRouter.route("/userLogout").get(userLogout);
 
 // userRouter.route("/userPassword").post(passwordRecovery);
 

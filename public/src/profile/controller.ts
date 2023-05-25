@@ -2,10 +2,10 @@ function handleGetUserDetails() {
   try {
     fetch("/api/v1/users/getUser")
       .then((res) => res.json())
-      .then(({ cookieUser }) => {
-        renderPageHeader(cookieUser)
-        renderPersonalDetailsBar(cookieUser)
-        if (cookieUser.userRole === "admin") {
+      .then(({ user }) => {
+        renderPageHeader(user)
+        renderPersonalDetailsBar(user)
+        if (user.userRole === "admin") {
           renderAllUsersWrapper()
         }
       });
@@ -70,8 +70,8 @@ function handleSaveEditUserDetails() {
 
     fetch("/api/v1/users/getUser")
       .then((res) => res.json())
-      .then(({ cookieUser }) => {
-        const userId = cookieUser.userId;
+      .then(({ user }) => {
+        const userId = user._id;
 
         fetch("/api/v1/users/updateUser", {
           method: "PATCH",

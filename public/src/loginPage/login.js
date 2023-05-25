@@ -22,11 +22,11 @@ checkIfUserSignedIn();
 // console.log("knnjnjiu")
 function checkIfUserSignedIn() {
     return __awaiter(this, void 0, void 0, function* () {
-        const user = yield fetch("api/v1/users/getUser")
+        const fetchUser = yield fetch("api/v1/users/getUser")
             .then((res) => res.json())
-            .then(({ cookieUser }) => cookieUser)
+            .then(({ user }) => user)
             .catch((error) => console.error(error));
-        if (user) {
+        if (fetchUser) {
             location.href = "/profile";
         }
     });

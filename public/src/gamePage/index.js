@@ -87,7 +87,7 @@ function createGameToDB(playerArr, board, deck) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    userId: user.userId,
+                    userId: user._id,
                     players: playerIdArr,
                     boardId: board.id,
                     deckId: deck.id,
@@ -112,11 +112,11 @@ function createGameToDB(playerArr, board, deck) {
 }
 function getUser() {
     return __awaiter(this, void 0, void 0, function* () {
-        const getUser = yield fetch(`${userAPI}/getUser`)
+        const fetchUser = yield fetch(`${userAPI}/getUser`)
             .then((res) => res.json())
-            .then(({ cookieUser }) => cookieUser)
+            .then(({ user }) => user)
             .catch((error) => console.error(error));
-        return getUser;
+        return fetchUser;
     });
 }
 function startFakeGame() {

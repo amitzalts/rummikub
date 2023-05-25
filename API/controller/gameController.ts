@@ -86,16 +86,16 @@ export const getUserGames = async (
   next: NextFunction
 ) => {
   try {
-    const { user } = req.cookies;
+    const { userId } = req.cookies;
 
     if (!secret) throw new Error("No secret");
-    if (!user) throw new Error("No user found");
+    if (!userId) throw new Error("No user found");
 
-    const decoded = jwt.decode(user, secret);
+    const decoded = jwt.decode(userId, secret);
 
-    const cookieUser = decoded;
+    const user = await User.findById(decoded);
 
-    const games = await Game.find({ user: cookieUser.userId }).populate(
+    const games = await Game.find({ user: decoded }).populate(
       "user players board deck"
     );
 

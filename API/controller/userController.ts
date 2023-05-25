@@ -48,6 +48,7 @@ export const createUser = async (
     } = req.body;
 
     const takenEmail = await User.findOne({ email });
+
     if (takenEmail) {
       res.status(500).json({
         ok: false,
@@ -70,64 +71,15 @@ export const createUser = async (
 
       if (!secret) throw new Error("Missing jwt secret");
 
-      const token = jwt.encode(
-        {
-          userId: user._id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          gender: user.gender,
-          userName: user.userName,
-          email: user.email,
-          userRole: user.userRole,
-          role: "public",
-        },
-        secret
-      );
+      const token = jwt.encode(user._id, secret);
 
-      res.cookie("user", token, {
+      res.cookie("userId", token, {
         expires: new Date(Date.now() + 7200000), //2 hours
         httpOnly: true,
       });
 
       res.redirect("/signIn");
     }
-
-    const user = await User.create({
-      firstName: firstName.toLowerCase(),
-      lastName: lastName.toLowerCase(),
-      gender: gender.toLowerCase(),
-      userName,
-      password,
-      email: email.toLowerCase(),
-    });
-
-    if (adminToken === "amit" && user.userRole === "simple") {
-      user.userRole = "admin";
-      user.save();
-    }
-
-    if (!secret) throw new Error("Missing jwt secret");
-
-    const token = jwt.encode(
-      {
-        userId: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        gender: user.gender,
-        userName: user.userName,
-        email: user.email,
-        userRole: user.userRole,
-        role: "public",
-      },
-      secret
-    );
-
-    res.cookie("user", token, {
-      expires: new Date(Date.now() + 7200000), //2 hours
-      httpOnly: true,
-    });
-
-    res.redirect("/signIn");
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });
@@ -140,16 +92,16 @@ export const getUser = async (
   next: NextFunction
 ) => {
   try {
-    const { user } = req.cookies;
+    const { userId } = req.cookies;
 
     if (!secret) throw new Error("No secret");
-    if (!user) throw new Error("No user found");
+    if (!userId) throw new Error("No user found");
 
-    const decoded = jwt.decode(user, secret);
+    const decoded = jwt.decode(userId, secret);
 
-    const cookieUser = decoded;
+    const user = await User.findById(decoded);
 
-    res.send({ ok: true, cookieUser });
+    res.send({ ok: true, user });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: "error.message" });
@@ -170,21 +122,9 @@ export const userLogin = async (
 
     if (!secret) throw new Error("Missing jwt secret");
 
-    const token = jwt.encode(
-      {
-        userId: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        gender: user.gender,
-        userName: user.userName,
-        email: user.email,
-        userRole: user.userRole,
-        role: "public",
-      },
-      secret
-    );
+    const token = jwt.encode(user._id, secret);
 
-    res.cookie("user", token, {
+    res.cookie("userId", token, {
       expires: new Date(Date.now() + 7200000), //2 hours
       httpOnly: true,
     });
@@ -202,20 +142,7 @@ export const userLogout = async (
   next: NextFunction
 ) => {
   try {
-    const { userId } = req.cookies;
-
-    const user = await User.findById(userId);
-
-    if (!secret) throw new Error("Missing jwt secret");
-    const token = jwt.encode(
-      {
-        userId: userId,
-        role: "public",
-      },
-      secret
-    );
-
-    res.clearCookie("user");
+    res.clearCookie("userId");
 
     res.send({ ok: true });
   } catch (error: any) {
@@ -244,6 +171,20 @@ export const passwordRecovery = async (
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });
+  }
+};
+
+export const deleteAllUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const deleteUsers = await User.deleteMany({});
+    res.status(200).send({ deleteUsers });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -318,26 +259,6 @@ async function updatedUser(
     );
 
     const user = await User.findById(userId);
-
-    if (!secret) throw new Error("Missing jwt secret");
-    const token = jwt.encode(
-      {
-        userId: userId,
-        firstName: firstName,
-        lastName: lastName,
-        gender: gender,
-        userName: userName,
-        email: email,
-        userRole: "simple",
-        role: "public",
-      },
-      secret
-    );
-
-    res.cookie("user", token, {
-      expires: new Date(Date.now() + 7200000), //2 hours
-      httpOnly: true,
-    });
 
     res.status(201).json({ ok: true, user });
   } catch (error: any) {
