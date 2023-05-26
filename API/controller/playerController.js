@@ -24,6 +24,7 @@ const getAllPlayers = (req, res, next) => __awaiter(void 0, void 0, void 0, func
     }
     catch (error) {
         console.error(error);
+        res.status(500).send({ error: "error.message" });
     }
 });
 exports.getAllPlayers = getAllPlayers;

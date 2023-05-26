@@ -41,6 +41,18 @@ exports.getAllSimpleUsers = getAllSimpleUsers;
 const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { firstName, lastName, gender, userName, password, email, adminToken, } = req.body;
+        if (!firstName)
+            throw new Error("No first name found");
+        if (!lastName)
+            throw new Error("No last name found");
+        if (!gender)
+            throw new Error("No gender found");
+        if (!userName)
+            throw new Error("No user name found");
+        if (!password)
+            throw new Error("No password found");
+        if (!email)
+            throw new Error("No email found");
         const takenEmail = yield userModel_1.default.findOne({ email });
         if (takenEmail) {
             res.status(500).json({

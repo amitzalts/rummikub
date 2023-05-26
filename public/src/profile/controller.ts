@@ -264,41 +264,45 @@ interface GameDB {
 }
 
 async function loadUserGames() {
-  const gamesFromDB = await fetch("api/v1/games/getUserGames")
-    .then((res) => res.json())
-    .then(({ games }) => games)
-    .catch((err) => console.error(err));
+  try {
+    const gamesFromDB = await fetch("api/v1/games/getUserGames")
+      .then((res) => res.json())
+      .then(({ games }) => games)
+      .catch((err) => console.error(err));
 
-  const middleImage = document.querySelector(".middleImage") as HTMLDivElement;
+    const middleImage = document.querySelector(".middleImage") as HTMLDivElement;
 
-  const names = gamesFromDB.map(
-    (game: GameDB) =>
-      `<div class="game" id="${game._id}">${game.players
-        .map((player) => player.name)
-        .join(", ")}</div>`
-  );
-
-  savedGamesBtn.addEventListener("click", () => {
-    savedGamesWindow.innerHTML = names.join("");
-
-    const divGames = savedGamesWindow.querySelectorAll(
-      ".game"
-    ) as NodeListOf<HTMLDivElement>;
-
-    divGames.forEach((game) =>
-      game.addEventListener("click", async () => {
-        const findGame = gamesFromDB.find((obj: GameDB) => obj._id === game.id);
-        
-        await fetch("api/v1/games/saveGameCookie", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ gameId: findGame._id }),
-        }).catch((error) => console.error(error));
-        location.href = "/game"
-      })
+    const names = gamesFromDB.map(
+      (game: GameDB) =>
+        `<div class="game" id="${game._id}">${game.players
+          .map((player) => player.name)
+          .join(", ")}</div>`
     );
-  });
+
+    savedGamesBtn.addEventListener("click", () => {
+      savedGamesWindow.innerHTML = names.join("");
+
+      const divGames = savedGamesWindow.querySelectorAll(
+        ".game"
+      ) as NodeListOf<HTMLDivElement>;
+
+      divGames.forEach((game) =>
+        game.addEventListener("click", async () => {
+          const findGame = gamesFromDB.find((obj: GameDB) => obj._id === game.id);
+
+          await fetch("api/v1/games/saveGameCookie", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ gameId: findGame._id }),
+          }).catch((error) => console.error(error));
+          location.href = "/game"
+        })
+      );
+    });
+  } catch (error) {
+    console.error(error);
+  }
 }

@@ -37,12 +37,17 @@ createGameBtn.addEventListener("click", () => {
 function toggleWindows() { }
 function checkIfUserSavedInCookies() {
     return __awaiter(this, void 0, void 0, function* () {
-        const user = yield fetch("api/v1/users/getUser")
-            .then((res) => res.json())
-            .then(({ user }) => user)
-            .catch((error) => console.error(error));
-        if (!user) {
-            location.href = "/";
+        try {
+            const user = yield fetch("api/v1/users/getUser")
+                .then((res) => res.json())
+                .then(({ user }) => user)
+                .catch((error) => console.error(error));
+            if (!user) {
+                location.href = "/";
+            }
+        }
+        catch (error) {
+            console.error(error);
         }
     });
 }
