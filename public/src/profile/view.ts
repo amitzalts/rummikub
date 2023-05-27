@@ -148,9 +148,6 @@ function renderAllSimpleUsers(users: any) {
             <p>email:
               <span id="editableUserDataRoot-email-${user._id}" class="allUsersWrapper__users__user__details__detail"> ${user.email}</span>
             </p>
-            <p>password:
-              <span id="editableUserDataRoot-password-${user._id}" class="allUsersWrapper__users__user__details__detail"> ${user.password}</span>
-            </p>
             <button onclick="handleDeleteUserByAdmin('${user._id}')" >DELETE USER</button>
           </div>
         </div>
@@ -193,11 +190,6 @@ function catchEditbaleUserDetailsRoots(
     );
     if (!editableEmailRoot)
       throw new Error("editableEmailRoot not found on DOM");
-    const editablePasswordRoot: HTMLDivElement | null = document.querySelector(
-      `#editableUserDataRoot-password-${userId}`
-    );
-    if (!editablePasswordRoot)
-      throw new Error("editablePasswordRoot not found on DOM");
 
     const editableUserDataRootArray: HTMLDivElement[] = [];
 
@@ -207,7 +199,6 @@ function catchEditbaleUserDetailsRoots(
       editableUserNameRoot,
       editableGenderRoot,
       editableEmailRoot,
-      editablePasswordRoot
     );
 
     return editableUserDataRootArray;
@@ -238,7 +229,7 @@ function collapseUserDetails(userId: string) {
         throw new Error("collapsibleArrow not found on DOM");
 
       if (collapsible.style.maxHeight === "0px") {
-        collapsible.style.maxHeight = "35vh";
+        collapsible.style.maxHeight = "30vh";
         collapsibleArrow.style.transform = "scaleY(-1)";
       } else {
         collapsible.style.maxHeight = "0px";
