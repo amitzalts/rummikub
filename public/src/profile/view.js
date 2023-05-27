@@ -186,7 +186,7 @@ function collapseUserDetails(userId) {
             if (!collapsibleArrow)
                 throw new Error("collapsibleArrow not found on DOM");
             if (collapsible.style.maxHeight === "0px") {
-                collapsible.style.maxHeight = "32vh";
+                collapsible.style.maxHeight = "35vh";
                 collapsibleArrow.style.transform = "scaleY(-1)";
             }
             else {

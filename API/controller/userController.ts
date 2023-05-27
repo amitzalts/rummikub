@@ -122,7 +122,6 @@ export const userLogin = async (
 ) => {
   try {
     const { userName, password } = req.body
-    //User Authentication...
 
     const user = await User.findOne({ userName, password })
     if (!user) throw new Error("User not found on get user function")

@@ -109,7 +109,6 @@ exports.getUser = getUser;
 const userLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { userName, password } = req.body;
-        //User Authentication...
         const user = yield userModel_1.default.findOne({ userName, password });
         if (!user)
             throw new Error("User not found on get user function");
