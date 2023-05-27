@@ -15,15 +15,12 @@
 <body>
   <!-- <div class="loginWrapper1"> -->
     <div class="loginWrapper">
-      <h2 class="loginWrapper__title">Login</h2>
+      <h1>Login</h1>
       <form class="form" action="/api/v1/users/userLogin" method="post">
-        <input name="userName" class="checkUserName"  type="text" placeholder="user-name" required/>
-        <input name="password" class="checkPassword" type="password" placeholder="password"  minlength="8" required/>
-        <span id="showOrHidePassword" class="fa-solid fa-eye"></span>
-
-        <button type="submit" class="login__Button">
-          Login
-        </button>
+        <input name="userName" class="checkUserName"  type="text" placeholder="User Name" required/>
+        <input name="password" class="checkPassword" type="password" placeholder="Password"  minlength="8" required/>
+        <i id="showOrHidePassword" class="fa-solid fa-eye"></i>
+        <button type="submit" class="login__Button">Login</button>
       </form>
       <a class="signUp" href="/signUp">Don't have an account yet?</a>
     </div>  
