@@ -21,7 +21,6 @@ export const isAdmin = async (
         if (!user) throw new Error("No user found")
 
         if(user.userRole === "admin"){
-            console.log("user is admin")
             next()
         }
     } catch (error: any) {

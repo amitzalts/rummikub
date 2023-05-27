@@ -17,8 +17,8 @@
     <div class="loginWrapper">
       <h1>Login</h1>
       <form class="form" action="/api/v1/users/userLogin" method="post">
-        <input name="userName" class="checkUserName"  type="text" placeholder="User Name" required/>
-        <input name="password" class="checkPassword" type="password" placeholder="Password"  minlength="8" required/>
+        <input name="email" id="checkEmail"  type="text" placeholder="Email" required/>
+        <input name="password" id="checkPassword" type="password" placeholder="Password"  minlength="8" required/>
         <i id="showOrHidePassword" class="fa-solid fa-eye"></i>
         <button type="submit" class="login__Button">Login</button>
       </form>

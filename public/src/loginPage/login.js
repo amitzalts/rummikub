@@ -12,7 +12,7 @@ checkIfUserSignedIn();
 const showOrHidePassword = document.querySelector("#showOrHidePassword");
 if (!showOrHidePassword)
     throw new Error("showOrHidePassword not found on DOM");
-const password = document.querySelector(".checkPassword");
+const password = document.querySelector("#checkPassword");
 if (!password)
     throw new Error("password not found on DOM");
 showOrHidePassword.addEventListener("click", (e) => {

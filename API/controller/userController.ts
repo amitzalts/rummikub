@@ -2,6 +2,7 @@ import { NextFunction, Response, Request } from "express";
 import User, { UserInterface } from "../model/userModel";
 import jwt from "jwt-simple";
 const secret = process.env.JWT_SECRET;
+const bcrypt = require ('bcryptjs')
 
 export const getAllUsers = async (
   req: Request,
@@ -54,6 +55,14 @@ export const createUser = async (
     if (!password) throw new Error("No password found")
     if (!email) throw new Error("No email found")
 
+    //bcryption//
+    const salt  = bcrypt.genSaltSync(10)
+    console.log("salt", salt)
+    const hash = bcrypt.hashSync(password, salt)
+    console.log("hash", hash)
+    //bcryption//
+
+
     const takenEmail = await User.findOne({ email })
 
     if (takenEmail) {
@@ -67,7 +76,7 @@ export const createUser = async (
         lastName: lastName.toLowerCase(),
         gender: gender.toLowerCase(),
         userName,
-        password,
+        password: hash,
         email: email.toLowerCase(),
       });
 
@@ -121,12 +130,15 @@ export const userLogin = async (
   next: NextFunction
 ) => {
   try {
-    const { userName, password } = req.body
+    const { email, password } = req.body
 
-    const user = await User.findOne({ userName, password })
+    const user = await User.findOne({ email })
     if (!user) throw new Error("User not found on get user function")
 
-    if (!secret) throw new Error("Missing jwt secret");
+    if (!secret) throw new Error("Missing jwt secret")
+
+    const hash = user.password
+    const isValidPassword = bcrypt.compareSync(password, hash)//1:password from user, 1:hashed password from db
 
     const token = jwt.encode(user._id, secret);
 
@@ -281,7 +293,7 @@ export const updateUserByAdmin = async (
   next: NextFunction
 ) => {
   try {
-    const { userId, firstName, lastName, gender, userName, email, password } =
+    const { userId, firstName, lastName, gender, userName, email } =
       req.body;
 
     const takenEmailUser = await User.findOne({ email })
@@ -300,7 +312,6 @@ export const updateUserByAdmin = async (
           gender,
           userName,
           email,
-          password,
           res
         );
       }
@@ -312,7 +323,6 @@ export const updateUserByAdmin = async (
         gender,
         userName,
         email,
-        password,
         res
       );
     }
@@ -329,7 +339,6 @@ async function updatedUserByAdmin(
   gender: any,
   userName: any,
   email: any,
-  password: any,
   res: Response
 ) {
   try {

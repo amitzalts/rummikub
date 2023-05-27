@@ -28,7 +28,6 @@ const isAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
         if (!user)
             throw new Error("No user found");
         if (user.userRole === "admin") {
-            console.log("user is admin");
             next();
         }
     }
