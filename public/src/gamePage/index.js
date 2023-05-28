@@ -16,8 +16,6 @@ sortByNumbersBtn.addEventListener("click", sortHandByNumber);
 sortByColorBtn.addEventListener("click", sortHandByColor);
 resetTurnBtn.addEventListener("click", resetMoves);
 activePlayerArea.addEventListener("click", activatePlayerArea);
-//start game...
-// startFakeGame();
 function handlePlayerForm(e) {
     try {
         e.preventDefault();

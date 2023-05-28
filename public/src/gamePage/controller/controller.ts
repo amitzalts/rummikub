@@ -8,7 +8,6 @@ async function checkIfGameStarted() {
     if (!game) return console.info("No game found. Please start new game.");
 
     if (!playerNamesForm) return;
-    console.log(game);
     playerNamesForm.style.display = "none";
 
     const playersArr: Player[] = game.players.map((player: PlayerDB) => {

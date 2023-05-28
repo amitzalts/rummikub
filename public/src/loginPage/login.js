@@ -37,7 +37,7 @@ function checkIfUserSignedIn() {
         try {
             const fetchUser = yield fetch("api/v1/users/getUser")
                 .then((res) => res.json())
-                .then(({ user }) => user)
+                .then(({ user }) => user ? true : false)
                 .catch((error) => console.error(error));
             if (fetchUser) {
                 location.href = "/profile";

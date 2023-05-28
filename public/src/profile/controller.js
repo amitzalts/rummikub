@@ -103,11 +103,8 @@ function handleSaveEditUserDetails() {
 function handleLogout() {
     try {
         fetch("/api/v1/users/userLogout")
-            .then((res) => res.json())
-            .then((data) => {
-            console.log(data);
-            window.location.href = "./index.html";
-        });
+            .then(() => (window.location.href = "/"))
+            .catch((error) => console.error(error));
     }
     catch (error) {
         console.error(error);

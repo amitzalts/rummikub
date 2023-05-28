@@ -147,7 +147,6 @@ const deleteGameAndAllRelatedToIt = (req, res, next) => __awaiter(void 0, void 0
         const game = yield gameModel_1.default.findById(decoded);
         if (!game)
             return;
-        console.log(game);
         game.players.forEach((player) => __awaiter(void 0, void 0, void 0, function* () { return yield playerModel_1.default.findByIdAndDelete(player); }));
         yield boardModel_1.default.findByIdAndDelete(game.board);
         yield deckModel_1.default.findByIdAndDelete(game.deck);

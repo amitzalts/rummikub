@@ -55,24 +55,11 @@ export const createUser = async (
     if (!password) throw new Error("No password found");
     if (!email) throw new Error("No email found");
 
-    //bcryption//
-    const salt = bcrypt.genSaltSync(10);
-    console.log("salt", salt);
-    const hash = bcrypt.hashSync(password, salt);
-    console.log("hash", hash);
-    //bcryption//
-
     const takenEmail = await User.findOne({ email });
 
     //bcryption//
-    const salt  = bcrypt.genSaltSync(10)
-    console.log("salt", salt)
-    const hash = bcrypt.hashSync(password, salt)
-    console.log("hash", hash)
-    //bcryption//
-
-
-    const takenEmail = await User.findOne({ email })
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
 
     if (takenEmail) {
       res.status(500).json({
@@ -119,17 +106,17 @@ export const getUser = async (
   try {
     const { userId } = req.cookies;
 
-    if (!secret) throw new Error("No secret")
-    if (!userId) throw new Error("No user found")
+    if (!secret) throw new Error("No secret");
+    if (!userId) throw new Error("No user found");
 
-    const decoded = jwt.decode(userId, secret)
+    const decoded = jwt.decode(userId, secret);
 
-    const user = await User.findById(decoded)
+    const user = await User.findById(decoded);
 
     res.send({ ok: true, user });
   } catch (error: any) {
     console.error(error);
-    res.status(500).send({ error: "error.message" })
+    res.status(500).send({ error: "error.message" });
   }
 };
 
@@ -144,7 +131,7 @@ export const userLogin = async (
     const user = await User.findOne({ email });
     if (!user) throw new Error("User not found on userLogin function");
 
-    if (!secret) throw new Error("Missing jwt secret")
+    if (!secret) throw new Error("Missing jwt secret");
 
     const hash = user.password;
     const isValidPassword = bcrypt.compareSync(password, hash); //1:password from user, 2:hashed password from db
@@ -161,7 +148,7 @@ export const userLogin = async (
     res.redirect("/profile");
   } catch (error: any) {
     console.error(error);
-    res.status(500).send({ error: error.message })
+    res.status(500).send({ error: error.message });
   }
 };
 
@@ -176,7 +163,7 @@ export const userLogout = async (
     res.send({ ok: true });
   } catch (error: any) {
     console.error(error);
-    res.status(500).send({ error: error.message })
+    res.status(500).send({ error: error.message });
   }
 };
 
@@ -186,7 +173,7 @@ export const passwordRecovery = async (
   next: NextFunction
 ) => {
   try {
-    const { firstName, lastName, userName, email } = req.body
+    const { firstName, lastName, userName, email } = req.body;
     const user = await User.findOne({
       firstName,
       lastName,
@@ -194,12 +181,12 @@ export const passwordRecovery = async (
       email,
     });
 
-    if (!user) throw new Error("User not found, check entered data")
+    if (!user) throw new Error("User not found, check entered data");
 
     res.status(200).send({ user });
   } catch (error: any) {
     console.error(error);
-    res.status(500).send({ error: error.message })
+    res.status(500).send({ error: error.message });
   }
 };
 
@@ -209,11 +196,11 @@ export const deleteAllUsers = async (
   next: NextFunction
 ) => {
   try {
-    const deleteUsers = await User.deleteMany({})
-    res.status(200).send({ deleteUsers })
+    const deleteUsers = await User.deleteMany({});
+    res.status(200).send({ deleteUsers });
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -225,16 +212,16 @@ export const deleteUser = async (
   try {
     const { userId } = req.body;
 
-    const deletedUser = await User.findByIdAndDelete(userId)
+    const deletedUser = await User.findByIdAndDelete(userId);
     if (!deletedUser)
-      throw new Error("User  was not found in delete user route")
+      throw new Error("User  was not found in delete user route");
 
-    const users = await User.find({ userRole: "simple" })
+    const users = await User.find({ userRole: "simple" });
 
     res.status(200).send({ users });
   } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -244,9 +231,9 @@ export const updateUser = async (
   next: NextFunction
 ) => {
   try {
-    const { userId, firstName, lastName, gender, userName, email } = req.body
+    const { userId, firstName, lastName, gender, userName, email } = req.body;
 
-    const takenEmailUser = await User.findOne({ email })
+    const takenEmailUser = await User.findOne({ email });
 
     if (takenEmailUser) {
       if (takenEmailUser.email !== email) {
@@ -255,14 +242,14 @@ export const updateUser = async (
           errorMessage: `Email already exists in the system`,
         });
       } else if (takenEmailUser.email === email) {
-        updatedUser(userId, firstName, lastName, gender, userName, email, res)
+        updatedUser(userId, firstName, lastName, gender, userName, email, res);
       }
     } else {
-      updatedUser(userId, firstName, lastName, gender, userName, email, res)
+      updatedUser(userId, firstName, lastName, gender, userName, email, res);
     }
   } catch (error: any) {
     console.error(error);
-    res.status(500).send({ error: error.message })
+    res.status(500).send({ error: error.message });
   }
 };
 
@@ -287,12 +274,12 @@ async function updatedUser(
       }
     );
 
-    const user = await User.findById(userId)
+    const user = await User.findById(userId);
 
-    res.status(201).json({ ok: true, user })
+    res.status(201).json({ ok: true, user });
   } catch (error: any) {
     console.error(error);
-    res.status(500).send({ error: error.message })
+    res.status(500).send({ error: error.message });
   }
 }
 
@@ -306,7 +293,7 @@ export const updateUserByAdmin = async (
   try {
     const { userId, firstName, lastName, gender, userName, email } = req.body;
 
-    const takenEmailUser = await User.findOne({ email })
+    const takenEmailUser = await User.findOne({ email });
 
     if (takenEmailUser) {
       if (takenEmailUser.email !== email) {
@@ -338,7 +325,7 @@ export const updateUserByAdmin = async (
     }
   } catch (error: any) {
     console.error(error);
-    res.status(500).send({ error: error.message })
+    res.status(500).send({ error: error.message });
   }
 };
 
@@ -360,16 +347,15 @@ async function updatedUserByAdmin(
         gender,
         userName,
         email,
-        password,
       }
     );
 
-    const user = await User.findById(userId)
+    const user = await User.findById(userId);
 
-    res.status(201).json({ ok: true, user })
+    res.status(201).json({ ok: true, user });
   } catch (error: any) {
     console.error(error);
-    res.status(500).send({ error: error.message })
+    res.status(500).send({ error: error.message });
   }
 }
 
@@ -379,7 +365,7 @@ export const searchUser = async (
   next: NextFunction
 ) => {
   try {
-    const { userInputValue } = req.body
+    const { userInputValue } = req.body;
 
     const users = await User.find({
       userRole: "simple",
@@ -391,9 +377,9 @@ export const searchUser = async (
         { email: userInputValue },
       ],
     });
-    res.status(200).json({ ok: true, users })
+    res.status(200).json({ ok: true, users });
   } catch (error: any) {
-    console.error(error)
-    res.status(500).send({ error: error.message })
+    console.error(error);
+    res.status(500).send({ error: error.message });
   }
 };
