@@ -240,29 +240,34 @@ function handleSearchUsers() {
 }
 function loadUserGames() {
     return __awaiter(this, void 0, void 0, function* () {
-        const gamesFromDB = yield fetch("api/v1/games/getUserGames")
-            .then((res) => res.json())
-            .then(({ games }) => games)
-            .catch((err) => console.error(err));
-        const middleImage = document.querySelector(".middleImage");
-        const names = gamesFromDB.map((game) => `<div class="game" id="${game._id}">${game.players
-            .map((player) => player.name)
-            .join(", ")}</div>`);
-        savedGamesBtn.addEventListener("click", () => {
-            savedGamesWindow.innerHTML = names.join("");
-            const divGames = savedGamesWindow.querySelectorAll(".game");
-            divGames.forEach((game) => game.addEventListener("click", () => __awaiter(this, void 0, void 0, function* () {
-                const findGame = gamesFromDB.find((obj) => obj._id === game.id);
-                yield fetch("api/v1/games/saveGameCookie", {
-                    method: "POST",
-                    headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ gameId: findGame._id }),
-                }).catch((error) => console.error(error));
-                location.href = "/game";
-            })));
-        });
+        try {
+            const gamesFromDB = yield fetch("api/v1/games/getUserGames")
+                .then((res) => res.json())
+                .then(({ games }) => games)
+                .catch((err) => console.error(err));
+            const middleImage = document.querySelector(".middleImage");
+            const names = gamesFromDB.map((game) => `<div class="game" id="${game._id}">${game.players
+                .map((player) => player.name)
+                .join(", ")}</div>`);
+            savedGamesBtn.addEventListener("click", () => {
+                savedGamesWindow.innerHTML = names.join("");
+                const divGames = savedGamesWindow.querySelectorAll(".game");
+                divGames.forEach((game) => game.addEventListener("click", () => __awaiter(this, void 0, void 0, function* () {
+                    const findGame = gamesFromDB.find((obj) => obj._id === game.id);
+                    yield fetch("api/v1/games/saveGameCookie", {
+                        method: "POST",
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ gameId: findGame._id }),
+                    }).catch((error) => console.error(error));
+                    location.href = "/game";
+                })));
+            });
+        }
+        catch (error) {
+            console.error(error);
+        }
     });
 }

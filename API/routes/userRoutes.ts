@@ -14,6 +14,7 @@ import {
   updateUserByAdmin,
   searchUser,
 } from "../controller/userController";
+import { isAdmin } from "../middlewares/userMiddleware";
 
 userRouter.route("/").get(getAllUsers).post(createUser);
 
@@ -25,13 +26,13 @@ userRouter.route("/getAllUsers").get(getAllUsers);
 
 userRouter.route("/getUser").get(getUser);
 
-userRouter.route("/deleteUser").delete(deleteUser);
+userRouter.route("/deleteUser").delete(isAdmin, deleteUser);
 
-userRouter.route("/deleteAllUsers").delete(deleteAllUsers);
+userRouter.route("/deleteAllUsers").delete(isAdmin, deleteAllUsers);
 
 userRouter.route("/updateUser").patch(updateUser);
 
-userRouter.route("/updateUserByAdmin").patch(updateUserByAdmin);
+userRouter.route("/updateUserByAdmin").patch(isAdmin, updateUserByAdmin);
 
 userRouter.route("/userLogin").post(userLogin);
 

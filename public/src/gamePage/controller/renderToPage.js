@@ -1,27 +1,42 @@
 "use strict";
 function createEmptyBoard(array) {
-    if (!board)
-        throw new Error("Board div not found.");
-    for (let i = 1; i <= 160; i++) {
-        const squareDiv = document.createElement("div");
-        squareDiv.classList.add("square");
-        // squareDiv.innerHTML = `<i class="fa-regular fa-circle-down"></i>`;
-        array.push(squareDiv);
-        toggleTileActive(squareDiv, array);
+    try {
+        if (!board)
+            throw new Error("Board div not found.");
+        for (let i = 1; i <= 160; i++) {
+            const squareDiv = document.createElement("div");
+            squareDiv.classList.add("square");
+            // squareDiv.innerHTML = `<i class="fa-regular fa-circle-down"></i>`;
+            array.push(squareDiv);
+            toggleTileActive(squareDiv, array);
+        }
+        renderBoard(array);
     }
-    renderBoard(array);
+    catch (error) {
+        console.error(error);
+    }
 }
 function renderBoard(divsArray) {
-    if (!board)
-        throw new Error("Can't find board div.");
-    board.innerHTML = "";
-    divsArray.forEach((div) => board.append(div));
+    try {
+        if (!board)
+            throw new Error("Can't find board div.");
+        board.innerHTML = "";
+        divsArray.forEach((div) => board.append(div));
+    }
+    catch (error) {
+        console.error(error);
+    }
 }
 function renderPlayers(playersArray) {
-    const html = playersArray
-        .map((player) => `<div class="player" id="${player.id}"">${player.name}</div>`)
-        .join("");
-    playersInGameArea.innerHTML = html;
+    try {
+        const html = playersArray
+            .map((player) => `<div class="player" id="${player.id}"">${player.name}</div>`)
+            .join("");
+        playersInGameArea.innerHTML = html;
+    }
+    catch (error) {
+        console.error(error);
+    }
 }
 // function expandBoard() {
 //   if (

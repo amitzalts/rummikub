@@ -31,15 +31,19 @@ createGameBtn.addEventListener("click", () => {
   }
 });
 
-function toggleWindows() {}
+function toggleWindows() { }
 
 async function checkIfUserSavedInCookies() {
-  const user = await fetch("api/v1/users/getUser")
-    .then((res) => res.json())
-    .then(({ user }) => user)
-    .catch((error) => console.error(error));
+  try {
+    const user = await fetch("api/v1/users/getUser")
+      .then((res) => res.json())
+      .then(({ user }) => user)
+      .catch((error) => console.error(error));
 
-  if (!user) {
-    location.href = "/";
+    if (!user) {
+      location.href = "/";
+    }
+  } catch (error) {
+    console.error(error);
   }
 }

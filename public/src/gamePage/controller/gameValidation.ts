@@ -77,20 +77,24 @@ function hasDuplicates(array: Tile[]) {
 }
 
 function isValidGroup(tileArr: Tile[]) {
-  if (tileArr.length > 4) {
-    return false;
+  try {
+    if (tileArr.length > 4) {
+      return false;
+    }
+
+    const stringArr = tileArr.map((tile) => tile.value + tile.color);
+    const setArr = [...new Set(stringArr)];
+
+    if (
+      !tileArr.map((tile) => tile.value).reduce((a, b) => (a === b ? a : NaN))
+    ) {
+      return false;
+    }
+
+    return setArr.length === stringArr.length;
+  } catch (error) {
+    console.error(error);
   }
-
-  const stringArr = tileArr.map((tile) => tile.value + tile.color);
-  const setArr = [...new Set(stringArr)];
-
-  if (
-    !tileArr.map((tile) => tile.value).reduce((a, b) => (a === b ? a : NaN))
-  ) {
-    return false;
-  }
-
-  return setArr.length === stringArr.length;
 }
 
 function isValidRun(tileArr: Tile[]) {
@@ -104,48 +108,60 @@ function isSameColor(tileArr: Tile[]) {
 }
 
 function validSetWithJocker(tileArr: Tile[]) {
-  let isValid = true;
+  try {
+    let isValid = true;
 
-  if (isSameColor(tileArr.filter((tile) => tile.color !== "jocker"))) {
-    if (!isValidRunWithJocker(tileArr)) isValid = false;
-  } else {
-    if (!isValidGroupWithJocker(tileArr)) isValid = false;
+    if (isSameColor(tileArr.filter((tile) => tile.color !== "jocker"))) {
+      if (!isValidRunWithJocker(tileArr)) isValid = false;
+    } else {
+      if (!isValidGroupWithJocker(tileArr)) isValid = false;
+    }
+    return isValid;
+  } catch (error) {
+    console.error(error);
   }
-  return isValid;
 }
 
 function isValidRunWithJocker(tileArr: Tile[]) {
-  let jockerValue = 0;
-  return tileArr
-    .map((tile) => tile.value)
-    .reduce((a, b) => {
-      if (b === 0) {
-        jockerValue = a + 1;
-        return jockerValue;
-      }
-      if (a === 0) {
-        return b;
-      }
-      return a + 1 === b ? b : NaN;
-    });
+  try {
+    let jockerValue = 0;
+    return tileArr
+      .map((tile) => tile.value)
+      .reduce((a, b) => {
+        if (b === 0) {
+          jockerValue = a + 1;
+          return jockerValue;
+        }
+        if (a === 0) {
+          return b;
+        }
+        return a + 1 === b ? b : NaN;
+      });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function isValidGroupWithJocker(tileArr: Tile[]) {
-  if (tileArr.length > 4) {
-    return false;
+  try {
+    if (tileArr.length > 4) {
+      return false;
+    }
+
+    if (
+      !tileArr
+        .filter((tile) => tile.color !== "jocker")
+        .map((tile) => tile.value)
+        .reduce((a, b) => (a === b ? a : NaN))
+    ) {
+      return false;
+    }
+
+    const stringArr = tileArr.map((tile) => tile.value + tile.color);
+    const setArr = [...new Set(stringArr)];
+
+    return setArr.length === stringArr.length;
+  } catch (error) {
+    console.error(error);
   }
-
-  if (
-    !tileArr
-      .filter((tile) => tile.color !== "jocker")
-      .map((tile) => tile.value)
-      .reduce((a, b) => (a === b ? a : NaN))
-  ) {
-    return false;
-  }
-
-  const stringArr = tileArr.map((tile) => tile.value + tile.color);
-  const setArr = [...new Set(stringArr)];
-
-  return setArr.length === stringArr.length;
-}
+}  

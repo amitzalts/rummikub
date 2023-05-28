@@ -14,6 +14,7 @@ export const getAllPlayers = async (
     res.status(200).json({ players });
   } catch (error) {
     console.error(error);
+    res.status(500).send({ error: "error.message" });
   }
 };
 

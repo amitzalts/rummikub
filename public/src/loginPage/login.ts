@@ -1,27 +1,38 @@
 checkIfUserSignedIn();
 
-// const closedEye=document.querySelector("iconClosedEye") as HTMLSpanElement
-// const openEye=document.querySelector(".iconOpenEye") as HTMLSpanElement
-// const password=document.querySelector(".checkPassword") as HTMLInputElement
+const showOrHidePassword: HTMLSpanElement | null = document.querySelector("#showOrHidePassword")
+if (!showOrHidePassword) throw new Error("showOrHidePassword not found on DOM")
 
-// closedEye?.addEventListener("click",(e)=>{
-// openEye.classList.remove(".eye-slash")
-// password.type="text"
+const password: HTMLInputElement | null = document.querySelector("#checkPassword")
+if (!password) throw new Error("password not found on DOM")
 
-// });
-// closedEye?.addEventListener("click",(e)=>{
-// password.type="password"
+showOrHidePassword.addEventListener("click", (e) => {
+  try {
+    if (password.type === "password") {
+      password.type = "text"
+      showOrHidePassword.classList.remove("fa-eye")
+      showOrHidePassword.classList.add("fa-eye-slash")
+    } else if (password.type === "text") {
+      password.type = "password"
+      showOrHidePassword.classList.remove("fa-eye-slash")
+      showOrHidePassword.classList.add("fa-eye")
+    }
+  } catch (error) {
+    console.error(error)
+  }
+})
 
-// });
-// console.log("knnjnjiu")
 
 async function checkIfUserSignedIn() {
-  const fetchUser = await fetch("api/v1/users/getUser")
-    .then((res) => res.json())
-    .then(({ user }) => user)
-    .catch((error) => console.error(error));
-
-  if (fetchUser) {
-    location.href = "/profile";
+  try {
+    const fetchUser = await fetch("api/v1/users/getUser")
+      .then((res) => res.json())
+      .then(({ user }) => user)
+      .catch((error) => console.error(error));
+    if (fetchUser) {
+      location.href = "/profile";
+    }
+  } catch (error) {
+    console.error(error);
   }
 }

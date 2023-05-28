@@ -16,6 +16,7 @@ exports.searchUser = exports.updateUserByAdmin = exports.updateUser = exports.de
 const userModel_1 = __importDefault(require("../model/userModel"));
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const secret = process.env.JWT_SECRET;
+const bcrypt = require('bcryptjs');
 const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield userModel_1.default.find({});
@@ -41,6 +42,24 @@ exports.getAllSimpleUsers = getAllSimpleUsers;
 const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { firstName, lastName, gender, userName, password, email, adminToken, } = req.body;
+        if (!firstName)
+            throw new Error("No first name found");
+        if (!lastName)
+            throw new Error("No last name found");
+        if (!gender)
+            throw new Error("No gender found");
+        if (!userName)
+            throw new Error("No user name found");
+        if (!password)
+            throw new Error("No password found");
+        if (!email)
+            throw new Error("No email found");
+        //bcryption//
+        const salt = bcrypt.genSaltSync(10);
+        console.log("salt", salt);
+        const hash = bcrypt.hashSync(password, salt);
+        console.log("hash", hash);
+        //bcryption//
         const takenEmail = yield userModel_1.default.findOne({ email });
         if (takenEmail) {
             res.status(500).json({
@@ -54,7 +73,7 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
                 lastName: lastName.toLowerCase(),
                 gender: gender.toLowerCase(),
                 userName,
-                password,
+                password: hash,
                 email: email.toLowerCase(),
             });
             if (adminToken === "amit" && user.userRole === "simple") {
@@ -96,13 +115,14 @@ const getUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
 exports.getUser = getUser;
 const userLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { userName, password } = req.body;
-        //User Authentication...
-        const user = yield userModel_1.default.findOne({ userName, password });
+        const { email, password } = req.body;
+        const user = yield userModel_1.default.findOne({ email });
         if (!user)
             throw new Error("User not found on get user function");
         if (!secret)
             throw new Error("Missing jwt secret");
+        const hash = user.password;
+        const isValidPassword = bcrypt.compareSync(password, hash); //1:password from user, 1:hashed password from db
         const token = jwt_simple_1.default.encode(user._id, secret);
         res.cookie("userId", token, {
             expires: new Date(Date.now() + 7200000),
@@ -219,7 +239,7 @@ function updatedUser(userId, firstName, lastName, gender, userName, email, res) 
 //////////////////////////
 const updateUserByAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { userId, firstName, lastName, gender, userName, email, password } = req.body;
+        const { userId, firstName, lastName, gender, userName, email } = req.body;
         const takenEmailUser = yield userModel_1.default.findOne({ email });
         if (takenEmailUser) {
             if (takenEmailUser.email !== email) {
@@ -229,11 +249,11 @@ const updateUserByAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, 
                 });
             }
             else if (takenEmailUser.email === email) {
-                updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, password, res);
+                updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, res);
             }
         }
         else {
-            updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, password, res);
+            updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, res);
         }
     }
     catch (error) {
@@ -242,7 +262,7 @@ const updateUserByAdmin = (req, res, next) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.updateUserByAdmin = updateUserByAdmin;
-function updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, password, res) {
+function updatedUserByAdmin(userId, firstName, lastName, gender, userName, email, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const updatedUser = yield userModel_1.default.findByIdAndUpdate({ _id: userId }, {
