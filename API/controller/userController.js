@@ -16,7 +16,7 @@ exports.searchUser = exports.updateUserByAdmin = exports.updateUser = exports.de
 const userModel_1 = __importDefault(require("../model/userModel"));
 const jwt_simple_1 = __importDefault(require("jwt-simple"));
 const secret = process.env.JWT_SECRET;
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const users = yield userModel_1.default.find({});
@@ -54,6 +54,13 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             throw new Error("No password found");
         if (!email)
             throw new Error("No email found");
+        //bcryption//
+        const salt = bcrypt.genSaltSync(10);
+        console.log("salt", salt);
+        const hash = bcrypt.hashSync(password, salt);
+        console.log("hash", hash);
+        //bcryption//
+        const takenEmail = yield userModel_1.default.findOne({ email });
         //bcryption//
         const salt = bcrypt.genSaltSync(10);
         console.log("salt", salt);
@@ -118,11 +125,13 @@ const userLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         const { email, password } = req.body;
         const user = yield userModel_1.default.findOne({ email });
         if (!user)
-            throw new Error("User not found on get user function");
+            throw new Error("User not found on userLogin function");
         if (!secret)
             throw new Error("Missing jwt secret");
         const hash = user.password;
-        const isValidPassword = bcrypt.compareSync(password, hash); //1:password from user, 1:hashed password from db
+        const isValidPassword = bcrypt.compareSync(password, hash); //1:password from user, 2:hashed password from db
+        if (isValidPassword === false)
+            return res.json("Not valid password.");
         const token = jwt_simple_1.default.encode(user._id, secret);
         res.cookie("userId", token, {
             expires: new Date(Date.now() + 7200000),

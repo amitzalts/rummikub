@@ -2,7 +2,7 @@ import { NextFunction, Response, Request } from "express";
 import User, { UserInterface } from "../model/userModel";
 import jwt from "jwt-simple";
 const secret = process.env.JWT_SECRET;
-const bcrypt = require ('bcryptjs')
+const bcrypt = require("bcryptjs");
 
 export const getAllUsers = async (
   req: Request,
@@ -48,12 +48,21 @@ export const createUser = async (
       adminToken,
     } = req.body;
 
-    if (!firstName) throw new Error("No first name found")
-    if (!lastName) throw new Error("No last name found")
-    if (!gender) throw new Error("No gender found")
-    if (!userName) throw new Error("No user name found")
-    if (!password) throw new Error("No password found")
-    if (!email) throw new Error("No email found")
+    if (!firstName) throw new Error("No first name found");
+    if (!lastName) throw new Error("No last name found");
+    if (!gender) throw new Error("No gender found");
+    if (!userName) throw new Error("No user name found");
+    if (!password) throw new Error("No password found");
+    if (!email) throw new Error("No email found");
+
+    //bcryption//
+    const salt = bcrypt.genSaltSync(10);
+    console.log("salt", salt);
+    const hash = bcrypt.hashSync(password, salt);
+    console.log("hash", hash);
+    //bcryption//
+
+    const takenEmail = await User.findOne({ email });
 
     //bcryption//
     const salt  = bcrypt.genSaltSync(10)
@@ -130,15 +139,17 @@ export const userLogin = async (
   next: NextFunction
 ) => {
   try {
-    const { email, password } = req.body
+    const { email, password } = req.body;
 
-    const user = await User.findOne({ email })
-    if (!user) throw new Error("User not found on get user function")
+    const user = await User.findOne({ email });
+    if (!user) throw new Error("User not found on userLogin function");
 
     if (!secret) throw new Error("Missing jwt secret")
 
-    const hash = user.password
-    const isValidPassword = bcrypt.compareSync(password, hash)//1:password from user, 1:hashed password from db
+    const hash = user.password;
+    const isValidPassword = bcrypt.compareSync(password, hash); //1:password from user, 2:hashed password from db
+
+    if (isValidPassword === false) return res.json("Not valid password.");
 
     const token = jwt.encode(user._id, secret);
 
@@ -293,8 +304,7 @@ export const updateUserByAdmin = async (
   next: NextFunction
 ) => {
   try {
-    const { userId, firstName, lastName, gender, userName, email } =
-      req.body;
+    const { userId, firstName, lastName, gender, userName, email } = req.body;
 
     const takenEmailUser = await User.findOne({ email })
 
