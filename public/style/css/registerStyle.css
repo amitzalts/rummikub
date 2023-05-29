@@ -29,26 +29,23 @@ body {
   align-items: center;
   background: rgba(255, 255, 255, 0.66);
   box-shadow: 6px 0px 12px rgba(0, 0, 0, 0.12);
-  border-radius: 30px; }
+  border-radius: 30px;
+  padding: 1rem 2rem; }
   .registerWrapper form {
     height: 100%;
-    width: 70%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-around;
     flex-direction: column;
     gap: 5px;
-    padding: 1rem 2rem; }
+    padding: 0.5rem; }
     .registerWrapper form h1 {
-      padding: 1rem;
-      height: auto;
-      width: auto;
-      text-align: center;
-      font-family: 'Roboto';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 2.5em;
-      color: #006336; }
+      width: 100%;
+      font-family: "Roboto";
+      font-size: calc((4vh + 4vw) / 2);
+      color: #006336;
+      text-align: center; }
     .registerWrapper form select {
       width: 100%;
       height: 5%;
@@ -76,12 +73,12 @@ body {
       width: 70%;
       height: 10%;
       margin-top: 1.5rem;
-      padding-bottom: .5rem;
-      padding-top: .5rem;
-      border: 1px solid #4A5568;
+      padding-bottom: 0.5rem;
+      padding-top: 0.5rem;
+      border: 1px solid #4a5568;
       border-radius: 36px;
       background: #5adb9d;
-      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
       font-size: x-large;
       color: white;
       cursor: pointer; }
@@ -89,6 +86,6 @@ body {
         background: #48b681; }
   .registerWrapper .signIn {
     color: black;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
     padding-top: 1rem;
     padding-bottom: 2rem; }
