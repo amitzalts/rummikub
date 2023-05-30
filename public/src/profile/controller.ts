@@ -129,6 +129,7 @@ function handleGetAllSimpleUsers() {
 
 function handleEditUserDetailsByAdmin(userId: string) {
   try {
+    
     const editableUserDataRootArray = catchEditbaleUserDetailsRoots(userId);
     if (!editableUserDataRootArray)
       throw new Error("editableUserDataRootArray not found");
@@ -144,9 +145,9 @@ function handleEditUserDetailsByAdmin(userId: string) {
 
 function handleSaveEditUserDetailsByAdmin(userId: string) {
   try {
+    
     const editableUserDataRootArray = catchEditbaleUserDetailsRoots(userId);
-    if (!editableUserDataRootArray)
-      throw new Error("editableUserDataRootArray not found");
+    if (!editableUserDataRootArray) throw new Error("editableUserDataRootArray not found");
 
     const EmailInHeaderRoot: HTMLDivElement | null = document.querySelector(
       `#emailInHeaderRoot-${userId}`
@@ -159,7 +160,6 @@ function handleSaveEditUserDetailsByAdmin(userId: string) {
     const userName = editableUserDataRootArray[2].innerText;
     const gender = editableUserDataRootArray[3].innerText;
     const email = editableUserDataRootArray[4].innerText;
-    const password = editableUserDataRootArray[5].innerText;
 
     fetch("/api/v1/users/updateUserByAdmin", {
       method: "PATCH",
@@ -174,7 +174,6 @@ function handleSaveEditUserDetailsByAdmin(userId: string) {
         gender,
         userName,
         email,
-        password,
       }),
     })
       .then((res) => res.json())

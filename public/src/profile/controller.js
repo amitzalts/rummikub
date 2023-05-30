@@ -149,7 +149,6 @@ function handleSaveEditUserDetailsByAdmin(userId) {
         const userName = editableUserDataRootArray[2].innerText;
         const gender = editableUserDataRootArray[3].innerText;
         const email = editableUserDataRootArray[4].innerText;
-        const password = editableUserDataRootArray[5].innerText;
         fetch("/api/v1/users/updateUserByAdmin", {
             method: "PATCH",
             headers: {
@@ -163,7 +162,6 @@ function handleSaveEditUserDetailsByAdmin(userId) {
                 gender,
                 userName,
                 email,
-                password,
             }),
         })
             .then((res) => res.json())
