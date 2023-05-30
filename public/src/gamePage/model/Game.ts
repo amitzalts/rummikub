@@ -85,7 +85,6 @@ class Game {
 
   async updateGameInDB() {
     try {
-      console.log("Updating game in DB...");
       this.players.forEach((player) => player.updatePlayerInDB());
       this.board.updateBoardInDB();
       this.deck.updateDeckInDB();

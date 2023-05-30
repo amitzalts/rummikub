@@ -3,10 +3,10 @@ function handleGetUserDetails() {
     fetch("/api/v1/users/getUser")
       .then((res) => res.json())
       .then(({ user }) => {
-        renderPageHeader(user)
-        renderPersonalDetailsBar(user)
+        renderPageHeader(user);
+        renderPersonalDetailsBar(user);
         if (user.userRole === "admin") {
-          renderAllUsersWrapper()
+          renderAllUsersWrapper();
         }
       });
   } catch (error) {
@@ -108,11 +108,8 @@ function handleSaveEditUserDetails() {
 function handleLogout() {
   try {
     fetch("/api/v1/users/userLogout")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        window.location.href = "./index.html";
-      });
+      .then(() => (window.location.href = "/"))
+      .catch((error) => console.error(error));
   } catch (error) {
     console.error(error);
   }
@@ -270,7 +267,9 @@ async function loadUserGames() {
       .then(({ games }) => games)
       .catch((err) => console.error(err));
 
-    const middleImage = document.querySelector(".middleImage") as HTMLDivElement;
+    const middleImage = document.querySelector(
+      ".middleImage"
+    ) as HTMLDivElement;
 
     const names = gamesFromDB.map(
       (game: GameDB) =>
@@ -288,7 +287,9 @@ async function loadUserGames() {
 
       divGames.forEach((game) =>
         game.addEventListener("click", async () => {
-          const findGame = gamesFromDB.find((obj: GameDB) => obj._id === game.id);
+          const findGame = gamesFromDB.find(
+            (obj: GameDB) => obj._id === game.id
+          );
 
           await fetch("api/v1/games/saveGameCookie", {
             method: "POST",
@@ -298,7 +299,7 @@ async function loadUserGames() {
             },
             body: JSON.stringify({ gameId: findGame._id }),
           }).catch((error) => console.error(error));
-          location.href = "/game"
+          location.href = "/game";
         })
       );
     });

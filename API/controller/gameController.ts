@@ -180,8 +180,6 @@ export const deleteGameAndAllRelatedToIt = async (
     const game = await Game.findById(decoded);
     if (!game) return;
 
-    console.log(game);
-
     game.players.forEach(
       async (player) => await Player.findByIdAndDelete(player)
     );

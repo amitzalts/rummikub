@@ -89,7 +89,6 @@ class Game {
     updateGameInDB() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log("Updating game in DB...");
                 this.players.forEach((player) => player.updatePlayerInDB());
                 this.board.updateBoardInDB();
                 this.deck.updateDeckInDB();

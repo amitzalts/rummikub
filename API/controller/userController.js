@@ -54,20 +54,10 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             throw new Error("No password found");
         if (!email)
             throw new Error("No email found");
-        //bcryption//
-        const salt = bcrypt.genSaltSync(10);
-        console.log("salt", salt);
-        const hash = bcrypt.hashSync(password, salt);
-        console.log("hash", hash);
-        //bcryption//
         const takenEmail = yield userModel_1.default.findOne({ email });
         //bcryption//
         const salt = bcrypt.genSaltSync(10);
-        console.log("salt", salt);
         const hash = bcrypt.hashSync(password, salt);
-        console.log("hash", hash);
-        //bcryption//
-        const takenEmail = yield userModel_1.default.findOne({ email });
         if (takenEmail) {
             res.status(500).json({
                 ok: false,
@@ -280,7 +270,6 @@ function updatedUserByAdmin(userId, firstName, lastName, gender, userName, email
                 gender,
                 userName,
                 email,
-                password,
             });
             const user = yield userModel_1.default.findById(userId);
             res.status(201).json({ ok: true, user });

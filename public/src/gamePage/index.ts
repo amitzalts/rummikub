@@ -9,9 +9,6 @@ resetTurnBtn.addEventListener("click", resetMoves);
 
 activePlayerArea.addEventListener("click", activatePlayerArea);
 
-//start game...
-// startFakeGame();
-
 function handlePlayerForm(e: Event) {
   try {
     e.preventDefault();

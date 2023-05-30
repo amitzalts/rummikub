@@ -19,7 +19,6 @@ function checkIfGameStarted() {
                 return console.info("No game found. Please start new game.");
             if (!playerNamesForm)
                 return;
-            console.log(game);
             playerNamesForm.style.display = "none";
             const playersArr = game.players.map((player) => {
                 const hand = player.hand.map((tile) => new Tile(tile.color, tile.value, tile.id));
